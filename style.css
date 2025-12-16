@@ -103,10 +103,9 @@ ul { list-style: none; }
 .nav-links li a:hover::after { width: 100%; }
 .menu-toggle { display: none; color: var(--white); font-size: 1.5rem; cursor: pointer; }
 
-/* --- HERO SECTION (Glassmorphism) --- */
+/* --- HERO SECTION --- */
 .hero {
     position: relative;
-    background: radial-gradient(circle at top left, #172a45 0, #020c1b 45%, #020617 100%);
     color: var(--white);
     padding: 130px 0 160px;
     margin-top: -var(--nav-height);
@@ -116,18 +115,35 @@ ul { list-style: none; }
     overflow: hidden;
 }
 
+/* Animated gradient background */
+.hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        120deg,
+        #020617,
+        #111827,
+        #1e293b,
+        #020617
+    );
+    background-size: 300% 300%;
+    animation: heroGradient 24s ease infinite;
+    z-index: 0;
+}
+
 /* Background orbs */
 .hero-bg-orb {
     position: absolute;
     border-radius: 50%;
     filter: blur(40px);
-    opacity: 0.5;
+    opacity: 0.65;
     z-index: 0;
 }
 .orb-1 {
     width: 320px;
     height: 320px;
-    background: #ff4b8b;
+    background: #f97316;
     top: -60px;
     right: -80px;
 }
@@ -139,13 +155,14 @@ ul { list-style: none; }
     left: -50px;
 }
 
-/* Subtle noise/frost overlay */
+/* Soft noise/frost overlay */
 .hero-bg-blur {
     position: absolute;
     inset: 0;
-    background: radial-gradient(circle at 10% 20%, rgba(148,163,184,0.25) 0, transparent 45%),
-                radial-gradient(circle at 80% 0, rgba(148,163,184,0.18) 0, transparent 55%);
-    opacity: 0.6;
+    background:
+        radial-gradient(circle at 10% 20%, rgba(148,163,184,0.22) 0, transparent 45%),
+        radial-gradient(circle at 80% 0, rgba(148,163,184,0.18) 0, transparent 55%);
+    opacity: 0.7;
     z-index: 0;
 }
 
@@ -153,7 +170,7 @@ ul { list-style: none; }
 .glass-card {
     position: relative;
     z-index: 1;
-    background: rgba(15, 23, 42, 0.72);
+    background: rgba(15, 23, 42, 0.78);
     border-radius: 24px;
     border: 1px solid rgba(148, 163, 184, 0.35);
     box-shadow: 0 22px 60px rgba(15, 23, 42, 0.7);
@@ -174,8 +191,35 @@ ul { list-style: none; }
 }
 
 .hero h1 { font-size: 3.3rem; letter-spacing: 1px; margin-bottom: 10px; }
-.subtitle { font-size: 1.1rem; color: #cbd5f5; margin-bottom: 18px; font-weight: 300; }
+.subtitle { font-size: 1.1rem; color: #cbd5f5; margin-bottom: 10px; font-weight: 300; }
 
+/* Typing line */
+.typing-wrapper {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 4px;
+    margin-bottom: 18px;
+    font-size: 1rem;
+    color: #e5e7eb;
+    flex-wrap: wrap;
+}
+.typing-prefix {
+    opacity: 0.9;
+}
+#typing-text {
+    font-weight: 600;
+    color: #fbbf24;
+    min-height: 1.2em;
+}
+.typing-cursor {
+    margin-left: 3px;
+    font-weight: 600;
+    color: #fbbf24;
+    animation: blinkCursor 0.9s steps(1) infinite;
+}
+
+/* Hero tags */
 .hero-tags {
     display: flex;
     flex-wrap: wrap;
@@ -414,6 +458,16 @@ footer h3 { font-size: 1.5rem; margin-bottom: 25px; }
                 transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 .reveal.active { opacity: 1; transform: translateY(0); }
+
+/* Keyframes for hero gradient & cursor */
+@keyframes heroGradient {
+    0%   { background-position: 0% 50%; }
+    50%  { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+@keyframes blinkCursor {
+    50% { opacity: 0; }
+}
 
 /* --- RESPONSIVE --- */
 @media (max-width: 900px) {
