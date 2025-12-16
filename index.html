@@ -3,20 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Joyston Menezes | CS Researcher</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <title>Joyston Menezes | Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
     <header class="hero">
+        <div class="hero-bg-overlay"></div>
         <div class="container hero-content">
-            <div class="avatar-circle">JM</div>
-            <h1>Joyston Menezes</h1>
-            <p class="subtitle">Computer Science Researcher | M.S. Graduate | Aspiring Ph.D. Candidate</p>
+            <div class="avatar-container">
+                <div class="avatar-circle">JM</div>
+                <div class="status-indicator"></div>
+            </div>
             
-            <div class="contact-bar">
+            <h1 class="animate-pop">Joyston Menezes</h1>
+            
+            <div class="typing-container">
+                <span class="static-text">I am into </span>
+                <span class="dynamic-text"></span><span class="cursor">|</span>
+            </div>
+
+            <p class="subtitle fade-in-delay">Computer Science Researcher | M.S. Graduate | Aspiring Ph.D. Candidate</p>
+            
+            <div class="contact-bar fade-in-delay-2">
                 <a href="tel:+12135198504"><i class="fas fa-phone-alt"></i> +1 (213) 519-8504</a>
                 <a href="mailto:jmenezes@usc.edu"><i class="fas fa-envelope"></i> jmenezes@usc.edu</a>
                 <a href="https://www.linkedin.com/in/joymenezes/" target="_blank"><i class="fab fa-linkedin"></i> LinkedIn</a>
@@ -27,20 +38,22 @@
                 <div class="mouse">
                     <div class="wheel"></div>
                 </div>
+                <p>Scroll Down</p>
             </div>
         </div>
     </header>
 
-    <main class="main-wrapper">
+    <main>
         
-        <section id="objective">
+        <section id="objective" class="reveal">
             <div class="container">
-                <div class="section-header">
+                <div class="section-title">
                     <h2>Objective</h2>
+                    <div class="line"></div>
                 </div>
-                <div class="objective-card">
+                <div class="objective-card glass-light">
                     <p>
-                        M.S. in Computer Science graduate with a research focus on <strong>computational social science</strong> and <strong>digital mental health</strong>. 
+                        M.S. in Computer Science graduate with a research focus on <span class="highlight">computational social science</span> and <span class="highlight">digital mental health</span>. 
                         Seeking to pursue a Ph.D. in Brain & Cognitive Science to apply advanced machine learning, NLP, and 
                         large-scale data analysis to investigate the cognitive mechanisms of human communication, shared 
                         understanding, and online collective behavior.
@@ -49,137 +62,143 @@
             </div>
         </section>
 
-        <section id="education">
+        <section id="education" class="reveal">
             <div class="container">
-                <div class="section-header">
+                <div class="section-title">
                     <h2>Education</h2>
+                    <div class="line"></div>
                 </div>
                 <div class="grid-2">
-                    <div class="card dark-card">
-                        <div class="icon-box"><i class="fas fa-graduation-cap"></i></div>
+                    <div class="card dark-blue-card">
+                        <div class="card-icon gold-bg"><i class="fas fa-graduation-cap"></i></div>
                         <h3>Master of Science in Computer Science</h3>
                         <div class="university">University of Southern California</div>
-                        <div class="meta">
+                        <div class="meta-row">
                             <span><i class="fas fa-map-marker-alt"></i> Los Angeles, CA</span>
-                            <span><i class="fas fa-calendar-alt"></i> December 2024</span>
+                            <span><i class="fas fa-calendar-alt"></i> Dec 2024</span>
                         </div>
-                        <div class="details">
-                            <p class="highlight">Relevant Coursework:</p>
-                            <p>Data Structures and Algorithms, Databases, Web Technologies, Multimedia, NLP</p>
-                            <div class="award">
-                                <i class="fas fa-award"></i> 
-                                <span><strong>Honors:</strong> Recipient, Order of the Laurel and the Palm (USC’s highest honor, 2025)</span>
-                            </div>
+                        <div class="divider-light"></div>
+                        <p class="coursework"><strong>Relevant Coursework:</strong> NLP, Multimedia, Web Tech, Databases, Algorithms.</p>
+                        <div class="honor-highlight">
+                            <i class="fas fa-medal"></i>
+                            <span>Recipient, Order of the Laurel and the Palm (USC’s highest honor, 2025)</span>
                         </div>
                     </div>
 
-                    <div class="card dark-card">
-                        <div class="icon-box"><i class="fas fa-university"></i></div>
+                    <div class="card dark-blue-card">
+                        <div class="card-icon gold-bg"><i class="fas fa-university"></i></div>
                         <h3>Bachelor of Engineering in CS</h3>
                         <div class="university">NMAM Institute of Technology</div>
-                        <div class="meta">
+                        <div class="meta-row">
                             <span><i class="fas fa-map-marker-alt"></i> Nitte, India</span>
-                            <span><i class="fas fa-calendar-alt"></i> August 2021</span>
+                            <span><i class="fas fa-calendar-alt"></i> Aug 2021</span>
                         </div>
-                        <div class="details">
-                            <div class="award">
-                                <i class="fas fa-star"></i> 
-                                <span><strong>Honors:</strong> Student President; Outstanding Student of College (2017–2021)</span>
-                            </div>
+                        <div class="divider-light"></div>
+                        <div class="honor-highlight">
+                            <i class="fas fa-star"></i>
+                            <span>Student President & Outstanding Student of College (2017–2021)</span>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section id="research">
+        <section id="research" class="reveal">
             <div class="container">
-                <div class="section-header">
+                <div class="section-title">
                     <h2>Research Experience</h2>
+                    <div class="line"></div>
                 </div>
                 
-                <div class="timeline">
-                    <div class="timeline-item">
-                        <div class="timeline-marker"></div>
-                        <div class="card light-card">
+                <div class="timeline-container">
+                    <div class="timeline-block">
+                        <div class="marker"></div>
+                        <div class="card white-card hover-lift">
                             <h3>Research Assistant</h3>
-                            <div class="job-meta">
-                                <span class="company"><i class="fas fa-building"></i> HUMANS LAB, USC ISI</span>
-                                <span class="date"><i class="fas fa-calendar"></i> Aug 2024 – Present</span>
+                            <div class="job-header">
+                                <span class="company text-blue"><i class="fas fa-microscope"></i> HUMANS LAB, USC ISI</span>
+                                <span class="date">Aug 2024 – Present</span>
                             </div>
-                            <p class="supervisors">Supervisors: Prof. Luca Luceri and Prof. Emilio Ferrara</p>
-                            <ul class="bullet-list">
-                                <li><strong>TikTok Data Analysis:</strong> Investigated political discourse in a multimodal dataset of 1M+ entries. Utilized BERTopic to discover 10 latent topics.</li>
-                                <li><strong>Media Pipeline:</strong> Created a pipeline for downloading/organizing Twitter media and scraping TikTok comments.</li>
-                            </ul>
+                            <p class="supervisor">Supervisors: Prof. Luca Luceri and Prof. Emilio Ferrara</p>
+                            
+                            <div class="sub-project">
+                                <h4>TikTok Data Analysis and Topic Modeling</h4>
+                                <p>Investigated thematic structure of political discourse on TikTok (1M+ entries). Utilized BERTopic to model 10 latent topics and analyzed engagement patterns.</p>
+                            </div>
+                            <div class="sub-project">
+                                <h4>Media Download Pipeline</h4>
+                                <p>Created comprehensive pipeline for downloading Twitter media and scraping TikTok comments. Optimized performance and resolved bugs.</p>
+                            </div>
                         </div>
                     </div>
 
-                    <div class="timeline-item">
-                        <div class="timeline-marker"></div>
-                        <div class="card light-card">
+                    <div class="timeline-block">
+                        <div class="marker"></div>
+                        <div class="card white-card hover-lift">
                             <h3>Research Assistant</h3>
-                            <div class="job-meta">
-                                <span class="company"><i class="fas fa-building"></i> Lerman Lab, USC ISI</span>
-                                <span class="date"><i class="fas fa-calendar"></i> Aug 2024 – May 2025</span>
+                            <div class="job-header">
+                                <span class="company text-blue"><i class="fas fa-brain"></i> Lerman Lab, USC ISI</span>
+                                <span class="date">Aug 2024 – May 2025</span>
                             </div>
-                            <p class="supervisors">Supervisor: Prof. Kristina Lerman</p>
-                            <ul class="bullet-list">
-                                <li><strong>Digital Mental Health:</strong> Researched dissemination of harmful content related to muscle dysmorphia ('Bigorexia').</li>
-                                <li>Developed computational taxonomies to model harmful communication patterns at scale.</li>
-                            </ul>
+                            <p class="supervisor">Supervisor: Prof. Kristina Lerman</p>
+                            
+                            <div class="sub-project">
+                                <h4>Digital Mental Health Research</h4>
+                                <p>Researched dissemination of harmful content related to muscle dysmorphia ('Bigorexia'). Developed computational taxonomies and ML classifiers.</p>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section id="experience">
+        <section id="experience" class="reveal">
             <div class="container">
-                <div class="section-header">
+                <div class="section-title">
                     <h2>Professional Experience</h2>
+                    <div class="line"></div>
                 </div>
                 
-                <div class="timeline">
-                    <div class="timeline-item">
-                        <div class="timeline-marker"></div>
-                        <div class="card light-card">
+                <div class="timeline-container">
+                    <div class="timeline-block">
+                        <div class="marker"></div>
+                        <div class="card white-card hover-lift">
                             <h3>Software Developer</h3>
-                            <div class="job-meta">
-                                <span class="company">Center for Homelessness, Housing, and Health Equity Research, USC</span>
+                            <div class="job-header">
+                                <span class="company text-blue">Center for Homelessness, Housing, and Health Equity Research, USC</span>
                                 <span class="date">Jan 2023 – Present</span>
                             </div>
-                            <ul class="bullet-list">
-                                <li>Developed 'DemoGraphic Count' Android app using Android Studio.</li>
+                            <ul class="styled-list">
+                                <li>Developed Android applications (DemoGraphic Count) using Android Studio.</li>
                                 <li>Implemented GIS and spatial data visualization using ArcGIS and GeoJSON.</li>
                             </ul>
                         </div>
                     </div>
 
-                    <div class="timeline-item">
-                        <div class="timeline-marker"></div>
-                        <div class="card light-card">
+                    <div class="timeline-block">
+                        <div class="marker"></div>
+                        <div class="card white-card hover-lift">
                             <h3>Graduate Student Course Producer</h3>
-                            <div class="job-meta">
-                                <span class="company">University of Southern California</span>
+                            <div class="job-header">
+                                <span class="company text-blue">University of Southern California</span>
                                 <span class="date">Aug 2023 – May 2024</span>
                             </div>
-                            <ul class="bullet-list">
-                                <li>Managed Database Systems course under Prof. Saty Ragavachari.</li>
-                                <li>Conducted office hours and addressed student inquiries for two consecutive semesters.</li>
+                            <ul class="styled-list">
+                                <li>Assisted in managing the Database Systems course under Prof. Saty Ragavachari.</li>
+                                <li>Conducted office hours and addressed student inquiries.</li>
                             </ul>
                         </div>
                     </div>
 
-                     <div class="timeline-item">
-                        <div class="timeline-marker"></div>
-                        <div class="card light-card">
+                    <div class="timeline-block">
+                        <div class="marker"></div>
+                        <div class="card white-card hover-lift">
                             <h3>Website Developer</h3>
-                            <div class="job-meta">
-                                <span class="company">Alphonso Consultancy, India</span>
+                            <div class="job-header">
+                                <span class="company text-blue">Alphonso Consultancy, India</span>
                                 <span class="date">Aug 2021 – Nov 2022</span>
                             </div>
-                            <ul class="bullet-list">
+                            <ul class="styled-list">
                                 <li>Built responsive UIs using Angular, HTML, CSS, and JavaScript.</li>
                                 <li>Integrated scalable SQL databases and optimized PHP backend.</li>
                             </ul>
@@ -189,95 +208,155 @@
             </div>
         </section>
 
-        <section id="publications">
+        <section id="publications" class="reveal">
             <div class="container">
-                <div class="section-header">
+                <div class="section-title">
                     <h2>Publications & Patents</h2>
+                    <div class="line"></div>
                 </div>
                 <div class="grid-2">
-                    <div class="card pub-card">
-                        <div class="pub-icon paper"><i class="far fa-file-alt"></i> Conference Paper</div>
+                    <div class="card white-card hover-scale">
+                        <div class="badge-row">
+                            <span class="badge blue-badge">Conference Paper</span>
+                            <span class="badge yellow-badge">Submitted</span>
+                        </div>
                         <h4>Tracking the 2024 US Presidential Election Chatter on TikTok...</h4>
-                        <p>Submitted to The Web Conference (WWW) 2025</p>
-                        <span class="pub-date">April 4, 2025</span>
+                        <p class="pub-venue">The Web Conference (WWW) 2025</p>
+                        <p class="pub-date"><i class="far fa-calendar"></i> April 4, 2025</p>
                     </div>
 
-                    <div class="card pub-card">
-                        <div class="pub-icon patent"><i class="fas fa-certificate"></i> Patent</div>
+                    <div class="card white-card hover-scale">
+                        <div class="badge-row">
+                            <span class="badge purple-badge">Patent</span>
+                        </div>
                         <h4>E-Commerce Product Comparison System</h4>
-                        <p>Indian Patent Office</p>
-                        <span class="pub-date">Sept 9, 2024</span>
+                        <p class="pub-venue">Indian Patent Office</p>
+                        <p class="pub-date"><i class="far fa-calendar"></i> Sept 9, 2024</p>
                     </div>
 
-                    <div class="card pub-card">
-                        <div class="pub-icon patent"><i class="fas fa-certificate"></i> Patent</div>
+                    <div class="card white-card hover-scale">
+                        <div class="badge-row">
+                            <span class="badge purple-badge">Patent</span>
+                        </div>
                         <h4>An Automated Extraction and Summarization System</h4>
-                        <p>Indian Patent Office</p>
-                        <span class="pub-date">Sept 6, 2024</span>
+                        <p class="pub-venue">Indian Patent Office</p>
+                        <p class="pub-date"><i class="far fa-calendar"></i> Sept 6, 2024</p>
                     </div>
 
-                    <div class="card pub-card">
-                        <div class="pub-icon book"><i class="fas fa-book"></i> Book Chapter</div>
-                        <h4>Identification and Classification of Paddy Crop Diseases...</h4>
-                        <p>CRC Press</p>
-                        <span class="pub-date">Sept 23, 2021</span>
+                    <div class="card white-card hover-scale">
+                        <div class="badge-row">
+                            <span class="badge green-badge">Book Chapter</span>
+                        </div>
+                        <h4>Identification and Classification of Paddy Crop Diseases using Big Data ML</h4>
+                        <p class="pub-venue">CRC Press</p>
+                        <p class="pub-date"><i class="far fa-calendar"></i> Sept 23, 2021</p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section id="skills">
+        <section id="honors" class="reveal">
             <div class="container">
-                <div class="section-header">
+                <div class="section-title">
+                    <h2>Honors & Awards</h2>
+                    <div class="line"></div>
+                </div>
+                <div class="grid-3">
+                    <div class="card cream-card">
+                        <i class="fas fa-award gold-icon"></i>
+                        <p>National Overseas Scholarship, Karnataka State Government, April 2024</p>
+                    </div>
+                    <div class="card cream-card">
+                        <i class="fas fa-trophy gold-icon"></i>
+                        <p>Outstanding Student and Best Outgoing Student, NMAMIT (2017–2021)</p>
+                    </div>
+                    <div class="card cream-card">
+                        <i class="fas fa-medal gold-icon"></i>
+                        <p>Best Outgoing Student of CS Department, NMAMIT, April 2021</p>
+                    </div>
+                    <div class="card cream-card">
+                        <i class="fas fa-certificate gold-icon"></i>
+                        <p>Outstanding Achievement Award, NMAMIT, April 2021</p>
+                    </div>
+                    <div class="card cream-card">
+                        <i class="fas fa-star gold-icon"></i>
+                        <p>Best Project of University, NMAMIT, March 2021</p>
+                    </div>
+                    <div class="card cream-card">
+                        <i class="fas fa-user-check gold-icon"></i>
+                        <p>Top Data Collector, USC School of Social Work, May 2023</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="skills" class="reveal">
+            <div class="container">
+                <div class="section-title">
                     <h2>Skills</h2>
+                    <div class="line"></div>
                 </div>
                 <div class="grid-2">
-                    <div class="card light-card">
+                    <div class="card white-card">
                         <h4>Programming Languages</h4>
-                        <div class="skill-tags">
+                        <div class="skill-cloud">
                             <span>Java</span><span>Python</span><span>C++</span><span>Node.js</span>
-                            <span>JavaScript</span><span>HTML5</span><span>SQL</span>
+                            <span>JavaScript</span><span>ABAP</span><span>HTML5</span><span>SQL</span>
                         </div>
                     </div>
-                    <div class="card light-card">
-                        <h4>Technologies & ML</h4>
-                        <div class="skill-tags">
-                            <span>LLMs</span><span>Git</span><span>Docker</span><span>Kubernetes</span>
-                            <span>TensorFlow</span><span>PyTorch</span><span>Apache Spark</span>
+                    <div class="card white-card">
+                        <h4>Frameworks & ML</h4>
+                        <div class="skill-cloud">
+                            <span>REST APIs</span><span>LLMs</span><span>Git</span><span>Jenkins</span>
+                            <span>Docker</span><span>Kubernetes</span><span>TensorFlow</span><span>PyTorch</span>
                         </div>
                     </div>
-                    <div class="card light-card">
-                        <h4>Cloud Computing</h4>
-                        <div class="skill-tags">
-                            <span>AWS</span><span>Azure</span><span>GCP</span><span>SAP</span>
+                    <div class="card white-card">
+                        <h4>Cloud & Data</h4>
+                        <div class="skill-cloud">
+                            <span>SAP</span><span>AWS</span><span>Azure</span><span>GCP</span>
+                            <span>Apache Spark</span><span>Data Structures</span>
                         </div>
                     </div>
-                    <div class="card light-card">
+                    <div class="card white-card">
                         <h4>Tools & Languages</h4>
-                        <div class="skill-tags">
-                            <span>ArcGIS</span><span>English (Fluent)</span><span>Hindi</span><span>Kannada</span>
+                        <div class="skill-cloud">
+                            <span>ArcGIS</span><span>Swifter</span>
+                            <span>English (Fluent)</span><span>Hindi</span><span>Kannada</span>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section id="leadership">
+        <section id="leadership" class="reveal">
             <div class="container">
-                <div class="section-header">
-                    <h2>Leadership & Involvement</h2>
+                <div class="section-title">
+                    <h2>Leadership</h2>
+                    <div class="line"></div>
                 </div>
-                <div class="card light-card" style="margin-bottom: 20px; border-left: 5px solid #0055ff;">
-                    <div class="icon-header"><i class="fas fa-users"></i> Team Lead, Greater Los Angeles Homeless Count</div>
-                    <p>Led the DemoGraphic Count initiative, coordinating data collection across Los Angeles (2022–Present).</p>
+                <div class="card white-card border-left-blue">
+                    <div class="icon-title">
+                        <i class="fas fa-users text-blue"></i>
+                        <h3>Team Lead, Greater Los Angeles Homeless Count</h3>
+                    </div>
+                    <p class="sub-text">2022 – Present</p>
+                    <p>Led the DemoGraphic Count initiative, coordinating data collection across Los Angeles.</p>
                 </div>
-                <div class="card light-card" style="margin-bottom: 20px; border-left: 5px solid #28a745;">
-                    <div class="icon-header"><i class="fas fa-globe-americas"></i> National Service Scheme (NSS)</div>
-                    <p>Implemented waste management solutions; initiated Piggy Bank project for homeless individuals (2017–2021).</p>
+                <div class="card white-card border-left-green margin-top">
+                    <div class="icon-title">
+                        <i class="fas fa-leaf text-green"></i>
+                        <h3>National Service Scheme (NSS)</h3>
+                    </div>
+                    <p class="sub-text">July 2017 – Dec 2021</p>
+                    <p>Implemented waste management solutions in villages; initiated Piggy Bank project for homeless individuals.</p>
                 </div>
-                <div class="card light-card" style="border-left: 5px solid #8a2be2;">
-                    <div class="icon-header"><i class="fas fa-plane"></i> Mission Trips</div>
-                    <p><strong>Tijuana, Mexico:</strong> Built houses for homeless people. <br> <strong>Colombia:</strong> Built water tank for Wayuu communities.</p>
+                <div class="card white-card border-left-purple margin-top">
+                    <div class="icon-title">
+                        <i class="fas fa-plane text-purple"></i>
+                        <h3>Mission Trips</h3>
+                    </div>
+                    <p><strong>Tijuana, Mexico (2024):</strong> Built houses for homeless people. <br> <strong>Colombia (2024):</strong> Built water tank for Wayuu communities.</p>
                 </div>
             </div>
         </section>
@@ -287,14 +366,58 @@
     <footer>
         <div class="container">
             <h3>Let's connect and collaborate!</h3>
-            <div class="footer-links">
-                <a href="mailto:jmenezes@usc.edu">Email</a>
-                <a href="https://www.linkedin.com/in/joymenezes/">LinkedIn</a>
-                <a href="tel:+12135198504">Phone</a>
+            <div class="footer-icons">
+                <a href="mailto:jmenezes@usc.edu"><i class="fas fa-envelope"></i></a>
+                <a href="https://www.linkedin.com/in/joymenezes/"><i class="fab fa-linkedin"></i></a>
+                <a href="tel:+12135198504"><i class="fas fa-phone"></i></a>
             </div>
             <p>&copy; 2025 Joyston Menezes. All rights reserved.</p>
         </div>
     </footer>
 
+    <script>
+        // --- TYPING EFFECT ---
+        const words = ["Research", "Frontend", "ML", "AI", "Problem Solving"];
+        const dynamicText = document.querySelector(".dynamic-text");
+        let wordIndex = 0;
+        let charIndex = 0;
+        let isDeleting = false;
+
+        const typeEffect = () => {
+            const currentWord = words[wordIndex];
+            const currentChar = currentWord.substring(0, charIndex);
+            dynamicText.textContent = currentChar;
+
+            if (!isDeleting && charIndex < currentWord.length) {
+                // Typing
+                charIndex++;
+                setTimeout(typeEffect, 100);
+            } else if (isDeleting && charIndex > 0) {
+                // Deleting
+                charIndex--;
+                setTimeout(typeEffect, 50);
+            } else {
+                // Word finished or deleted
+                isDeleting = !isDeleting;
+                if (!isDeleting) {
+                    wordIndex = !isDeleting ? (wordIndex + 1) % words.length : wordIndex;
+                }
+                setTimeout(typeEffect, 1200); // Pause before deleting/typing next
+            }
+        }
+        typeEffect();
+
+        // --- SCROLL REVEAL ANIMATION ---
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add("active");
+                }
+            });
+        }, { threshold: 0.1 });
+
+        const revealElements = document.querySelectorAll(".reveal");
+        revealElements.forEach((el) => observer.observe(el));
+    </script>
 </body>
 </html>
