@@ -10,6 +10,9 @@
 </head>
 <body>
 
+    <!-- Scroll Progress Bar -->
+    <div class="scroll-progress"></div>
+
     <nav class="navbar">
         <div class="container nav-content">
             <div class="logo">JM.</div>
@@ -19,6 +22,7 @@
                 <li><a href="#research">Research</a></li>
                 <li><a href="#experience">Experience</a></li>
                 <li><a href="#publications">Publications</a></li>
+                <li><a href="#projects">Projects</a></li>
                 <li><a href="#skills">Skills</a></li>
                 <li><a href="#honors">Honors</a></li>
                 <li><a href="#leadership">Leadership</a></li>
@@ -28,16 +32,40 @@
     </nav>
 
     <header class="hero" id="home">
-        <div class="container hero-content">
+        <div class="hero-bg-blur"></div>
+        <div class="hero-bg-orb orb-1"></div>
+        <div class="hero-bg-orb orb-2"></div>
+
+        <div class="container hero-content glass-card">
             <div class="avatar-circle slide-in-top">JM</div>
             <h1 class="slide-in-top delay-1">JOYSTON MENEZES</h1>
-            <p class="subtitle slide-in-top delay-2">Computer Science Researcher | M.S. Graduate | Aspiring Ph.D. Candidate</p>
+
+            <p class="subtitle slide-in-top delay-2">
+                Researcher at the intersection of <strong>ML</strong>, <strong>social media</strong>, and <strong>digital mental health</strong>.
+            </p>
+
+            <div class="typing-wrapper slide-in-top delay-3">
+                <span class="typing-prefix">I work as&nbsp;</span>
+                <span id="typing-text"></span>
+                <span class="typing-cursor">|</span>
+            </div>
+            
+            <div class="hero-tags slide-in-top delay-3">
+                <span><i class="fas fa-brain"></i> Brain & Cognitive Science</span>
+                <span><i class="fas fa-robot"></i> ML & NLP</span>
+                <span><i class="fas fa-network-wired"></i> Online Collective Behavior</span>
+            </div>
             
             <div class="contact-bar slide-in-top delay-3">
                 <a href="tel:+12135198504"><i class="fas fa-phone-alt"></i> +1 (213) 519-8504</a>
                 <a href="mailto:jmenezes@usc.edu"><i class="fas fa-envelope"></i> jmenezes@usc.edu</a>
                 <a href="https://www.linkedin.com/in/joymenezes/" target="_blank"><i class="fab fa-linkedin"></i> LinkedIn</a>
                 <span><i class="fas fa-map-marker-alt"></i> Los Angeles, CA</span>
+            </div>
+
+            <div class="hero-cta slide-in-top delay-3">
+                <a href="#research" class="btn-primary"><i class="fas fa-flask"></i> View Research</a>
+                <a href="#experience" class="btn-ghost"><i class="fas fa-briefcase"></i> Experience</a>
             </div>
             
             <div class="scroll-wrapper fade-in delay-4">
@@ -48,6 +76,18 @@
         </div>
     </header>
 
+    <!-- Sticky section quick-nav (desktop) -->
+    <div class="section-shortcuts">
+        <div class="container shortcuts-inner">
+            <a href="#objective"><span>01</span> Objective</a>
+            <a href="#research"><span>02</span> Research</a>
+            <a href="#projects"><span>03</span> Projects</a>
+            <a href="#experience"><span>04</span> Experience</a>
+            <a href="#publications"><span>05</span> Publications</a>
+            <a href="#skills"><span>06</span> Skills</a>
+        </div>
+    </div>
+
     <main>
         
         <section id="objective">
@@ -57,9 +97,10 @@
                 </div>
                 <div class="objective-card reveal delay-1">
                     <p>
-                        M.S. in Computer Science graduate with a research focus on <strong>computational social science</strong> and <strong>digital mental health</strong>. 
-                        Seeking to pursue a Ph.D. in Brain & Cognitive Science to apply advanced machine learning, NLP, and 
-                        large-scale data analysis to investigate the cognitive mechanisms of human communication, shared 
+                        M.S. in Computer Science graduate with a research focus on 
+                        <strong>computational social science</strong> and <strong>digital mental health</strong>. 
+                        Interested in pursuing a Ph.D. in Brain &amp; Cognitive Science to apply machine learning, NLP, 
+                        and large-scale data analysis to the cognitive mechanisms of human communication, shared 
                         understanding, and online collective behavior.
                     </p>
                 </div>
@@ -126,8 +167,8 @@
                             </div>
                             <p class="supervisors">Supervisors: Prof. Luca Luceri and Prof. Emilio Ferrara</p>
                             <ul class="bullet-list">
-                                <li><strong>TikTok Data Analysis and Topic Modeling:</strong> Investigated the thematic structure of political discourse on TikTok in a multimodal dataset of over 1 million entries. Utilized advanced NLP (BERTopic) to discover and model 10 latent topics of communication.</li>
-                                <li><strong>Media Download Pipeline:</strong> Created a comprehensive pipeline for downloading and organizing Twitter media content. Developed scripts for TikTok comment scraping and reposted video retrieval.</li>
+                                <li><strong>TikTok Election Discourse:</strong> Analyzed a multimodal dataset of 1M+ TikTok entries to study political discourse, applying BERTopic to uncover 10 latent topics and characterize engagement and sentiment dynamics.</li>
+                                <li><strong>Social Media Media-Pipeline:</strong> Built and optimized a large-scale media collection pipeline for Twitter/X and TikTok, including comment scraping and reposted-video retrieval, collecting 1M+ comments and resolving performance bottlenecks.</li>
                             </ul>
                         </div>
                     </div>
@@ -142,7 +183,7 @@
                             </div>
                             <p class="supervisors">Supervisor: Prof. Kristina Lerman</p>
                             <ul class="bullet-list">
-                                <li><strong>Digital Mental Health Research:</strong> Researched the dissemination of harmful digital content related to muscle dysmorphia ('Bigorexia'). Developed computational taxonomies to model and identify harmful communication patterns at scale.</li>
+                                <li><strong>Harmful-Content Modeling (Bigorexia):</strong> Studied the dissemination of content related to muscle dysmorphia (“Bigorexia”), designing computational taxonomies and ML classifiers to identify harmful communication patterns and their linguistic and social signatures at scale.</li>
                             </ul>
                         </div>
                     </div>
@@ -166,7 +207,8 @@
                                 <span class="date">January 2023 – Present</span>
                             </div>
                             <ul class="bullet-list">
-                                <li>Developed Android applications (DemoGraphic Count) using Android Studio. Designed and maintained websites using HTML and CSS. Implemented GIS and spatial data visualization using ArcGIS and GeoJSON.</li>
+                                <li>Built and maintained Android apps (DemoGraphic Count) in Android Studio to support large-scale homelessness data collection.</li>
+                                <li>Developed and maintained HTML/CSS research and program sites; implemented GIS and spatial data visualizations with ArcGIS and GeoJSON for policy and planning use.</li>
                             </ul>
                         </div>
                     </div>
@@ -180,7 +222,7 @@
                                 <span class="date">August 2023 – May 2024</span>
                             </div>
                             <ul class="bullet-list">
-                                <li>Assisted in managing the Database Systems course under Prof. Saty Ragavachari. Conducted office hours, crafted course materials, and addressed student inquiries.</li>
+                                <li>Served as Graduate Course Producer for the Database Systems course for two semesters; led office hours, created instructional materials, and supported 100+ students in applying database concepts.</li>
                             </ul>
                         </div>
                     </div>
@@ -194,10 +236,27 @@
                                 <span class="date">August 2021 – November 2022</span>
                             </div>
                             <ul class="bullet-list">
-                                <li>Built responsive UIs using Angular, HTML, CSS, and JavaScript. Integrated scalable SQL databases and optimized PHP backend. Increased operational efficiency by 40%.</li>
+                                <li>Developed responsive Angular, HTML, CSS, and JavaScript frontends integrated with scalable SQL databases and PHP backends.</li>
+                                <li>Improved operational efficiency by ~40% by optimizing data flows and site performance, resulting in smoother user experiences.</li>
                             </ul>
                         </div>
                     </div>
+
+                    <div class="timeline-item reveal delay-4">
+                        <div class="timeline-marker"></div>
+                        <div class="card light-card">
+                            <h3>Research Assistant</h3>
+                            <div class="job-meta">
+                                <span class="company"><i class="fas fa-building"></i> NMAM Institute of Technology, Nitte, India</span>
+                                <span class="date">June 2020 – July 2021</span>
+                            </div>
+                            <ul class="bullet-list">
+                                <li>Designed ML models (Decision Tree, Random Forest, SVM, Naive Bayes) for paddy crop disease classification; used Apache Spark to optimize training and achieve high accuracy at scale.</li>
+                                <li>Project was funded by the university and recognized as the top project in the department.</li>
+                            </ul>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </section>
@@ -237,6 +296,55 @@
                         <h4>Identification and Classification of Paddy Crop Diseases using Big Data ML Techniques</h4>
                         <p class="pub-venue">CRC Press</p>
                         <span class="pub-date"><i class="far fa-calendar"></i> September 23, 2021</span>
+                    </div>
+
+                    <div class="card light-card reveal delay-5">
+                        <div class="badge-container">
+                            <span class="badge paper-badge"><i class="far fa-file-alt"></i> Conference Paper</span>
+                        </div>
+                        <h4>Deep Learning Photo Caption Generator</h4>
+                        <p class="pub-venue">IEEE Conference</p>
+                        <span class="pub-date"><i class="far fa-calendar"></i> November 1, 2021</span>
+                    </div>
+
+                    <div class="card light-card reveal delay-6">
+                        <div class="badge-container">
+                            <span class="badge paper-badge"><i class="far fa-file-alt"></i> Conference Paper</span>
+                        </div>
+                        <h4>Brain Tumor Detection from MRI Images Using Deep Learning</h4>
+                        <p class="pub-venue">3rd Int. Conf. on Data, Decision, and Systems</p>
+                        <span class="pub-date"><i class="far fa-calendar"></i> August 4, 2024</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="projects">
+            <div class="container">
+                <div class="section-header reveal">
+                    <h2>Academic Projects</h2>
+                </div>
+                <div class="grid-2">
+                    <div class="card light-card reveal delay-1">
+                        <h4>Augmenting LLMs with Dense Retrievers</h4>
+                        <p>Integrated DRAGON (dense retriever) with LLaMA‑7B‑Chat to reduce hallucinations in LLMs.</p>
+                        <ul class="bullet-list">
+                            <li>Used dense retrieval over datasets such as TriviaQA to ground model responses in evidence.</li>
+                            <li>Achieved up to 59% improvement in answer accuracy compared to baseline generation.</li>
+                        </ul>
+                    </div>
+                    <div class="card light-card reveal delay-2">
+                        <h4>Medical Imaging with Deep Learning</h4>
+                        <ul class="bullet-list">
+                            <li><strong>Brain Tumor Detection:</strong> Built a CNN for early tumor detection from MRI scans, achieving 89% test and 87.21% validation accuracy.</li>
+                            <li><strong>Bone Abnormality Detection:</strong> Implemented CNN-based detection and visualization of bone abnormalities on X‑ray images; project received departmental top-project recognition and university funding.</li>
+                        </ul>
+                    </div>
+                    <div class="card light-card reveal delay-3">
+                        <h4>Deep Learning Photo Caption Generator</h4>
+                        <ul class="bullet-list">
+                            <li>Combined VGG‑16 feature extraction with LSTM sequence modeling to generate descriptive image captions with strong BLEU scores.</li>
+                        </ul>
                     </div>
                 </div>
             </div>
@@ -344,7 +452,7 @@
                         <h3>National Service Scheme (NSS), Better India Mission</h3>
                     </div>
                     <p class="sub-text">July 2017 – December 2021</p>
-                    <p>Implemented waste management solutions in villages; initiated the Piggy Bank project to support homeless individuals and HIV victims.</p>
+                    <p>Implemented village waste‑management initiatives and launched the “Piggy Bank” project to support homeless individuals and people living with HIV.</p>
                 </div>
                 <div class="card light-card border-purple margin-top reveal delay-3">
                     <div class="icon-title">
@@ -375,25 +483,22 @@
         // --- SCROLL REVEAL ANIMATION ---
         const observerOptions = {
             root: null,
-            threshold: 0.15, // Trigger when 15% of element is visible
-            rootMargin: "0px 0px -50px 0px" // Pull trigger line up a bit
+            threshold: 0.15,
+            rootMargin: "0px 0px -50px 0px"
         };
 
-        const observer = new IntersectionObserver((entries, observer) => {
+        const observer = new IntersectionObserver((entries, observerRef) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     entry.target.classList.add('active');
-                    observer.unobserve(entry.target); // Stop observing once revealed
+                    observerRef.unobserve(entry.target);
                 }
             });
         }, observerOptions);
 
-        // Observe all elements with class 'reveal'
-        document.querySelectorAll('.reveal').forEach(el => {
-            observer.observe(el);
-        });
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-        // --- MOBILE MENU TOGGLE (Optional for future) ---
+        // --- MOBILE MENU TOGGLE ---
         const menuToggle = document.querySelector('.menu-toggle');
         const navLinks = document.querySelector('.nav-links');
 
@@ -403,13 +508,92 @@
             });
         }
         
-        // Close menu when a link is clicked
         document.querySelectorAll('.nav-links li a').forEach(link => {
             link.addEventListener('click', () => {
                 if (navLinks.classList.contains('active')) {
                     navLinks.classList.remove('active');
                 }
             });
+        });
+
+        // --- SCROLL PROGRESS BAR ---
+        const progressBar = document.querySelector('.scroll-progress');
+        window.addEventListener('scroll', () => {
+            const scrollTop = window.scrollY;
+            const docHeight = document.body.scrollHeight - window.innerHeight;
+            const progress = (scrollTop / docHeight) * 100;
+            progressBar.style.width = progress + '%';
+        });
+
+        // --- ACTIVE SECTION SHORTCUT HIGHLIGHT ---
+        const sections = document.querySelectorAll('main section[id]');
+        const shortcutLinks = document.querySelectorAll('.section-shortcuts a');
+
+        function setActiveShortcut() {
+            let currentId = null;
+            sections.forEach(sec => {
+                const rect = sec.getBoundingClientRect();
+                if (rect.top <= 120 && rect.bottom >= 120) {
+                    currentId = sec.id;
+                }
+            });
+            shortcutLinks.forEach(link => {
+                link.classList.toggle('active', link.getAttribute('href') === '#' + currentId);
+            });
+        }
+        window.addEventListener('scroll', setActiveShortcut);
+        setActiveShortcut();
+
+        // --- TYPEWRITER EFFECT IN HERO ---
+        const typingPhrases = [
+            "Computer Science Researcher",
+            "ML & NLP Engineer",
+            "Computational Social Scientist",
+            "Digital Mental Health Explorer"
+        ];
+
+        const typingEl = document.getElementById("typing-text");
+        const cursorEl = document.querySelector(".typing-cursor");
+
+        let phraseIndex = 0;
+        let charIndex = 0;
+        let isDeleting = false;
+
+        const TYPING_SPEED = 80;
+        const DELETING_SPEED = 45;
+        const PAUSE_AT_END = 900;
+        const PAUSE_BETWEEN = 450;
+
+        function typeLoop() {
+            if (!typingEl) return;
+
+            const current = typingPhrases[phraseIndex];
+            if (!isDeleting) {
+                typingEl.textContent = current.slice(0, charIndex + 1);
+                charIndex++;
+
+                if (charIndex === current.length) {
+                    isDeleting = true;
+                    setTimeout(typeLoop, PAUSE_AT_END);
+                    return;
+                }
+                setTimeout(typeLoop, TYPING_SPEED);
+            } else {
+                typingEl.textContent = current.slice(0, charIndex - 1);
+                charIndex--;
+
+                if (charIndex === 0) {
+                    isDeleting = false;
+                    phraseIndex = (phraseIndex + 1) % typingPhrases.length;
+                    setTimeout(typeLoop, PAUSE_BETWEEN);
+                    return;
+                }
+                setTimeout(typeLoop, DELETING_SPEED);
+            }
+        }
+
+        window.addEventListener("load", () => {
+            setTimeout(typeLoop, 600);
         });
     </script>
 </body>
