@@ -3,598 +3,544 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Joyston Menezes | CS Researcher</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Outfit:wght@500;700&display=swap" rel="stylesheet">
+    <title>Joyston Menezes | Researcher & Engineer Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Space+Grotesk:wght@300;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="style.css">
+    <style>
+        :root {
+            --bg: #02010a;
+            --accent-1: #7000ff; /* Electric Violet */
+            --accent-2: #00d4ff; /* Cyber Cyan */
+            --accent-3: #10b981; /* Emerald */
+            --glass: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --text-main: #f8fafc;
+            --text-dim: #94a3b8;
+            --card-speed: 0.6s;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            background-color: var(--bg);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* Neon Scrollbar */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: var(--bg); }
+        ::-webkit-scrollbar-thumb { background: linear-gradient(var(--accent-1), var(--accent-2)); border-radius: 10px; }
+
+        h1, h2, h3, h4 { font-family: 'Space Grotesk', sans-serif; }
+        a { text-decoration: none; color: inherit; transition: 0.3s; }
+
+        /* --- Global Animations --- */
+        .reveal { opacity: 0; transform: translateY(40px); transition: 1s cubic-bezier(0.2, 0.8, 0.2, 1); }
+        .reveal-left { opacity: 0; transform: translateX(-40px); transition: 1s ease; }
+        .reveal-right { opacity: 0; transform: translateX(40px); transition: 1s ease; }
+        .active { opacity: 1; transform: translate(0); }
+
+        /* --- Scroll Progress Bar --- */
+        .scroll-progress {
+            position: fixed; top: 0; left: 0; width: 0%; height: 4px;
+            background: linear-gradient(90deg, var(--accent-1), var(--accent-2), var(--accent-3));
+            z-index: 2000;
+        }
+
+        /* --- Neural Network Canvas --- */
+        #hero-canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100vh; z-index: -1; opacity: 0.6; }
+
+        /* --- Navigation --- */
+        .nav {
+            position: fixed; top: 20px; left: 50%; transform: translateX(-50%);
+            width: 95%; max-width: 1400px; height: 65px;
+            background: rgba(2, 1, 10, 0.8); backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border); border-radius: 100px;
+            z-index: 1000; display: flex; align-items: center; padding: 0 25px;
+            justify-content: space-between;
+        }
+        .nav-links { display: flex; gap: 12px; list-style: none; }
+        .nav-links a { font-size: 0.65rem; font-weight: 700; text-transform: uppercase; color: var(--text-dim); letter-spacing: 1px; }
+        .nav-links a:hover { color: var(--accent-2); text-shadow: 0 0 8px var(--accent-2); }
+
+        /* --- Hero --- */
+        .hero { height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 0 20px; position: relative; }
+        .hero-title {
+            font-size: clamp(3rem, 10vw, 6rem); font-weight: 700;
+            background: linear-gradient(to right, #fff, var(--accent-2), var(--accent-1));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            letter-spacing: -2px; line-height: 1.1; margin-bottom: 20px; min-height: 1.2em;
+        }
+        .hero-title::after { content: '|'; color: var(--accent-2); animation: blink 1s infinite; -webkit-text-fill-color: var(--accent-2); }
+        @keyframes blink { 50% { opacity: 0; } }
+        .hero-subtitle { font-size: 1.2rem; color: var(--text-dim); max-width: 700px; margin-bottom: 40px; }
+
+        /* --- Layout --- */
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 25px; }
+        .section-tag { color: var(--accent-2); font-weight: 700; text-transform: uppercase; letter-spacing: 3px; font-size: 0.8rem; margin-bottom: 10px; display: block; }
+        .section-title { font-size: 3.2rem; margin-bottom: 60px; }
+
+        .bento-grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 25px; }
+        .card {
+            background: var(--glass); border: 1px solid var(--glass-border);
+            border-radius: 24px; padding: 35px; position: relative;
+            transition: var(--card-speed) cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .card:hover { border-color: var(--accent-2); transform: scale(1.02) translateY(-10px); box-shadow: 0 20px 50px rgba(0, 212, 255, 0.1); }
+
+        .span-12 { grid-column: span 12; }
+        .span-8 { grid-column: span 8; }
+        .span-6 { grid-column: span 6; }
+        .span-4 { grid-column: span 4; }
+
+        /* --- Project List Styling --- */
+        .project-item { margin-bottom: 60px; padding-bottom: 40px; border-bottom: 1px solid var(--glass-border); display: flex; gap: 30px; }
+        .project-glow-bar { width: 4px; border-radius: 2px; flex-shrink: 0; }
+        
+        /* --- Timeline & Lists --- */
+        .timeline { border-left: 1px solid var(--accent-1); padding-left: 30px; margin-top: 20px; }
+        .item { margin-bottom: 50px; position: relative; }
+        .item::before { content: ''; position: absolute; left: -36px; top: 8px; width: 10px; height: 10px; background: var(--accent-2); border-radius: 50%; box-shadow: 0 0 15px var(--accent-2); }
+        .company { font-size: 1.3rem; font-weight: 700; margin: 5px 0; color: #fff; }
+        .date { font-size: 0.8rem; color: var(--accent-2); font-weight: 700; text-transform: uppercase; }
+        .bullets { margin-top: 15px; list-style: none; }
+        .bullets li { margin-bottom: 12px; color: var(--text-dim); font-size: 0.95rem; position: relative; padding-left: 20px; }
+        .bullets li::before { content: '>'; position: absolute; left: 0; color: var(--accent-2); font-weight: 700; }
+
+        /* --- Components --- */
+        .honor-badge { background: linear-gradient(135deg, var(--accent-1), transparent); padding: 25px; border-radius: 18px; border: 1px solid var(--accent-1); margin-top: 20px; }
+        .pub-type { font-size: 0.7rem; color: var(--accent-2); border: 1px solid var(--accent-2); padding: 3px 10px; border-radius: 4px; text-transform: uppercase; font-weight: 700; margin-bottom: 15px; display: inline-block; }
+        .skill-cloud { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
+        .chip { background: rgba(255,255,255,0.05); padding: 7px 16px; border-radius: 100px; border: 1px solid var(--glass-border); font-size: 0.85rem; transition: 0.3s; }
+        .chip:hover { border-color: var(--accent-1); background: var(--accent-1); color: white; transform: translateY(-3px); }
+
+        .footer { padding: 80px 0; border-top: 1px solid var(--glass-border); text-align: center; }
+        .social-link { font-size: 1.8rem; margin: 0 20px; color: var(--text-dim); transition: 0.3s; display: inline-block; }
+        .social-link:hover { color: var(--accent-2); transform: translateY(-5px); }
+
+        @media (max-width: 1024px) {
+            .nav { width: 98%; padding: 0 15px; }
+            .nav-links { display: none; }
+            .span-8, .span-6, .span-4 { grid-column: span 12; }
+            .hero-title { font-size: 3.5rem; }
+        }
+    </style>
 </head>
 <body>
 
-    <!-- Scroll Progress Bar -->
-    <div class="scroll-progress"></div>
+    <div class="scroll-progress" id="scrollIndicator"></div>
+    <canvas id="hero-canvas"></canvas>
 
-    <nav class="navbar">
-        <div class="container nav-content">
-            <div class="logo">JM.</div>
-            <ul class="nav-links">
-                <li><a href="#objective">Objective</a></li>
-                <li><a href="#education">Education</a></li>
-                <li><a href="#research">Research</a></li>
-                <li><a href="#experience">Experience</a></li>
-                <li><a href="#publications">Publications</a></li>
-                <li><a href="#projects">Projects</a></li>
-                <li><a href="#skills">Skills</a></li>
-                <li><a href="#honors">Honors</a></li>
-                <li><a href="#leadership">Leadership</a></li>
-            </ul>
-            <div class="menu-toggle"><i class="fas fa-bars"></i></div>
-        </div>
+    <nav class="nav">
+        <div class="logo">JOYSTON</div>
+        <ul class="nav-links">
+            <li><a href="#about">About</a></li>
+            <li><a href="#education">Education</a></li>
+            <li><a href="#experience">Experience</a></li>
+            <li><a href="#publications">Publications</a></li>
+            <li><a href="#projects">Projects</a></li>
+            <li><a href="#leadership">Impact</a></li>
+            <li><a href="#skills">Skills</a></li>
+            <li><a href="#honors">Awards</a></li>
+        </ul>
+        <a href="mailto:jmenezes@usc.edu" class="chip" style="background: var(--accent-2); color: #000; font-weight: 700;">GET IN TOUCH</a>
     </nav>
 
-    <header class="hero" id="home">
-        <div class="hero-bg-blur"></div>
-        <div class="hero-bg-orb orb-1"></div>
-        <div class="hero-bg-orb orb-2"></div>
-
-        <div class="container hero-content glass-card">
-            <div class="avatar-circle slide-in-top">JM</div>
-            <h1 class="slide-in-top delay-1">JOYSTON MENEZES</h1>
-
-            <p class="subtitle slide-in-top delay-2">
-                Researcher at the intersection of <strong>ML</strong>, <strong>social media</strong>, and <strong>digital mental health</strong>.
-            </p>
-
-            <div class="typing-wrapper slide-in-top delay-3">
-                <span class="typing-prefix">I work as&nbsp;</span>
-                <span id="typing-text"></span>
-                <span class="typing-cursor">|</span>
-            </div>
-
-            <div class="hero-tags slide-in-top delay-3">
-                <span><i class="fas fa-brain"></i> Brain & Cognitive Science</span>
-                <span><i class="fas fa-robot"></i> ML & NLP</span>
-                <span><i class="fas fa-network-wired"></i> Online Collective Behavior</span>
-            </div>
-            
-            <div class="contact-bar slide-in-top delay-3">
-                <a href="tel:+12135198504"><i class="fas fa-phone-alt"></i> +1 (213) 519-8504</a>
-                <a href="mailto:jmenezes@usc.edu"><i class="fas fa-envelope"></i> jmenezes@usc.edu</a>
-                <a href="https://www.linkedin.com/in/joymenezes/" target="_blank"><i class="fab fa-linkedin"></i> LinkedIn</a>
-                <span><i class="fas fa-map-marker-alt"></i> Los Angeles, CA</span>
-            </div>
-
-            <div class="hero-cta slide-in-top delay-3">
-                <a href="#research" class="btn-primary"><i class="fas fa-flask"></i> View Research</a>
-                <a href="#experience" class="btn-ghost"><i class="fas fa-briefcase"></i> Experience</a>
-            </div>
-            
-            <div class="scroll-wrapper fade-in delay-4">
-                <a href="#objective" class="scroll-indicator">
-                    <div class="mouse"><div class="wheel"></div></div>
-                </a>
-            </div>
+    <header class="hero">
+        <span class="section-tag" style="letter-spacing: 5px; opacity: 0.8;">Hey there, I’m</span>
+        <h1 class="hero-title" id="typewriter-name"></h1>
+        <p class="hero-subtitle">M.S. in Computer Science Graduate | Specialized in Digital Mental Health & Computational Social Science Researcher at USC.</p>
+        <div style="display: flex; gap: 20px;">
+            <a href="#about" class="chip" style="padding: 14px 40px;">Research Focus</a>
+            <a href="#experience" class="chip" style="padding: 14px 40px; border-color: var(--accent-1);">Portfolio</a>
         </div>
     </header>
 
-    <!-- Sticky section quick-nav (desktop) -->
-    <div class="section-shortcuts">
-        <div class="container shortcuts-inner">
-            <a href="#objective"><span>01</span> Objective</a>
-            <a href="#research"><span>02</span> Research</a>
-            <a href="#experience"><span>03</span> Experience</a>
-            <a href="#publications"><span>04</span> Publications</a>
-            <a href="#projects"><span>05</span> Projects</a>
-            <a href="#skills"><span>06</span> Skills</a>
-        </div>
-    </div>
+    <main class="container">
 
-    <main>
-        
-        <section id="objective">
-            <div class="container">
-                <div class="section-header reveal">
-                    <h2>Objective</h2>
-                </div>
-                <div class="objective-card reveal delay-1">
-                    <p>
-                        M.S. in Computer Science graduate with a research focus on 
-                        <strong>computational social science</strong> and <strong>digital mental health</strong>. 
-                        Interested in pursuing a Ph.D. in Brain &amp; Cognitive Science to apply machine learning, NLP, 
-                        and large-scale data analysis to the cognitive mechanisms of human communication, shared 
-                        understanding, and online collective behavior.
+        <section id="about" style="margin-top: -100px; padding-bottom: 120px;">
+            <div class="bento-grid">
+                <div class="card span-12 reveal">
+                    <span class="section-tag">Objective</span>
+                    <h2 style="font-size: 2.5rem; margin-top: 10px; color: #fff;">At the Intersection of Computing and Cognition</h2>
+                    <p style="font-size: 1.25rem; color: var(--text-dim); margin-top: 25px; line-height: 1.8;">
+                        I am an M.S. in Computer Science graduate focused on computational social science and digital mental health. My goal is to pursue a Ph.D. in Brain and Cognitive Science, leveraging machine learning, NLP, and large-scale social data to understand how humans communicate, form shared meaning, and behave collectively in digital spaces.
                     </p>
                 </div>
             </div>
         </section>
 
-        <section id="education">
-            <div class="container">
-                <div class="section-header reveal">
-                    <h2>Education</h2>
-                </div>
-                <div class="grid-2">
-                    <div class="card dark-card reveal delay-1">
-                        <div class="icon-box"><i class="fas fa-graduation-cap"></i></div>
-                        <h3>Master of Science in Computer Science</h3>
-                        <div class="university">University of Southern California</div>
-                        <div class="meta">
-                            <span><i class="fas fa-map-marker-alt"></i> Los Angeles, CA</span>
-                            <span><i class="fas fa-calendar-alt"></i> December 2024</span>
-                        </div>
-                        <div class="details">
-                            <p class="highlight">Relevant Coursework:</p>
-                            <p>Data Structures and Algorithms, Databases, Web Technologies, Multimedia, Natural Language Processing</p>
-                            <div class="award">
-                                <i class="fas fa-award"></i> 
-                                <span><strong>Honors:</strong> Recipient, Order of the Laurel and the Palm: USC’s highest honor (2025)</span>
-                            </div>
-                        </div>
+        <section id="education" style="padding-bottom: 120px;">
+            <div class="section-header reveal-left">
+                <span class="section-tag">Academic Path</span>
+                <h2 class="section-title">Education</h2>
+            </div>
+            <div class="bento-grid">
+                <div class="card span-6 reveal-left" style="background: linear-gradient(135deg, rgba(255,255,255,0.02) 0%, transparent 100%);">
+                    <span class="date">Dec 2024</span>
+                    <h3 class="company">Master of Science in Computer Science</h3>
+                    <p style="color: var(--accent-2); font-weight: 600;">University of Southern California | Los Angeles, CA</p>
+                    <p style="margin-top: 15px; font-size: 0.95rem; color: var(--text-dim);">
+                        <strong>Relevant Coursework:</strong> Natural Language Processing, Database Systems, Web Technologies, Data Structures & Algorithms, Multimedia.
+                    </p>
+                    <div class="honor-badge">
+                        <i class="fas fa-crown" style="color: gold; font-size: 1.5rem; margin-bottom: 10px; display: block;"></i>
+                        <strong style="font-size: 1.1rem; color: #fff;">The Order of the Laurel and the Palm (2025)</strong>
+                        <p style="font-size: 0.85rem; opacity: 0.9; margin-top: 5px;">USC's highest graduating distinction awarded for exemplary leadership and scholarship.</p>
                     </div>
-
-                    <div class="card dark-card reveal delay-2">
-                        <div class="icon-box"><i class="fas fa-university"></i></div>
-                        <h3>Bachelor of Engineering in Computer Science</h3>
-                        <div class="university">NMAM Institute of Technology</div>
-                        <div class="meta">
-                            <span><i class="fas fa-map-marker-alt"></i> Nitte, Karnataka, India</span>
-                            <span><i class="fas fa-calendar-alt"></i> August 2021</span>
-                        </div>
-                        <div class="details">
-                            <div class="award">
-                                <i class="fas fa-star"></i> 
-                                <span><strong>Honors:</strong> Student President; Outstanding Student of College, and Computer Science Department (2017–2021)</span>
-                            </div>
-                        </div>
+                </div>
+                <div class="card span-6 reveal-right">
+                    <span class="date">Aug 2021</span>
+                    <h3 class="company">Bachelor of Engineering in Computer Science</h3>
+                    <p style="color: var(--accent-1); font-weight: 600;">NMAM Institute of Technology | Nitte, India</p>
+                    <p style="margin-top: 15px; font-size: 0.95rem; color: var(--text-dim);">
+                        <strong>Relevant Coursework:</strong> Machine Learning, Object Oriented Programming, Computer Networks, Operating Systems, Compiler Design, UNIX.
+                    </p>
+                    <div class="honor-badge" style="background: linear-gradient(135deg, var(--accent-1), transparent);">
+                        <i class="fas fa-star" style="color: gold; font-size: 1.5rem; margin-bottom: 10px; display: block;"></i>
+                        <strong style="font-size: 1.1rem; color: #fff;">Outstanding & Best Outgoing Student (2021)</strong>
+                        <p style="font-size: 0.85rem; opacity: 0.9; margin-top: 5px;">Highest Honor for the College and the Computer Science Department for leadership and academic excellence.</p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section id="research">
-            <div class="container">
-                <div class="section-header reveal">
-                    <h2>Research Experience</h2>
+        <section id="experience" style="padding-bottom: 120px;">
+            <div class="section-header reveal">
+                <span class="section-tag">Professional History</span>
+                <h2 class="section-title">Work & Research</h2>
+            </div>
+            <div class="bento-grid">
+                <div class="card span-12 reveal">
+                    <h3 style="color: var(--accent-2); margin-bottom: 35px; border-bottom: 1px solid var(--glass-border); padding-bottom: 10px;"><i class="fas fa-flask"></i> Research Assistantships</h3>
+                    <div class="timeline">
+                        <div class="item">
+                            <span class="date">Aug 2024 – Present</span>
+                            <span class="company">Research Assistant | HUMANS LAB, USC Information Sciences Institute (ISI)</span>
+                            <span class="supervisor" style="color: var(--accent-3); display: block; font-size: 0.9rem; margin-bottom: 10px;">Supervisors: Prof. Luca Luceri and Prof. Emilio Ferrara</span>
+                            <ul class="bullets">
+                                <li><strong>TikTok Data Analysis and Topic Modeling:</strong> Investigated the thematic structure of political discourse on TikTok in a multimodal dataset of over 1 million entries. Utilized advanced NLP (BERTopic) to discover and model 10 latent topics of communication. Analyzed user engagement and sentiment patterns to understand the mechanisms of information propagation.</li>
+                                <li><strong>Social Media Media-Pipeline:</strong> Created a comprehensive pipeline for downloading and organizing Twitter media content. Developed scripts for TikTok comment scraping and reposted video retrieval, collecting over a million comments. Optimized Twitter scraping scripts, resolving bugs, and enhancing performance.</li>
+                            </ul>
+                        </div>
+                        <div class="item">
+                            <span class="date">August 2023 – May 2024</span>
+                            <span class="company">Teaching Assistant / Graduate Student Course Producer | University of Southern California</span>
+                            <span class="supervisor" style="color: var(--accent-3); display: block; font-size: 0.9rem; margin-bottom: 10px;">Supervisor: Prof. Saty Ragavachari</span>
+                            <ul class="bullets">
+                                <li>Assisted in managing the Database Systems course under Prof. Saty Ragavachari. Conducted office hours, crafted course materials, and addressed student inquiries. Served as Course Producer for the Database Systems course for two consecutive semesters.</li>
+                            </ul>
+                        </div>
+                        <div class="item">
+                            <span class="date">Aug 2024 – May 2025</span>
+                            <span class="company">Research Assistant | Lerman Lab, USC Information Sciences Institute (ISI)</span>
+                            <span class="supervisor" style="color: var(--accent-3); display: block; font-size: 0.9rem; margin-bottom: 10px;">Supervisor: Prof. Kristina Lerman</span>
+                            <ul class="bullets">
+                                <li><strong>Digital Mental Health Research:</strong> Researched the dissemination of harmful digital content related to muscle dysmorphia ('Bigorexia'). Developed computational taxonomies to model and identify harmful communication patterns at scale. Contributed to ML classifiers to understand the linguistic and social features of this content.</li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
-                
-                <div class="timeline">
-                    <div class="timeline-item reveal delay-1">
-                        <div class="timeline-marker"></div>
-                        <div class="card light-card">
-                            <h3>Research Assistant</h3>
-                            <div class="job-meta">
-                                <span class="company"><i class="fas fa-building"></i> HUMANS LAB, USC ISI</span>
-                                <span class="date"><i class="fas fa-calendar"></i> August 2024 – Present</span>
-                            </div>
-                            <p class="supervisors">Supervisors: Prof. Luca Luceri and Prof. Emilio Ferrara</p>
-                            <ul class="bullet-list">
-                                <li><strong>TikTok Election Discourse:</strong> Analyzed a multimodal dataset of 1M+ TikTok entries to study political discourse, applying BERTopic to uncover 10 latent topics and characterize engagement and sentiment dynamics.</li>
-                                <li><strong>Social Media Media-Pipeline:</strong> Built and optimized a large-scale media collection pipeline for Twitter/X and TikTok, including comment scraping and reposted-video retrieval, collecting 1M+ comments and resolving performance bottlenecks.</li>
-                            </ul>
-                        </div>
-                    </div>
 
-                    <div class="timeline-item reveal delay-2">
-                        <div class="timeline-marker"></div>
-                        <div class="card light-card">
-                            <h3>Research Assistant</h3>
-                            <div class="job-meta">
-                                <span class="company"><i class="fas fa-building"></i> Lerman Lab, USC ISI</span>
-                                <span class="date"><i class="fas fa-calendar"></i> August 2024 – May 2025</span>
-                            </div>
-                            <p class="supervisors">Supervisor: Prof. Kristina Lerman</p>
-                            <ul class="bullet-list">
-                                <li><strong>Harmful-Content Modeling (Bigorexia):</strong> Studied the dissemination of content related to muscle dysmorphia (“Bigorexia”), designing computational taxonomies and ML classifiers to identify harmful communication patterns and their linguistic and social signatures at scale.</li>
-                            </ul>
-                        </div>
-                    </div>
+                <div class="card span-6 reveal-left" style="border-left: 4px solid var(--accent-3);">
+                    <span class="date">Jan 2023 – Present</span>
+                    <h3 class="company">Software Developer</h3>
+                    <p style="color: var(--accent-3); font-weight: 600;">Center for Homelessness Research, USC</p>
+                    <ul class="bullets">
+                        <li>Led full-stack development of Android apps (Java/Kotlin) and responsive web portals (Angular), integrating secure REST APIs.</li>
+                        <li>Implemented GIS spatial analysis with ArcGIS SDK and GeoJSON pipelines to visualize and optimize datapoints on homelessness patterns.</li>
+                        <li>Automated data ingestion and batch processing using Python scripts, reducing manual ETL time by 60%.</li>
+                    </ul>
+                </div>
+                <div class="card span-6 reveal-right" style="border-left: 4px solid var(--accent-1);">
+                    <span class="date">Aug 2021 – Nov 2022</span>
+                    <h3 class="company">Website Developer & Maintenance Engineer</h3>
+                    <p style="color: var(--accent-1); font-weight: 600;">Alphonso Consultancy | India</p>
+                    <ul class="bullets">
+                        <li>Built and maintained ERP & website end-to-end: responsive UIs (HTML/CSS/JS), PHP/MySQL back-ends, and on-page SEO that boosted organic traffic.</li>
+                        <li>Prototyped blockchain and ML solutions: Ethereum/Hyperledger DApps for supply-chain tracking and Python-based chatbots sharpened smart-contract and data-science skills.</li>
+                    </ul>
                 </div>
             </div>
         </section>
 
-        <section id="experience">
-            <div class="container">
-                <div class="section-header reveal">
-                    <h2>Professional Experience</h2>
+        <section id="publications" style="padding-bottom: 120px;">
+            <div class="section-header reveal">
+                <span class="section-tag">Scientific Output</span>
+                <h2 class="section-title">Publications & Patents</h2>
+            </div>
+            <div class="bento-grid">
+                <a href="https://dl.acm.org/doi/10.1145/3701716.3715291" target="_blank" class="card span-8 reveal" style="display: block;">
+                    <span class="pub-type">Conference Paper - Submitted</span>
+                    <h3>Tracking 2024 US Presidential Election Chatter on TikTok...</h3>
+                    <p style="color: var(--text-dim); margin-top: 10px; font-size: 0.9rem;">The Web Conference (WWW) 2025 | April 2025</p>
+                    <p style="color: var(--accent-2); font-size: 0.8rem; margin-top: 10px;"><i class="fas fa-link"></i> Click to view publication</p>
+                </a>
+                <a href="https://drive.google.com/file/d/1gFbIMuosrgCnvR0LYiXw_YEw3qAjvVHh/view" target="_blank" class="card span-4 reveal" style="display: block;">
+                    <span class="pub-type">Patent</span>
+                    <h3>E-Commerce Product Comparison System</h3>
+                    <p style="color: var(--text-dim); margin-top: 10px; font-size: 0.9rem;">Indian Patent Office | September 2024</p>
+                    <p style="color: var(--accent-2); font-size: 0.8rem; margin-top: 10px;"><i class="fas fa-link"></i> Click to view document</p>
+                </a>
+                <a href="https://www.taylorfrancis.com/chapters/edit/10.1201/9781003111290-4-5/identification-classification-paddy-crop-diseases-using-big-data-machine-learning-techniques" target="_blank" class="card span-4 reveal" style="display: block;">
+                    <span class="pub-type">Book Chapter</span>
+                    <h3>Paddy Crop Disease Identification using Big Data ML</h3>
+                    <p style="color: var(--text-dim); margin-top: 10px; font-size: 0.9rem;">CRC Press | September 2021</p>
+                    <p style="color: var(--accent-2); font-size: 0.8rem; margin-top: 10px;"><i class="fas fa-link"></i> Click to view chapter</p>
+                </a>
+                <a href="https://www.researchgate.net/publication/355823483_Deep_Learning_Photograph_Caption_Generator" target="_blank" class="card span-8 reveal" style="display: block;">
+                    <span class="pub-type">Conference Paper</span>
+                    <h3>Deep Learning Photograph Caption Generator</h3>
+                    <p style="color: var(--text-dim); margin-top: 10px; font-size: 0.9rem;">IEEE | Co-Author of Published Paper (November 01, 2021)</p>
+                    <p style="color: var(--accent-2); font-size: 0.8rem; margin-top: 10px;"><i class="fas fa-link"></i> Click to view publication</p>
+                </a>
+                <div class="card span-6 reveal">
+                    <span class="pub-type">Patent</span>
+                    <h3>An Automated Extraction and Summarization System</h3>
+                    <p style="color: var(--text-dim); margin-top: 10px; font-size: 0.9rem;">Indian Patent Office | September 2024</p>
                 </div>
-                
-                <div class="timeline">
-                    <div class="timeline-item reveal delay-1">
-                        <div class="timeline-marker"></div>
-                        <div class="card light-card">
-                            <h3>Software Developer</h3>
-                            <div class="job-meta">
-                                <span class="company"><i class="fas fa-briefcase"></i> Center for Homelessness, Housing, and Health Equity Research, USC</span>
-                                <span class="date">January 2023 – Present</span>
-                            </div>
-                            <ul class="bullet-list">
-                                <li>Built and maintained Android apps (DemoGraphic Count) in Android Studio to support large-scale homelessness data collection.</li>
-                                <li>Developed and maintained HTML/CSS research and program sites; implemented GIS and spatial data visualizations with ArcGIS and GeoJSON for policy and planning use.</li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <div class="timeline-item reveal delay-2">
-                        <div class="timeline-marker"></div>
-                        <div class="card light-card">
-                            <h3>Graduate Student Course Producer</h3>
-                            <div class="job-meta">
-                                <span class="company"><i class="fas fa-university"></i> University of Southern California</span>
-                                <span class="date">August 2023 – May 2024</span>
-                            </div>
-                            <ul class="bullet-list">
-                                <li>Served as Graduate Course Producer for the Database Systems course for two semesters; led office hours, created instructional materials, and supported 100+ students.</li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <div class="timeline-item reveal delay-3">
-                        <div class="timeline-marker"></div>
-                        <div class="card light-card">
-                            <h3>Website Developer and Maintenance Engineer</h3>
-                            <div class="job-meta">
-                                <span class="company"><i class="fas fa-laptop-code"></i> Alphonso Consultancy, Udupi, India</span>
-                                <span class="date">August 2021 – November 2022</span>
-                            </div>
-                            <ul class="bullet-list">
-                                <li>Developed responsive Angular, HTML, CSS, and JavaScript frontends integrated with scalable SQL databases and PHP backends.</li>
-                                <li>Improved operational efficiency by ~40% by optimizing data flows and site performance, resulting in smoother user experiences.</li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <div class="timeline-item reveal delay-4">
-                        <div class="timeline-marker"></div>
-                        <div class="card light-card">
-                            <h3>Research Assistant</h3>
-                            <div class="job-meta">
-                                <span class="company"><i class="fas fa-flask"></i> NMAM Institute of Technology, Nitte, India</span>
-                                <span class="date">June 2020 – July 2021</span>
-                            </div>
-                            <ul class="bullet-list">
-                                <li>Designed ML models (Decision Tree, Random Forest, SVM, Naive Bayes) for paddy crop disease classification; used Apache Spark to optimize training and achieve high accuracy at scale.</li>
-                                <li>Project was funded by the university and recognized as the top project in the department.</li>
-                            </ul>
-                        </div>
-                    </div>
-
+                <div class="card span-6 reveal">
+                    <span class="pub-type">Conference Paper</span>
+                    <h3>Brain Tumor Detection from MRI Images Using Deep Learning</h3>
+                    <p style="color: var(--text-dim); margin-top: 10px; font-size: 0.9rem;">3rd Int. Conf. on Data, Decision, and Systems | August 2024</p>
                 </div>
             </div>
         </section>
 
-        <section id="publications">
-            <div class="container">
-                <div class="section-header reveal">
-                    <h2>Publications & Patents</h2>
-                </div>
-                <div class="grid-2">
-                    <div class="card light-card reveal delay-1">
-                        <div class="badge-container">
-                            <span class="badge paper-badge"><i class="far fa-file-alt"></i> Conference Paper</span>
-                            <span class="badge submit-badge">Submitted</span>
-                        </div>
-                        <h4>Tracking the 2024 US Presidential Election Chatter on TikTok...</h4>
-                        <p class="pub-venue">The Web Conference (WWW) 2025</p>
-                        <span class="pub-date"><i class="far fa-calendar"></i> April 4, 2025</span>
-                    </div>
-
-                    <div class="card light-card reveal delay-2">
-                        <div class="badge-container"><span class="badge patent-badge"><i class="fas fa-certificate"></i> Patent</span></div>
-                        <h4>E-Commerce Product Comparison System</h4>
-                        <p class="pub-venue">Indian Patent Office</p>
-                        <span class="pub-date"><i class="far fa-calendar"></i> September 9, 2024</span>
-                    </div>
-
-                    <div class="card light-card reveal delay-3">
-                        <div class="badge-container"><span class="badge patent-badge"><i class="fas fa-certificate"></i> Patent</span></div>
-                        <h4>An Automated Extraction and Summarization System</h4>
-                        <p class="pub-venue">Indian Patent Office</p>
-                        <span class="pub-date"><i class="far fa-calendar"></i> September 6, 2024</span>
-                    </div>
-
-                    <div class="card light-card reveal delay-4">
-                        <div class="badge-container"><span class="badge book-badge"><i class="fas fa-book"></i> Book Chapter</span></div>
-                        <h4>Identification and Classification of Paddy Crop Diseases using Big Data ML Techniques</h4>
-                        <p class="pub-venue">CRC Press</p>
-                        <span class="pub-date"><i class="far fa-calendar"></i> September 23, 2021</span>
-                    </div>
-
-                    <div class="card light-card reveal delay-5">
-                        <div class="badge-container">
-                            <span class="badge paper-badge"><i class="far fa-file-alt"></i> Conference Paper</span>
-                        </div>
-                        <h4>Deep Learning Photo Caption Generator</h4>
-                        <p class="pub-venue">IEEE Conference</p>
-                        <span class="pub-date"><i class="far fa-calendar"></i> November 1, 2021</span>
-                    </div>
-
-                    <div class="card light-card reveal delay-6">
-                        <div class="badge-container">
-                            <span class="badge paper-badge"><i class="far fa-file-alt"></i> Conference Paper</span>
-                        </div>
-                        <h4>Brain Tumor Detection from MRI Images Using Deep Learning</h4>
-                        <p class="pub-venue">3rd Int. Conf. on Data, Decision, and Systems</p>
-                        <span class="pub-date"><i class="far fa-calendar"></i> August 4, 2024</span>
-                    </div>
-                </div>
+        <section id="projects" style="padding-bottom: 120px;">
+            <div class="section-header reveal">
+                <span class="section-tag">Academic Projects</span>
+                <h2 class="section-title">Research & Development</h2>
             </div>
-        </section>
 
-        <section id="projects">
-            <div class="container">
-                <div class="section-header reveal">
-                    <h2>Academic Projects</h2>
-                </div>
-                <div class="grid-2">
-                    <div class="card light-card reveal delay-1">
-                        <h4>Augmenting LLMs with Dense Retrievers</h4>
-                        <p>Integrated DRAGON (dense retriever) with LLaMA‑7B‑Chat to reduce hallucinations in large language models.</p>
-                        <ul class="bullet-list">
-                            <li>Used dense retrieval over datasets such as TriviaQA to ground model responses in evidence.</li>
+            <div style="max-width: 1000px; margin-top: 40px;">
+                <div class="project-item reveal">
+                    <div class="project-glow-bar" style="background: linear-gradient(to bottom, var(--accent-2), transparent);"></div>
+                    <div>
+                        <span class="pub-type" style="border-color: var(--accent-2); color: var(--accent-2);">Augmenting LLMs</span>
+                        <h3 style="color: #fff; font-size: 1.6rem; margin-top: 10px;">Integrated DRAGON with LLaMA-7b-Chat</h3>
+                        <ul class="bullets">
+                            <li>Integrated DRAGON (Dense Retriever) with LLaMA-7b-Chat to reduce hallucinations in large language models.</li>
+                            <li>Employed dense retrieval techniques to ground model responses in accurate evidence from datasets like TriviaQA.</li>
                             <li>Achieved up to 59% improvement in answer accuracy compared to baseline generation.</li>
                         </ul>
                     </div>
-                    <div class="card light-card reveal delay-2">
-                        <h4>Medical Imaging with Deep Learning</h4>
-                        <ul class="bullet-list">
-                            <li><strong>Brain Tumor Detection:</strong> Built a CNN for early tumor detection from MRI scans, achieving 89% test and 87.21% validation accuracy.</li>
-                            <li><strong>Bone Abnormality Detection:</strong> Implemented CNN-based detection and visualization of bone abnormalities on X‑ray images; project received departmental top-project recognition and university funding.</li>
+                </div>
+
+                <div class="project-item reveal">
+                    <div class="project-glow-bar" style="background: linear-gradient(to bottom, var(--accent-1), transparent);"></div>
+                    <div>
+                        <span class="pub-type" style="border-color: var(--accent-1); color: var(--accent-1);">Medical Imaging</span>
+                        <h3 style="color: #fff; font-size: 1.6rem; margin-top: 10px;">Brain Tumor Detection from MRI Images</h3>
+                        <ul class="bullets">
+                            <li>Developed a CNN model for early detection of brain tumors from MRI scans.</li>
+                            <li>Implemented robust training pipelines to ensure high sensitivity and specificity in automated diagnostics.</li>
+                            <li>Achieved 89% test accuracy and 87.21% validation accuracy in real-world scan tests.</li>
                         </ul>
                     </div>
-                    <div class="card light-card reveal delay-3">
-                        <h4>Deep Learning Photo Caption Generator</h4>
-                        <ul class="bullet-list">
-                            <li>Combined VGG‑16 feature extraction with LSTM sequence modeling to generate descriptive image captions with strong BLEU scores.</li>
+                </div>
+
+                <div class="project-item reveal">
+                    <div class="project-glow-bar" style="background: linear-gradient(to bottom, var(--accent-3), transparent);"></div>
+                    <div>
+                        <span class="pub-type" style="border-color: var(--accent-3); color: var(--accent-3);">Computer Vision</span>
+                        <h3 style="color: #fff; font-size: 1.6rem; margin-top: 10px;">Deep Learning Photo Caption Generator</h3>
+                        <ul class="bullets">
+                            <li>Created a system using VGG-16 for visual feature extraction and LSTM for sequence prediction.</li>
+                            <li>Engineered the encoder-decoder architecture to translate visual semantics into natural language descriptions.</li>
+                            <li>Generated descriptive image captions with high BLEU scores across benchmark datasets.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="project-item reveal">
+                    <div class="project-glow-bar" style="background: linear-gradient(to bottom, var(--accent-2), transparent);"></div>
+                    <div>
+                        <span class="pub-type" style="border-color: var(--accent-2); color: var(--accent-2);">ML Honors</span>
+                        <h3 style="color: #fff; font-size: 1.6rem; margin-top: 10px;">Detection & Visualization of Bone Abnormalities</h3>
+                        <ul class="bullets">
+                            <li>Executed an ML project using TensorFlow and CNN to identify irregularities on X-ray images.</li>
+                            <li>Implemented heatmaps and visualization tools to assist clinical professionals in abnormality identification.</li>
+                            <li>The Project was honored as the top in the department and received university funding for further exploration.</li>
                         </ul>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section id="skills">
-            <div class="container">
-                <div class="section-header reveal">
-                    <h2>Skills</h2>
+        <section id="leadership" style="padding-bottom: 120px;">
+            <div class="section-header reveal">
+                <span class="section-tag">Social Impact</span>
+                <h2 class="section-title">Leadership & Involvement</h2>
+            </div>
+            <div class="bento-grid">
+                <div class="card span-8 reveal-left" style="border-left: 4px solid var(--accent-2); background: linear-gradient(90deg, rgba(0, 212, 255, 0.05) 0%, transparent 100%);">
+                    <span class="date">2022 – Present</span>
+                    <h3 class="company">Team Lead | Greater Los Angeles Homeless Count</h3>
+                    <p style="color: var(--text-dim); margin-top: 15px; font-size: 1.1rem;">
+                        Led the <strong>DemoGraphic Count initiative</strong>, coordinating large-scale data collection efforts across Los Angeles to support regional housing and health equity research.
+                    </p>
                 </div>
-                <div class="grid-2">
-                    <div class="card light-card reveal delay-1">
-                        <h4>Programming Languages</h4>
-                        <div class="skill-tags">
-                            <span>Java</span><span>Python</span><span>C++</span><span>Node.js</span>
-                            <span>JavaScript</span><span>ABAP</span><span>HTML5</span><span>SQL</span><span>NoSQL</span>
-                        </div>
+                <div class="card span-4 reveal-right" style="border-top: 4px solid var(--accent-1);">
+                    <span class="date">2017 – 2021</span>
+                    <h3 class="company" style="font-size: 1.1rem;">NSS | Better India Mission</h3>
+                    <p style="color: var(--text-dim); margin-top: 10px; font-size: 0.95rem;">
+                        Implemented waste management solutions in villages and launched the <strong>'Piggy Bank' project</strong> to support homeless individuals and people living with HIV.
+                    </p>
+                </div>
+                <div class="card span-6 reveal-left">
+                    <span class="pub-type">Humanitarian Trip</span>
+                    <h3 class="company">Tijuana, Mexico</h3>
+                    <p style="color: var(--text-dim); margin-top: 10px;"><strong>November 2024:</strong> Collaborated with Esperanza to build houses for homeless people, providing hands-on construction and community support.</p>
+                </div>
+                <div class="card span-6 reveal-right">
+                    <span class="pub-type">Humanitarian Trip</span>
+                    <h3 class="company">Colombia</h3>
+                    <p style="color: var(--text-dim); margin-top: 10px;"><strong>March 2024:</strong> Engaged with indigenous Wayuu communities; assisted in building their first sustainable water tank for the village.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="skills" style="padding-bottom: 120px;">
+            <div class="section-header reveal">
+                <span class="section-tag">Neural Toolkit</span>
+                <h2 class="section-title">Skills & Technologies</h2>
+            </div>
+            <div class="bento-grid">
+                <div class="card span-6 reveal-left" style="border-top: 4px solid var(--accent-2); background: linear-gradient(180deg, rgba(0, 212, 255, 0.05) 0%, transparent 100%);">
+                    <h3 style="color: var(--accent-2);"><i class="fas fa-brain"></i> AI & Data Intelligence</h3>
+                    <div class="skill-cloud">
+                        <span class="chip">Large Language Models (LLM)</span><span class="chip">TensorFlow</span><span class="chip">PyTorch</span><span class="chip">Keras</span><span class="chip">Scikit-learn</span><span class="chip">OpenCV</span><span class="chip">Hugging Face</span><span class="chip">NLTK</span><span class="chip">Machine Learning Algorithms</span><span class="chip">Apache Spark</span><span class="chip">Data Structures & Algorithms</span>
                     </div>
-                    <div class="card light-card reveal delay-2">
-                        <h4>Technologies & Frameworks</h4>
-                        <div class="skill-tags">
-                            <span>REST APIs</span><span>Large Language Models (LLM)</span><span>Git</span>
-                            <span>Jenkins</span><span>Docker</span><span>Kubernetes</span>
-                            <span>TensorFlow</span><span>PyTorch</span>
-                        </div>
+                </div>
+                <div class="card span-6 reveal-right" style="border-top: 4px solid var(--accent-1); background: linear-gradient(180deg, rgba(112, 0, 255, 0.05) 0%, transparent 100%);">
+                    <h3 style="color: var(--accent-1);"><i class="fas fa-code"></i> Engineering & Databases</h3>
+                    <div class="skill-cloud">
+                        <span class="chip">Python</span><span class="chip">Java (Core)</span><span class="chip">C/C++</span><span class="chip">JavaScript</span><span class="chip">TypeScript</span><span class="chip">Node.js</span><span class="chip">ABAP</span><span class="chip">HTML5</span><span class="chip">CSS3</span><span class="chip">SQL</span><span class="chip">NoSQL</span><span class="chip">MongoDB</span><span class="chip">PostgreSQL</span><span class="chip">Firebase</span><span class="chip">CockroachDB</span>
                     </div>
-                    <div class="card light-card reveal delay-3">
-                        <h4>Cloud Computing</h4>
-                        <div class="skill-tags">
-                            <span>SAP</span><span>AWS</span><span>Azure</span><span>Google Cloud Platform (GCP)</span>
-                        </div>
-                    </div>
-                    <div class="card light-card reveal delay-4">
-                        <h4>Data Analysis & ML</h4>
-                        <div class="skill-tags">
-                            <span>Data Structures</span><span>Machine Learning Algorithms</span><span>Apache Spark</span>
-                        </div>
-                    </div>
-                    <div class="card light-card reveal delay-5">
-                        <h4>Tools</h4>
-                        <div class="skill-tags">
-                            <span>ArcGIS</span><span>Swifter</span>
-                        </div>
-                    </div>
-                    <div class="card light-card reveal delay-6">
-                        <h4>Languages</h4>
-                        <div class="skill-tags">
-                            <span>English (Fluent)</span><span>Hindi (Fluent)</span><span>Kannada (Fluent)</span>
-                        </div>
+                </div>
+                <div class="card span-12 reveal" style="border-bottom: 4px solid var(--accent-3);">
+                    <h3 style="color: var(--accent-3);"><i class="fas fa-cloud"></i> Infrastructure, Cloud & Tools</h3>
+                    <div class="skill-cloud">
+                        <span class="chip">AWS</span><span class="chip">Azure</span><span class="chip">Google Cloud Platform (GCP)</span><span class="chip">Docker</span><span class="chip">Kubernetes</span><span class="chip">Jenkins</span><span class="chip">Git</span><span class="chip">UNIX</span><span class="chip">SAP</span><span class="chip">REST APIs</span><span class="chip">Microservices</span><span class="chip">ArcGIS</span><span class="chip">Swifter</span><span class="chip">Bootstrap</span><span class="chip">Render</span>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section id="honors">
-            <div class="container">
-                <div class="section-header reveal">
-                    <h2>Honors & Awards</h2>
-                </div>
-                <div class="grid-3">
-                    <div class="card cream-card reveal delay-1">
-                        <i class="fas fa-award gold-icon"></i>
-                        <p>National Overseas Scholarship, Karnataka State Government, April 2024</p>
-                    </div>
-                    <div class="card cream-card reveal delay-2">
-                        <i class="fas fa-trophy gold-icon"></i>
-                        <p>Outstanding Student and Best Outgoing Student, NMAM Institute of Technology (2017–2021)</p>
-                    </div>
-                    <div class="card cream-card reveal delay-3">
-                        <i class="fas fa-medal gold-icon"></i>
-                        <p>Best Outgoing Student of Computer Science Department, NMAM Institute of Technology, April 2021</p>
-                    </div>
-                    <div class="card cream-card reveal delay-4">
-                        <i class="fas fa-certificate gold-icon"></i>
-                        <p>Outstanding Achievement Award, NMAM Institute of Technology, April 2021</p>
-                    </div>
-                    <div class="card cream-card reveal delay-5">
-                        <i class="fas fa-star gold-icon"></i>
-                        <p>Best Project of University, NMAM Institute of Technology, March 2021</p>
-                    </div>
-                    <div class="card cream-card reveal delay-6">
-                        <i class="fas fa-user-check gold-icon"></i>
-                        <p>Top Data Collector and Surveyor, USC Suzanne Dworak-Peck School of Social Work, May 2023</p>
-                    </div>
-                </div>
+        <section id="honors" style="padding-bottom: 120px;">
+            <div class="section-header reveal">
+                <span class="section-tag">Distinctions</span>
+                <h2 class="section-title">Honors & Awards</h2>
             </div>
-        </section>
-
-        <section id="leadership">
-            <div class="container">
-                <div class="section-header reveal">
-                    <h2>Leadership & Involvement</h2>
+            <div class="bento-grid">
+                <div class="card span-8 reveal-left" style="border-left: 4px solid var(--accent-2); background: linear-gradient(90deg, rgba(0, 212, 255, 0.05) 0%, transparent 100%);">
+                    <i class="fas fa-certificate" style="color: var(--accent-2); font-size: 2rem;"></i>
+                    <h3 style="margin-top: 15px;">National Overseas Scholarship</h3>
+                    <p style="color: var(--text-dim); margin-top: 5px;">Awarded by the <strong>Karnataka State Government</strong> to support distinguished postgraduate research abroad (April 2024).</p>
                 </div>
-                <div class="card light-card border-blue reveal delay-1">
-                    <div class="icon-title">
-                        <i class="fas fa-users text-blue"></i>
-                        <h3>Team Lead, Greater Los Angeles Homeless Count</h3>
-                    </div>
-                    <p class="sub-text">2022 – Present</p>
-                    <p>Led the DemoGraphic Count initiative, coordinating data collection across Los Angeles.</p>
+                <div class="card span-4 reveal-right" style="border-top: 4px solid var(--accent-1);">
+                    <i class="fas fa-globe-asia" style="color: var(--accent-1); font-size: 1.8rem;"></i>
+                    <h3 style="margin-top: 15px;">Representative of India</h3>
+                    <p style="color: var(--text-dim); margin-top: 5px;">Represented the nation at the <strong>Asian Level YCS Conference</strong> in Indonesia (July 2019).</p>
                 </div>
-                <div class="card light-card border-green margin-top reveal delay-2">
-                    <div class="icon-title">
-                        <i class="fas fa-leaf text-green"></i>
-                        <h3>National Service Scheme (NSS), Better India Mission</h3>
-                    </div>
-                    <p class="sub-text">July 2017 – December 2021</p>
-                    <p>Implemented village waste‑management initiatives and launched the “Piggy Bank” project to support homeless individuals and people living with HIV.</p>
+                <div class="card span-4 reveal">
+                    <i class="fas fa-clipboard-check" style="color: var(--accent-3);"></i>
+                    <h4 style="color: #fff; margin-top: 10px;">Top Data Collector</h4>
+                    <p style="font-size: 0.85rem; color: var(--text-dim);">USC Suzanne Dworak-Peck School of Social Work (May 2023).</p>
                 </div>
-                <div class="card light-card border-purple margin-top reveal delay-3">
-                    <div class="icon-title">
-                        <i class="fas fa-plane text-purple"></i>
-                        <h3>Mission Trips</h3>
-                    </div>
-                    <p><strong>Tijuana, Mexico (November 2024):</strong> Collaborated with Esperanza to build houses for homeless people.</p>
-                    <p style="margin-top: 10px;"><strong>Colombia (March 2024):</strong> Engaged with indigenous Wayuu communities; assisted in building their first water tank.</p>
+                <div class="card span-4 reveal">
+                    <i class="fas fa-trophy" style="color: var(--accent-3);"></i>
+                    <h4 style="color: #fff; margin-top: 10px;">Best Project of University</h4>
+                    <p style="font-size: 0.85rem; color: var(--text-dim);">NMAM Institute of Technology (March 2021).</p>
+                </div>
+                <div class="card span-4 reveal">
+                    <i class="fas fa-medal" style="color: var(--accent-3);"></i>
+                    <h4 style="color: #fff; margin-top: 10px;">Best Outgoing Student</h4>
+                    <p style="font-size: 0.85rem; color: var(--text-dim);">Honored at both the College and CS Department level (April 2021).</p>
+                </div>
+                <div class="card span-12 reveal" style="text-align: center; background: rgba(255,255,255,0.02);">
+                    <i class="fas fa-star" style="color: #facc15; font-size: 2rem;"></i>
+                    <h4 style="color: #fff; margin-top: 10px;">Outstanding Achievement Award</h4>
+                    <p style="color: var(--text-dim);">Highest recognition for holistic excellence, academic rigor, and leadership at NMAMIT (April 2021).</p>
                 </div>
             </div>
         </section>
 
     </main>
 
-    <footer>
-        <div class="container">
-            <h3>Let's connect and collaborate!</h3>
-            <div class="footer-links">
-                <a href="mailto:jmenezes@usc.edu">Email</a>
-                <a href="https://www.linkedin.com/in/joymenezes/" target="_blank">LinkedIn</a>
-                <a href="tel:+12135198504">Phone</a>
-            </div>
-            <p>&copy; 2025 Joyston Menezes. All rights reserved.</p>
+    <footer class="footer">
+        <div class="social-links">
+            <a href="https://www.linkedin.com/in/joymenezes/" target="_blank" class="social-link"><i class="fab fa-linkedin"></i></a>
+            <a href="mailto:jmenezes@usc.edu" class="social-link"><i class="fas fa-envelope"></i></a>
+            <a href="tel:+12135198504" class="social-link"><i class="fas fa-phone-alt"></i></a>
         </div>
+        <p style="color: var(--text-dim); margin-top: 30px;">Let's connect and collaborate on the future of Computational Social Science.</p>
+        <p style="color: var(--accent-2); font-size: 0.75rem; margin-top: 10px; letter-spacing: 2px;">&copy; 2026 Joyston Menezes. All Rights Reserved.</p>
     </footer>
 
     <script>
-        // --- SCROLL REVEAL ANIMATION ---
-        const observerOptions = {
-            root: null,
-            threshold: 0.15,
-            rootMargin: "0px 0px -50px 0px"
+        // --- SCROLL PROGRESS BAR ---
+        window.onscroll = function() {
+            let winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            let height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            let scrolled = (winScroll / height) * 100;
+            document.getElementById("scrollIndicator").style.width = scrolled + "%";
         };
 
-        const observer = new IntersectionObserver((entries, observerRef) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('active');
-                    observerRef.unobserve(entry.target);
-                }
-            });
-        }, observerOptions);
-
-        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-
-        // --- MOBILE MENU TOGGLE ---
-        const menuToggle = document.querySelector('.menu-toggle');
-        const navLinks = document.querySelector('.nav-links');
-
-        if (menuToggle) {
-            menuToggle.addEventListener('click', () => {
-                navLinks.classList.toggle('active');
-            });
+        // --- LOOPING TYPEWRITER EFFECT ---
+        const nameElement = document.getElementById('typewriter-name');
+        const nameText = "JOYSTON MENEZES";
+        function typeCycle() {
+            let idx = 0; nameElement.innerHTML = ""; 
+            const typingInterval = setInterval(() => {
+                if (idx < nameText.length) { nameElement.innerHTML += nameText.charAt(idx); idx++; }
+                else { clearInterval(typingInterval); }
+            }, 150);
         }
-        
-        document.querySelectorAll('.nav-links li a').forEach(link => {
-            link.addEventListener('click', () => {
-                if (navLinks.classList.contains('active')) {
-                    navLinks.classList.remove('active');
-                }
-            });
-        });
+        window.onload = typeCycle;
+        setInterval(typeCycle, 10000); // Loops every 10 seconds
 
-        // --- SCROLL PROGRESS BAR ---
-        const progressBar = document.querySelector('.scroll-progress');
-        window.addEventListener('scroll', () => {
-            const scrollTop = window.scrollY;
-            const docHeight = document.body.scrollHeight - window.innerHeight;
-            const progress = (scrollTop / docHeight) * 100;
-            progressBar.style.width = progress + '%';
-        });
-
-        // --- ACTIVE SECTION SHORTCUT HIGHLIGHT ---
-        const sections = document.querySelectorAll('main section[id]');
-        const shortcutLinks = document.querySelectorAll('.section-shortcuts a');
-
-        function setActiveShortcut() {
-            let currentId = null;
-            sections.forEach(sec => {
-                const rect = sec.getBoundingClientRect();
-                if (rect.top <= 120 && rect.bottom >= 120) {
-                    currentId = sec.id;
-                }
-            });
-            shortcutLinks.forEach(link => {
-                link.classList.toggle('active', link.getAttribute('href') === '#' + currentId);
-            });
-        }
-        window.addEventListener('scroll', setActiveShortcut);
-        setActiveShortcut();
-
-        // --- TYPEWRITER EFFECT IN HERO ---
-        const typingPhrases = [
-            "Computer Science Researcher",
-            "ML & NLP Engineer",
-            "Computational Social Scientist",
-            "Digital Mental Health Explorer"
-        ];
-
-        const typingEl = document.getElementById("typing-text");
-        const cursorEl = document.querySelector(".typing-cursor");
-
-        let phraseIndex = 0;
-        let charIndex = 0;
-        let isDeleting = false;
-
-        const TYPING_SPEED = 80;
-        const DELETING_SPEED = 45;
-        const PAUSE_AT_END = 900;
-        const PAUSE_BETWEEN = 450;
-
-        function typeLoop() {
-            if (!typingEl) return;
-
-            const current = typingPhrases[phraseIndex];
-            if (!isDeleting) {
-                typingEl.textContent = current.slice(0, charIndex + 1);
-                charIndex++;
-
-                if (charIndex === current.length) {
-                    isDeleting = true;
-                    setTimeout(typeLoop, PAUSE_AT_END);
-                    return;
-                }
-                setTimeout(typeLoop, TYPING_SPEED);
-            } else {
-                typingEl.textContent = current.slice(0, charIndex - 1);
-                charIndex--;
-
-                if (charIndex === 0) {
-                    isDeleting = false;
-                    phraseIndex = (phraseIndex + 1) % typingPhrases.length;
-                    setTimeout(typeLoop, PAUSE_BETWEEN);
-                    return;
-                }
-                setTimeout(typeLoop, DELETING_SPEED);
+        // --- NEURAL NETWORK CANVAS ---
+        const canvas = document.getElementById('hero-canvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+        function initCanvas() {
+            canvas.width = window.innerWidth; canvas.height = window.innerHeight;
+            particles = [];
+            for(let i=0; i<70; i++) {
+                particles.push({
+                    x: Math.random() * canvas.width, y: Math.random() * canvas.height,
+                    vx: (Math.random() - 0.5) * 0.4, vy: (Math.random() - 0.5) * 0.4
+                });
             }
         }
+        function drawParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = '#7000ff'; ctx.strokeStyle = 'rgba(0, 212, 255, 0.15)';
+            particles.forEach((p, i) => {
+                p.x += p.vx; p.y += p.vy;
+                if(p.x < 0 || p.x > canvas.width) p.vx *= -1;
+                if(p.y < 0 || p.y > canvas.height) p.vy *= -1;
+                ctx.beginPath(); ctx.arc(p.x, p.y, 2, 0, Math.PI*2); ctx.fill();
+                for(let j=i+1; j<particles.length; j++) {
+                    const p2 = particles[j]; const dist = Math.hypot(p.x - p2.x, p.y - p2.y);
+                    if(dist < 140) { ctx.lineWidth = 1 - dist/140; ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(p2.x, p2.y); ctx.stroke(); }
+                }
+            });
+            requestAnimationFrame(drawParticles);
+        }
+        window.addEventListener('resize', initCanvas);
+        initCanvas(); drawParticles();
 
-        window.addEventListener("load", () => {
-            setTimeout(typeLoop, 600);
-        });
+        // --- REVEAL ON SCROLL ---
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('active'); });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('.reveal, .reveal-left, .reveal-right').forEach(el => observer.observe(el));
     </script>
 </body>
 </html>
