@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <circle cx="256" cy="256" r="248" fill="#02010a" />
+  
+  <circle cx="256" cy="256" r="230" fill="none" stroke="#7000ff" stroke-width="20" opacity="0.8"/>
+  
+  <text x="50%" y="55%" dominant-baseline="middle" text-anchor="middle" 
+        font-family="Arial, sans-serif" font-weight="800" font-size="260">
+    <tspan fill="#7000ff" style="text-shadow: 0 0 20px #7000ff;">J</tspan>
+    <tspan fill="#00d4ff" style="text-shadow: 0 0 20px #00d4ff;">M</tspan>
+  </text>
+</svg>
