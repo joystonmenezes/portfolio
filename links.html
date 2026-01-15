@@ -179,15 +179,24 @@
             font-weight: 600;
         }
 
-        /* TOAST NOTIFICATION */
+        /* TOAST NOTIFICATION - UPDATED */
         .toast {
             position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%);
-            background: var(--accent-3); /* Green */
-            color: #000; padding: 12px 24px; border-radius: 100px;
+            
+            /* Dark Background + Green Border = Better Neon Look */
+            background: rgba(2, 1, 10, 0.9); 
+            border: 1px solid var(--accent-3); 
+            color: #fff; /* TEXT IS NOW WHITE */
+            
+            padding: 12px 24px; border-radius: 100px;
             font-weight: 700; opacity: 0; pointer-events: none; transition: 0.3s;
-            box-shadow: 0 5px 15px rgba(16, 185, 129, 0.4);
+            box-shadow: 0 0 20px rgba(16, 185, 129, 0.4); /* Green Glow */
             z-index: 999;
+            display: flex; align-items: center; gap: 8px; /* Aligns text and icon */
         }
+        
+        .toast i { color: var(--accent-3); } /* Makes the checkmark green */
+        
         .toast.show { opacity: 1; transform: translateX(-50%) translateY(-10px); }
 
         /* RESPONSIVE */
@@ -214,7 +223,7 @@
             </div>
 
             <div class="joy-buttons">
-                <a href="portfolio.html" class="link-btn">
+                <a href="https://www.joystonmenez.info/" class="link-btn">
                     <i class="fas fa-globe" style="color: var(--accent-2);"></i> Portfolio
                 </a>
 
