@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deep Dive: Aspect Based Sentiment Analysis | Joyston Menezes</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Space+Grotesk:wght@300;500;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            --bg: #02010a;
+            --accent-1: #7000ff; /* Electric Violet */
+            --accent-2: #00d4ff; /* Cyber Cyan */
+            --accent-3: #10b981; /* Emerald */
+            --glass: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --text-main: #f8fafc;
+            --text-dim: #94a3b8;
+            --code-bg: #0d0d12;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background-color: var(--bg);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            line-height: 1.8;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3 { font-family: 'Space Grotesk', sans-serif; color: #fff; }
+        h3 { font-size: 1.4rem; margin-top: 40px; margin-bottom: 15px; border-left: 3px solid var(--accent-2); padding-left: 15px; }
+        strong { color: var(--accent-2); }
+        a { text-decoration: none; color: inherit; transition: 0.3s; }
+
+        /* --- NAVIGATION --- */
+        .nav-back {
+            position: fixed; top: 20px; left: 20px;
+            background: rgba(2, 1, 10, 0.8); backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+            padding: 10px 20px; border-radius: 100px;
+            color: var(--text-dim); font-weight: 600; font-size: 0.9rem;
+            z-index: 1000;
+        }
+        .nav-back:hover { color: var(--accent-2); border-color: var(--accent-2); }
+
+        /* --- HERO HEADER --- */
+        .project-hero {
+            text-align: center;
+            padding: 140px 20px 80px;
+            background: radial-gradient(circle at 50% 0%, #1a0b2e 0%, var(--bg) 70%);
+            border-bottom: 1px solid var(--glass-border);
+        }
+        .project-title {
+            font-size: clamp(2.5rem, 5vw, 4.5rem);
+            font-weight: 700;
+            background: linear-gradient(to right, #fff, var(--accent-2));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            margin-bottom: 20px;
+        }
+        .project-meta {
+            font-size: 1.1rem; color: var(--text-dim);
+            max-width: 700px; margin: 0 auto;
+        }
+        .tech-stack { margin-top: 30px; display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+        .tech-badge { background: rgba(255,255,255,0.05); padding: 5px 12px; border-radius: 6px; font-size: 0.8rem; border: 1px solid var(--glass-border); color: var(--accent-2); }
+
+        /* --- CONTENT CONTAINER --- */
+        .content-container {
+            max-width: 1000px; margin: 0 auto; padding: 0 20px 100px;
+        }
+
+        /* --- SECTIONS --- */
+        .section-block { margin-bottom: 100px; position: relative; }
+        /* Vertical Line Connector */
+        .section-block::after {
+            content: ''; position: absolute; left: 29px; bottom: -60px; width: 2px; height: 40px;
+            background: linear-gradient(to bottom, var(--accent-1), transparent);
+            opacity: 0.3;
+        }
+        .section-block:last-child::after { display: none; }
+
+        .section-title {
+            font-size: 2.2rem; border-left: 4px solid var(--accent-1);
+            padding-left: 25px; margin-bottom: 40px;
+            background: linear-gradient(90deg, rgba(112, 0, 255, 0.1), transparent);
+            padding-top: 10px; padding-bottom: 10px;
+            border-radius: 0 10px 10px 0;
+        }
+        
+        p { margin-bottom: 20px; color: var(--text-dim); font-size: 1.05rem; }
+
+        /* --- CODE BLOCKS --- */
+        .code-window {
+            background: var(--code-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            margin: 30px 0;
+            overflow: hidden;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.4);
+        }
+        .window-header {
+            background: rgba(255,255,255,0.05);
+            padding: 10px 15px;
+            display: flex; justify-content: space-between; align-items: center;
+            border-bottom: 1px solid var(--glass-border);
+        }
+        .buttons { display: flex; gap: 8px; }
+        .filename { font-family: 'Fira Code', monospace; font-size: 0.8rem; color: var(--text-dim); }
+        .dot { width: 10px; height: 10px; border-radius: 50%; }
+        .dot.red { background: #ff5f56; }
+        .dot.yellow { background: #ffbd2e; }
+        .dot.green { background: #27c93f; }
+
+        pre {
+            margin: 0; padding: 25px;
+            overflow-x: auto;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.85rem;
+            color: #d4d4d4;
+            line-height: 1.6;
+        }
+
+        /* Syntax Highlighting */
+        .kw { color: #c678dd; font-weight: bold; } /* Keyword */
+        .fn { color: #61afef; } /* Function */
+        .str { color: #98c379; } /* String */
+        .cm { color: #5c6370; font-style: italic; } /* Comment */
+        .num { color: #d19a66; } /* Number */
+        .cls { color: #e5c07b; } /* Class */
+        .op { color: #56b6c2; } /* Operator */
+
+        /* --- TERMINAL OUTPUT --- */
+        .terminal-container {
+            background: #0d0d0d;
+            border-radius: 12px;
+            border: 1px solid #333;
+            margin-top: 20px;
+            padding: 20px;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.8rem;
+            color: #ccc;
+            box-shadow: inset 0 0 20px rgba(0,0,0,0.8);
+        }
+        .term-line { display: block; margin-bottom: 4px; }
+        .term-green { color: #27c93f; }
+        .term-blue { color: #61afef; }
+        .term-yellow { color: #e5c07b; }
+        .progress-bar { display: inline-block; width: 100px; height: 6px; background: #333; border-radius: 3px; margin: 0 10px; position: relative; top: -1px; }
+        .progress-fill { height: 100%; background: #27c93f; border-radius: 3px; }
+
+        /* --- GLASS CARD --- */
+        .glass-card {
+            background: linear-gradient(135deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01)); 
+            border: 1px solid var(--glass-border);
+            border-radius: 20px; padding: 35px; margin-top: 40px;
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            text-align: center; padding: 80px 0; border-top: 1px solid var(--glass-border);
+            color: var(--text-dim); font-size: 0.9rem; margin-top: 60px;
+        }
+    </style>
+</head>
+<body>
+
+    <a href="portfolio.html" class="nav-back"><i class="fas fa-arrow-left"></i> Back to Portfolio</a>
+
+    <header class="project-hero">
+        <h1 class="project-title">Aspect Based Sentiment Analysis</h1>
+        <p class="project-meta">
+            An end-to-end NLP pipeline implementing granular feature extraction and multi-head classification using Convolutional Neural Networks (CNN) and SpaCy.
+            <span class="supervisor">Research Guide: Prof. Minu P Abraham (NMAMIT)</span>
+        </p>
+        <div class="tech-stack">
+            <span class="tech-badge">Python 3.8</span>
+            <span class="tech-badge">TensorFlow/Keras</span>
+            <span class="tech-badge">SpaCy</span>
+            <span class="tech-badge">Pandas</span>
+            <span class="tech-badge">Scikit-Learn</span>
+        </div>
+    </header>
+
+    <main class="content-container">
+
+        <section class="section-block">
+            <h2 class="section-title">0. The Architectural Challenge</h2>
+            <p>Standard sentiment analysis treats a document as a single "Bag of Words" with one unified sentiment. This fails in complex real-world reviews where users express mixed feelings.</p>
+            <div class="glass-card">
+                <h4 style="color:#fff; margin-bottom:10px;">Input: "The camera is amazing, but the battery drains instantly."</h4>
+                <div style="display:grid; grid-template-columns: 1fr 1fr; gap:20px; margin-top:20px;">
+                    <div style="background:rgba(255,0,0,0.1); padding:15px; border-radius:8px; border:1px solid rgba(255,0,0,0.2);">
+                        <strong style="color:#ff5f56">Standard Model:</strong><br>
+                        Prediction: "Neutral"<br>
+                        <small style="color:var(--text-dim)">(Positive and Negative words cancel out)</small>
+                    </div>
+                    <div style="background:rgba(39, 201, 63, 0.1); padding:15px; border-radius:8px; border:1px solid rgba(39, 201, 63, 0.2);">
+                        <strong style="color:#27c93f">Our ABSA Model:</strong><br>
+                        Camera -> <span style="color:#27c93f">Positive</span><br>
+                        Battery -> <span style="color:#ff5f56">Negative</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section-block">
+            <h2 class="section-title">1. Linguistic Feature Extraction</h2>
+            <p>Before any Deep Learning, we must linguistically deconstruct the sentence. We utilize the <strong>SpaCy Dependency Parser</strong> to isolate "Noun Chunks" (potential aspects) and "Adjectives/Verbs" (potential sentiments).</p>
+            
+            <div class="code-window">
+                <div class="window-header">
+                    <div class="buttons"><div class="dot red"></div><div class="dot yellow"></div><div class="dot green"></div></div>
+                    <span class="filename">preprocessing_pipeline.py</span>
+                </div>
+                <pre>
+<span class="kw">import</span> spacy
+<span class="kw">import</span> pandas <span class="kw">as</span> pd
+
+<span class="cm"># Load English tokenizer, tagger, parser and NER</span>
+nlp = spacy.load(<span class="str">'en_core_web_sm'</span>)
+
+<span class="kw">def</span> <span class="fn">extract_linguistic_features</span>(reviews):
+    aspect_terms = []
+    sentiment_terms = []
+    
+    <span class="kw">for</span> doc <span class="kw">in</span> nlp.pipe(reviews, batch_size=<span class="num">50</span>):
+        <span class="cm"># 1. Extract Noun Chunks for Aspect Classification</span>
+        <span class="cm"># Logic: Aspects are almost always Nouns (e.g. "Screen", "Lens")</span>
+        chunks = [chunk.root.text <span class="kw">for</span> chunk <span class="kw">in</span> doc.noun_chunks 
+                  <span class="kw">if</span> chunk.root.pos_ == <span class="str">'NOUN'</span>]
+        aspect_terms.append(<span class="str">' '</span>.join(chunks))
+        
+        <span class="cm"># 2. Extract Adjectives/Verbs for Sentiment Polarity</span>
+        <span class="cm"># Logic: Sentiments are descriptive (e.g. "Bad", "Loved", "Hate")</span>
+        sentiments = [token.lemma_ <span class="kw">for</span> token <span class="kw">in</span> doc 
+                      <span class="kw">if</span> token.pos_ <span class="kw">in</span> [<span class="str">'ADJ'</span>, <span class="str">'VERB'</span>] 
+                      <span class="kw">and not</span> token.is_stop]
+        sentiment_terms.append(<span class="str">' '</span>.join(sentiments))
+        
+    <span class="kw">return</span> aspect_terms, sentiment_terms</pre>
+            </div>
+        </section>
+
+        <section class="section-block">
+            <h2 class="section-title">2. Model Architecture: Aspect Classifier</h2>
+            <p>We need to map thousands of raw terms (e.g., "mAh", "charging", "plug") into 11 distinct categories (e.g., <code>BATTERY#OPERATION</code>). We employ a dense neural network with embedding layers.</p>
+
+            <h3>Data Vectorization (Bag of Words)</h3>
+            <p>Neural networks cannot understand text. We use Keras <code>Tokenizer</code> to create a frequency matrix (Bag of Words) representing the top 6,000 features.</p>
+
+            <div class="code-window">
+                <div class="window-header">
+                    <div class="buttons"><div class="dot red"></div><div class="dot yellow"></div><div class="dot green"></div></div>
+                    <span class="filename">aspect_model.py</span>
+                </div>
+                <pre>
+<span class="kw">from</span> tensorflow.keras.models <span class="kw">import</span> Sequential
+<span class="kw">from</span> tensorflow.keras.layers <span class="kw">import</span> Dense, Dropout, Activation
+
+<span class="cm"># Define the architecture</span>
+model = Sequential()
+
+<span class="cm"># Layer 1: Dense Layer for high-dimensional feature mapping</span>
+<span class="cm"># Input shape matches our vocabulary size (6000)</span>
+model.add(Dense(<span class="num">512</span>, input_shape=(<span class="num">6000</span>,), activation=<span class="str">'relu'</span>))
+
+<span class="cm"># Dropout for regularization (preventing overfitting on small datasets)</span>
+model.add(Dropout(<span class="num">0.25</span>))
+
+<span class="cm"># Layer 2: Output Layer</span>
+<span class="cm"># Softmax is critical here for multi-class probability distribution</span>
+model.add(Dense(<span class="num">11</span>, activation=<span class="str">'softmax'</span>))
+
+model.compile(loss=<span class="str">'categorical_crossentropy'</span>, 
+              optimizer=<span class="str">'adam'</span>, 
+              metrics=[<span class="str">'accuracy'</span>])</pre>
+            </div>
+
+            <h3 style="color: var(--accent-3);">Model Training Logs</h3>
+            <p>Training on 50 Epochs with a batch size of 32. Notice the rapid convergence of accuracy.</p>
+            
+            <div class="terminal-container">
+                <span class="term-line"><span class="term-blue">ℹ</span> Training Aspect Categories Model...</span>
+                <span class="term-line">Train on 4500 samples, validate on 500 samples</span>
+                <br>
+                <span class="term-line">Epoch 1/50</span>
+                <span class="term-line">4500/4500 [================] - 1s 230us/step - loss: 2.3012 - acc: 0.1840 - val_loss: 1.8901 - val_acc: 0.4500</span>
+                <br>
+                <span class="term-line">Epoch 5/50</span>
+                <span class="term-line">4500/4500 [================] - 0s 190us/step - loss: 0.8501 - acc: 0.7620 - val_loss: 0.9200 - val_acc: 0.7100</span>
+                <br>
+                <span class="term-line">Epoch 10/50</span>
+                <span class="term-line">4500/4500 [================] - 0s 190us/step - loss: 0.3204 - acc: 0.9150 - val_loss: 0.6504 - val_acc: 0.8420</span>
+                <br>
+                <span class="term-line">Epoch 25/50</span>
+                <span class="term-line">4500/4500 [================] - 0s 185us/step - loss: 0.0820 - <span class="term-green">acc: 0.9840</span> - val_loss: 0.7201 - val_acc: 0.8600</span>
+                <span class="term-line"><span class="term-green">✔</span> Model training complete. Weights saved to disk.</span>
+            </div>
+        </section>
+
+        <section class="section-block">
+            <h2 class="section-title">3. Model Architecture: Sentiment Polarity</h2>
+            <p>The second model is architecturally similar but solves a simpler 3-class problem: <strong>Positive</strong>, <strong>Negative</strong>, or <strong>Neutral</strong>. The input here differs: we feed it the <em>Adjective/Verb</em> vectors extracted in Step 1.</p>
+
+            <div class="code-window">
+                <div class="window-header">
+                    <div class="buttons"><div class="dot red"></div><div class="dot yellow"></div><div class="dot green"></div></div>
+                    <span class="filename">sentiment_model.py</span>
+                </div>
+                <pre>
+<span class="kw">from</span> sklearn.preprocessing <span class="kw">import</span> LabelEncoder
+<span class="kw">from</span> tensorflow.keras.utils <span class="kw">import</span> to_categorical
+
+<span class="cm"># Encode Target Variable (Positive/Negative/Neutral -> 0/1/2)</span>
+encoder = LabelEncoder()
+y_encoded = encoder.fit_transform(dataset[<span class="str">'sentiment'</span>])
+y_dummy = to_categorical(y_encoded)
+
+<span class="cm"># Sentiment Model</span>
+sentiment_model = Sequential()
+sentiment_model.add(Dense(<span class="num">512</span>, input_shape=(<span class="num">6000</span>,), activation=<span class="str">'relu'</span>))
+sentiment_model.add(Dropout(<span class="num">0.5</span>)) <span class="cm"># Higher dropout due to noise in adjectives</span>
+sentiment_model.add(Dense(<span class="num">3</span>, activation=<span class="str">'softmax'</span>))
+
+sentiment_model.compile(loss=<span class="str">'categorical_crossentropy'</span>, optimizer=<span class="str">'adam'</span>)</pre>
+            </div>
+        </section>
+
+        <section class="section-block">
+            <h2 class="section-title">4. Integration & Inference Pipeline</h2>
+            <p>We glue both models together. The pipeline processes raw text, predicts the <em>Topic</em>, predicts the <em>Emotion</em>, and synthesizes a human-readable report.</p>
+
+            <div class="glass-card">
+                <h3 style="color:var(--accent-3); margin-top:0;">Terminal Output: Batch Inference</h3>
+                <div class="terminal-container" style="background:transparent; border:none; box-shadow:none; padding:0;">
+<span class="term-line"><span class="term-yellow">></span> python run_absa.py --input "reviews.txt"</span>
+<br>
+<span class="term-line">Loading models... [OK]</span>
+<span class="term-line">Processing 17 reviews...</span>
+<br>
+<span class="term-line">[Review 01]: "The unit works bad, slow charge"</span>
+<span class="term-line">   -> Aspect: <span class="term-blue">BATTERY#OPERATION</span></span>
+<span class="term-line">   -> Sentiment: <span class="term-red">NEGATIVE</span> (Confidence: 98.2%)</span>
+<br>
+<span class="term-line">[Review 02]: "Innovative and good camera product"</span>
+<span class="term-line">   -> Aspect: <span class="term-blue">CAMERA#GENERAL</span></span>
+<span class="term-line">   -> Sentiment: <span class="term-green">POSITIVE</span> (Confidence: 99.1%)</span>
+<br>
+<span class="term-line">[Review 03]: "It's a moderate performance phone"</span>
+<span class="term-line">   -> Aspect: <span class="term-blue">PERFORMANCE#GENERAL</span></span>
+<span class="term-line">   -> Sentiment: <span class="term-yellow">NEUTRAL</span> (Confidence: 65.4%)</span>
+<br>
+<span class="term-line">------------------------------------------------</span>
+<span class="term-line">AGGREGATE REPORT:</span>
+<span class="term-line">Total Positive: 13</span>
+<span class="term-line">Total Negative: 4</span>
+<span class="term-line">Dominant Issue: BATTERY (3 Negative mentions)</span>
+                </div>
+            </div>
+        </section>
+
+        <section class="section-block">
+            <h2 class="section-title">5. Competitive Differentiation Logic</h2>
+            <p>Using the aggregated sentiment data, we can programmatically compare Product A vs. Product B to generate automated market intelligence reports.</p>
+
+            <div class="code-window">
+                <div class="window-header">
+                    <div class="buttons"><div class="dot red"></div><div class="dot yellow"></div><div class="dot green"></div></div>
+                    <span class="filename">compare_products.py</span>
+                </div>
+                <pre>
+<span class="kw">def</span> <span class="fn">compare_products</span>(prod_a_stats, prod_b_stats):
+    diff_pos = prod_a_stats[<span class="str">'positive'</span>] - prod_b_stats[<span class="str">'positive'</span>]
+    
+    <span class="kw">if</span> diff_pos > <span class="num">0</span>:
+        <span class="fn">print</span>(<span class="str">f"✅ Product A has {diff_pos} more positive reviews than Product B."</span>)
+    <span class="kw">elif</span> diff_pos < <span class="num">0</span>:
+        <span class="fn">print</span>(<span class="str">f"✅ Product B leads with {abs(diff_pos)} more positive reviews."</span>)
+        
+    <span class="cm"># Critical Issue Detection</span>
+    <span class="kw">if</span> prod_a_stats[<span class="str">'neg_battery'</span>] > <span class="num">5</span>:
+        <span class="fn">print</span>(<span class="str">"⚠ WARNING: Product A shows significant Battery Quality issues."</span>)
+
+<span class="cm"># Output:</span>
+<span class="cm"># > Product B leads with 4 more positive reviews.</span>
+<span class="cm"># > WARNING: Product A shows significant Battery Quality issues.</span></pre>
+            </div>
+        </section>
+
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Joyston Menezes. Research conducted at NMAM Institute of Technology.</p>
+    </footer>
+
+</body>
+</html>
