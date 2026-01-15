@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connect with Joyston Menezes</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Space+Grotesk:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --bg: #02010a;
+            --accent-1: #7000ff; /* Electric Violet */
+            --accent-2: #00d4ff; /* Cyber Cyan */
+            --glass: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --text-main: #f8fafc;
+            --text-dim: #94a3b8;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            background-color: var(--bg);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            /* Subtle radial gradient background */
+            background-image: radial-gradient(circle at 50% 0%, #1a0b2e 0%, #02010a 70%);
+        }
+
+        /* --- HEADSHOT ANIMATION (Same as Portfolio) --- */
+        @keyframes float-glow {
+            0%, 100% { 
+                transform: translateY(0); 
+                box-shadow: 0 0 40px rgba(112, 0, 255, 0.3); /* Purple Glow */
+                border-color: var(--accent-1);
+            }
+            50% { 
+                transform: translateY(-10px); /* Moves up */
+                box-shadow: 0 0 60px rgba(0, 212, 255, 0.5); /* Cyan Glow expands */
+                border-color: var(--accent-2);
+            }
+        }
+        .animate-headshot {
+            animation: float-glow 4s ease-in-out infinite;
+        }
+
+        /* --- THE CARD --- */
+        .joy-premium-card {
+            background: rgba(2, 1, 10, 0.6);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            padding: 50px;
+            border-radius: 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 50px;
+            max-width: 1000px;
+            width: 100%;
+            box-shadow: 0 0 80px rgba(112, 0, 255, 0.15);
+            animation: floatUp 1s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+
+        @keyframes floatUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* LEFT SIDE */
+        .joy-left { flex: 1; }
+        
+        h1 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 2.8rem;
+            line-height: 1.1;
+            background: linear-gradient(to right, #fff, var(--accent-2));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .sub {
+            font-size: 1.1rem;
+            color: var(--text-dim);
+            margin-top: 8px;
+            font-weight: 300;
+        }
+
+        /* EMAIL COPY BUTTON */
+        .email-container {
+            margin: 25px 0 35px 0;
+            display: inline-flex;
+            align-items: center;
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            padding: 12px 25px;
+            border-radius: 100px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .email-container:hover {
+            border-color: var(--accent-2);
+            background: rgba(0, 212, 255, 0.1);
+        }
+        .email-text { font-family: 'Space Grotesk', monospace; color: var(--accent-2); margin-right: 10px; font-size: 1rem; }
+        .copy-icon { color: var(--text-dim); font-size: 0.9rem; }
+
+        /* BUTTONS GRID */
+        .joy-buttons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .link-btn {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 16px 22px;
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            border-radius: 14px;
+            text-decoration: none;
+            color: #fff;
+            font-weight: 600;
+            transition: 0.3s;
+            font-size: 0.95rem;
+        }
+        .link-btn:hover {
+            background: var(--accent-1);
+            border-color: var(--accent-1);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(112, 0, 255, 0.2);
+        }
+        .link-btn.resume {
+            grid-column: span 2; 
+            justify-content: center;
+            border-color: var(--accent-2);
+            background: rgba(0, 212, 255, 0.05);
+        }
+        .link-btn.resume:hover {
+            background: var(--accent-2);
+            color: #000;
+        }
+
+        /* RIGHT SIDE (Visuals) */
+        .joy-right {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+            align-items: center;
+            min-width: 250px;
+        }
+
+        /* QR Styling */
+        .qr-block {
+            background: rgba(255,255,255,0.03);
+            padding: 15px;
+            border-radius: 16px;
+            border: 1px solid var(--glass-border);
+            text-align: center;
+            width: 100%;
+        }
+        .qr-block img {
+            width: 120px;
+            height: 120px;
+            filter: invert(1);
+            mix-blend-mode: screen;
+            opacity: 0.9;
+        }
+        .qr-label {
+            color: var(--text-dim);
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-top: 10px;
+            font-weight: 600;
+        }
+
+        /* TOAST NOTIFICATION */
+        .toast {
+            position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%);
+            background: var(--accent-3); /* Green */
+            color: #000; padding: 12px 24px; border-radius: 100px;
+            font-weight: 700; opacity: 0; pointer-events: none; transition: 0.3s;
+            box-shadow: 0 5px 15px rgba(16, 185, 129, 0.4);
+            z-index: 999;
+        }
+        .toast.show { opacity: 1; transform: translateX(-50%) translateY(-10px); }
+
+        /* RESPONSIVE */
+        @media (max-width: 900px) {
+            .joy-premium-card { flex-direction: column-reverse; text-align: center; padding: 30px 20px; gap: 40px; }
+            .joy-buttons { grid-template-columns: 1fr; }
+            .link-btn.resume { grid-column: span 1; }
+            .email-container { margin: 20px auto; }
+            .joy-right { width: 100%; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="joy-premium-card">
+
+        <div class="joy-left">
+            <h1>Joyston Menezes</h1>
+            <p class="sub">Software Developer • ML Research • Data Systems</p>
+
+            <div class="email-container" onclick="copyEmail()">
+                <span class="email-text">menezesjoyston@gmail.com</span>
+                <i class="fas fa-copy copy-icon"></i>
+            </div>
+
+            <div class="joy-buttons">
+                <a href="portfolio.html" class="link-btn">
+                    <i class="fas fa-globe" style="color: var(--accent-2);"></i> Portfolio
+                </a>
+
+                <a href="https://www.linkedin.com/in/joymenezes/" target="_blank" class="link-btn">
+                    <i class="fab fa-linkedin" style="color: #0077b5;"></i> LinkedIn
+                </a>
+
+                <a href="https://scholar.google.com/citations?user=K0IpBQYAAAAJ" target="_blank" class="link-btn">
+                    <i class="fas fa-graduation-cap" style="color: var(--accent-3);"></i> Google Scholar
+                </a>
+
+                <a href="https://election-integrity.online/" target="_blank" class="link-btn">
+                    <i class="fas fa-database" style="color: #facc15;"></i> Dataset
+                </a>
+
+                <a href="https://drive.google.com/file/d/1U7el2JrWDVZOIC_gU004bvEvltwnRVnK/view?usp=sharing" target="_blank" class="link-btn resume">
+                    <i class="fas fa-file-download" style="margin-right: 8px;"></i> View Resume
+                </a>
+            </div>
+        </div>
+
+        <div class="joy-right">
+            
+            <div class="animate-headshot" style="
+                width: 160px; 
+                height: 160px; 
+                border-radius: 50%; 
+                padding: 4px; 
+                background: linear-gradient(135deg, var(--accent-1), var(--accent-2)); 
+                display: inline-block;
+            ">
+                <img src="Joyston.jpg" 
+                     alt="Joyston Menezes" 
+                     style="
+                        width: 100%; 
+                        height: 100%; 
+                        border-radius: 50%; 
+                        object-fit: cover; 
+                        border: 4px solid var(--bg); 
+                        display: block;
+                     " 
+                />
+            </div>
+
+            <div class="qr-block">
+                <img src="https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=https://www.linkedin.com/in/joymenezes/" alt="LinkedIn QR">
+                <p class="qr-label">Scan to Connect</p>
+            </div>
+
+        </div>
+
+    </div>
+
+    <div id="toast" class="toast"><i class="fas fa-check-circle" style="margin-right: 8px;"></i> Email Copied!</div>
+
+    <script>
+        function copyEmail() {
+            const email = "menezesjoyston@gmail.com";
+            navigator.clipboard.writeText(email).then(() => {
+                const toast = document.getElementById("toast");
+                toast.classList.add("show");
+                setTimeout(() => {
+                    toast.classList.remove("show");
+                }, 2000);
+            });
+        }
+    </script>
+
+</body>
+</html>
