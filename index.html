@@ -29,6 +29,23 @@
             line-height: 1.6;
         }
 
+        /* --- Add this to your existing <style> block --- */
+@keyframes float-glow {
+    0%, 0% { 
+        transform: translateY(0); 
+        box-shadow: 0 0 50px rgba(112, 0, 255, 0.3); /* Purple Glow */
+        border-color: var(--accent-1);
+    }
+    50% { 
+        transform: translateY(-15px); /* Moves up */
+        border-color: var(--accent-2);
+    }
+}
+
+.animate-headshot {
+    animation: float-glow 3s ease-in-out ;
+}
+
         /* Neon Scrollbar */
         ::-webkit-scrollbar { width: 6px; }
         ::-webkit-scrollbar-track { background: var(--bg); }
@@ -54,13 +71,27 @@
         #hero-canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100vh; z-index: -1; opacity: 0.6; }
 
         /* --- Navigation --- */
+        /* --- Navigation --- */
         .nav {
-            position: fixed; top: 20px; left: 50%; transform: translateX(-50%);
+            position: fixed; 
+            top: 20px; 
+            left: 50%; 
+            /* We combine translateX (centering) with translateY (hiding) in the JS, 
+               so we set the default transform here */
+            transform: translateX(-50%) translateY(0);
             width: 95%; max-width: 1400px; height: 65px;
             background: rgba(2, 1, 10, 0.8); backdrop-filter: blur(20px);
             border: 1px solid var(--glass-border); border-radius: 100px;
             z-index: 1000; display: flex; align-items: center; padding: 0 25px;
             justify-content: space-between;
+            
+            /* ADD THIS LINE: Smooth slide animation */
+            transition: transform 0.4s cubic-bezier(0.1, 0.7, 1.0, 0.1);
+        }
+
+        /* NEW CLASS: This moves the nav up and out of sight */
+        .nav-hidden {
+            transform: translateX(-50%) translateY(-150px);
         }
         .nav-links { display: flex; gap: 12px; list-style: none; }
         .nav-links a { font-size: 0.65rem; font-weight: 700; text-transform: uppercase; color: var(--text-dim); letter-spacing: 1px; }
@@ -150,25 +181,76 @@
     </nav>
 
     <header class="hero">
+        
+        <div style="margin-bottom: 30px;">
+            <div class="animate-headshot" style="
+                width: 200px; 
+                height: 200px; 
+                border-radius: 50%; 
+                padding: 4px; 
+                background: linear-gradient(135deg, var(--accent-1), var(--accent-2)); 
+                /* box-shadow is now handled by the animation! */
+                display: inline-block;
+            ">
+                <img src="/Users/joystonmenezes/Documents/Headshots/Pic3.jpg" 
+                     alt="Joyston Menezes" 
+                     style="
+                        width: 100%; 
+                        height: 100%; 
+                        border-radius: 50%; 
+                        object-fit: cover; 
+                        border: 4px solid var(--bg); 
+                        display: block;
+                     " 
+                />
+            </div>
+        </div>
+
         <span class="section-tag" style="letter-spacing: 5px; opacity: 0.8;">Hey there, I’m</span>
         <h1 class="hero-title" id="typewriter-name"></h1>
         <p class="hero-subtitle">M.S. in Computer Science Graduate | Specialized in Digital Mental Health & Computational Social Science Researcher at USC.</p>
-        <div style="display: flex; gap: 20px;">
-            <a href="#about" class="chip" style="padding: 14px 40px;">Research Focus</a>
-            <a href="#experience" class="chip" style="padding: 14px 40px; border-color: var(--accent-1);">Portfolio</a>
+        
+        <div style="display: flex; gap: 15px; flex-wrap: wrap; justify-content: center; margin-top: 30px;">
+            
+            <a href="https://drive.google.com/file/d/1U7el2JrWDVZOIC_gU004bvEvltwnRVnK/view?usp=sharing" target="_blank" class="chip" style="background: var(--accent-1); color: #fff; border-color: var(--accent-1); padding: 12px 25px;">
+                <i class="fas fa-file-download" style="margin-right: 8px;"></i> View Resume
+            </a>
+
+            <a href="https://www.linkedin.com/in/joymenezes/" target="_blank" class="chip" style="padding: 12px 25px;">
+                <i class="fab fa-linkedin" style="margin-right: 8px; color: #0077b5;"></i> LinkedIn
+            </a>
+
+            <a href="https://scholar.google.com/citations?user=K0IpBQYAAAAJ" target="_blank" class="chip" style="padding: 12px 25px;">
+                <i class="fas fa-graduation-cap" style="margin-right: 8px; color: var(--accent-2);"></i> Google Scholar
+            </a>
+
+            <a href="https://election-integrity.online/" target="_blank" class="chip" style="padding: 12px 25px;">
+                <i class="fas fa-database" style="margin-right: 8px; color: var(--accent-3);"></i> Dataset
+            </a>
+
         </div>
     </header>
 
     <main class="container">
 
-        <section id="about" style="margin-top: -100px; padding-bottom: 120px;">
+        <section id="about" style="margin-top: -10px; padding-bottom: 120px;">
             <div class="bento-grid">
                 <div class="card span-12 reveal">
-                    <span class="section-tag">Objective</span>
-                    <h2 style="font-size: 2.5rem; margin-top: 10px; color: #fff;">At the Intersection of Computing and Cognition</h2>
-                    <p style="font-size: 1.25rem; color: var(--text-dim); margin-top: 25px; line-height: 1.8;">
-                        I am an M.S. in Computer Science graduate focused on computational social science and digital mental health. My goal is to pursue a Ph.D. in Brain and Cognitive Science, leveraging machine learning, NLP, and large-scale social data to understand how humans communicate, form shared meaning, and behave collectively in digital spaces.
-                    </p>
+                    
+                    <div style="display: flex; gap: 40px; align-items: center; justify-content: space-between; flex-wrap: wrap;">
+                        
+                        <div style="flex: 2; min-width: 300px;">
+                            <span class="section-tag">Objective</span>
+                            <h2 style="font-size: 2.5rem; margin-top: 10px; color: #fff;">Building Intelligent Systems with Real-World Impact</h2>
+                            
+                            <p style="font-size: 1.25rem; color: var(--text-dim); margin-top: 25px; line-height: 1.8; margin-bottom: 30px;">
+                                I am a Master of Science in Computer Science graduate from USC, combining strong engineering foundations with advanced research capabilities. My expertise spans <strong>full-stack development</strong>, <strong>machine learning</strong>, and <strong>natural language processing</strong>. I am passionate about designing scalable, data-driven solutions that bridge the gap between complex technical challenges and meaningful user impact.
+                            </p>
+
+                         
+
+                    </div>
+
                 </div>
             </div>
         </section>
@@ -226,20 +308,21 @@
                                 <li><strong>Social Media Media-Pipeline:</strong> Created a comprehensive pipeline for downloading and organizing Twitter media content. Developed scripts for TikTok comment scraping and reposted video retrieval, collecting over a million comments. Optimized Twitter scraping scripts, resolving bugs, and enhancing performance.</li>
                             </ul>
                         </div>
-                        <div class="item">
-                            <span class="date">August 2023 – May 2024</span>
-                            <span class="company">Teaching Assistant / Graduate Student Course Producer | University of Southern California</span>
-                            <span class="supervisor" style="color: var(--accent-3); display: block; font-size: 0.9rem; margin-bottom: 10px;">Supervisor: Prof. Saty Ragavachari</span>
-                            <ul class="bullets">
-                                <li>Assisted in managing the Database Systems course under Prof. Saty Ragavachari. Conducted office hours, crafted course materials, and addressed student inquiries. Served as Course Producer for the Database Systems course for two consecutive semesters.</li>
-                            </ul>
-                        </div>
+                        
                         <div class="item">
                             <span class="date">Aug 2024 – May 2025</span>
                             <span class="company">Research Assistant | Lerman Lab, USC Information Sciences Institute (ISI)</span>
                             <span class="supervisor" style="color: var(--accent-3); display: block; font-size: 0.9rem; margin-bottom: 10px;">Supervisor: Prof. Kristina Lerman</span>
                             <ul class="bullets">
                                 <li><strong>Digital Mental Health Research:</strong> Researched the dissemination of harmful digital content related to muscle dysmorphia ('Bigorexia'). Developed computational taxonomies to model and identify harmful communication patterns at scale. Contributed to ML classifiers to understand the linguistic and social features of this content.</li>
+                            </ul>
+                        </div>
+                        <div class="item">
+                            <span class="date">August 2023 – May 2024</span>
+                            <span class="company">Teaching Assistant / Graduate Student Course Producer | University of Southern California</span>
+                            <span class="supervisor" style="color: var(--accent-3); display: block; font-size: 0.9rem; margin-bottom: 10px;">Supervisor: Prof. Saty Ragavachari</span>
+                            <ul class="bullets">
+                                <li>Assisted in managing the Database Systems course under Prof. Saty Ragavachari. Conducted office hours, crafted course materials, and addressed student inquiries. Served as Course Producer for the Database Systems course for two consecutive semesters.</li>
                             </ul>
                         </div>
                     </div>
@@ -491,16 +574,30 @@
             document.getElementById("scrollIndicator").style.width = scrolled + "%";
         };
 
-        // --- LOOPING TYPEWRITER EFFECT ---
+        // --- FIXED TYPEWRITER EFFECT ---
         const nameElement = document.getElementById('typewriter-name');
         const nameText = "JOYSTON MENEZES";
+        let typingTimer = null; // Variable to store the active timer
+
         function typeCycle() {
-            let idx = 0; nameElement.innerHTML = ""; 
-            const typingInterval = setInterval(() => {
-                if (idx < nameText.length) { nameElement.innerHTML += nameText.charAt(idx); idx++; }
-                else { clearInterval(typingInterval); }
+            // 1. CLEAR existing timer if it's still running
+            if (typingTimer) clearInterval(typingTimer);
+            
+            // 2. Reset text
+            nameElement.innerHTML = ""; 
+            let idx = 0;
+
+            // 3. Start new timer
+            typingTimer = setInterval(() => {
+                if (idx < nameText.length) { 
+                    nameElement.innerHTML += nameText.charAt(idx); 
+                    idx++; 
+                } else { 
+                    clearInterval(typingTimer); // Stop when finished
+                }
             }, 150);
         }
+
         window.onload = typeCycle;
         setInterval(typeCycle, 10000); // Loops every 10 seconds
 
@@ -508,39 +605,82 @@
         const canvas = document.getElementById('hero-canvas');
         const ctx = canvas.getContext('2d');
         let particles = [];
+
         function initCanvas() {
-            canvas.width = window.innerWidth; canvas.height = window.innerHeight;
+            canvas.width = window.innerWidth; 
+            canvas.height = window.innerHeight;
             particles = [];
             for(let i=0; i<70; i++) {
                 particles.push({
-                    x: Math.random() * canvas.width, y: Math.random() * canvas.height,
-                    vx: (Math.random() - 0.5) * 0.4, vy: (Math.random() - 0.5) * 0.4
+                    x: Math.random() * canvas.width, 
+                    y: Math.random() * canvas.height,
+                    vx: (Math.random() - 0.5) * 0.4, 
+                    vy: (Math.random() - 0.5) * 0.4
                 });
             }
         }
+
         function drawParticles() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
-            ctx.fillStyle = '#7000ff'; ctx.strokeStyle = 'rgba(0, 212, 255, 0.15)';
+            ctx.fillStyle = '#7000ff'; 
+            ctx.strokeStyle = 'rgba(0, 212, 255, 0.15)';
+            
             particles.forEach((p, i) => {
                 p.x += p.vx; p.y += p.vy;
+                
+                // Bounce off edges
                 if(p.x < 0 || p.x > canvas.width) p.vx *= -1;
                 if(p.y < 0 || p.y > canvas.height) p.vy *= -1;
+                
                 ctx.beginPath(); ctx.arc(p.x, p.y, 2, 0, Math.PI*2); ctx.fill();
+                
+                // Draw connections
                 for(let j=i+1; j<particles.length; j++) {
-                    const p2 = particles[j]; const dist = Math.hypot(p.x - p2.x, p.y - p2.y);
-                    if(dist < 140) { ctx.lineWidth = 1 - dist/140; ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(p2.x, p2.y); ctx.stroke(); }
+                    const p2 = particles[j]; 
+                    const dist = Math.hypot(p.x - p2.x, p.y - p2.y);
+                    if(dist < 140) { 
+                        ctx.lineWidth = 1 - dist/140; 
+                        ctx.beginPath(); 
+                        ctx.moveTo(p.x, p.y); 
+                        ctx.lineTo(p2.x, p2.y); 
+                        ctx.stroke(); 
+                    }
                 }
             });
             requestAnimationFrame(drawParticles);
         }
+
         window.addEventListener('resize', initCanvas);
-        initCanvas(); drawParticles();
+        initCanvas(); 
+        drawParticles();
 
         // --- REVEAL ON SCROLL ---
         const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('active'); });
+            entries.forEach(entry => { 
+                if (entry.isIntersecting) entry.target.classList.add('active'); 
+            });
         }, { threshold: 0.1 });
+        
         document.querySelectorAll('.reveal, .reveal-left, .reveal-right').forEach(el => observer.observe(el));
+
+        // --- SMART NAVBAR (Hide on scroll down, Show on scroll up) ---
+        let lastScrollY = window.scrollY;
+        const nav = document.querySelector('.nav');
+
+        window.addEventListener('scroll', () => {
+            const currentScrollY = window.scrollY;
+
+            // If scrolling DOWN and past the hero section (100px buffer)
+            if (currentScrollY > lastScrollY && currentScrollY > 100) {
+                nav.classList.add('nav-hidden');
+            } 
+            // If scrolling UP
+            else {
+                nav.classList.remove('nav-hidden');
+            }
+
+            lastScrollY = currentScrollY;
+        });
     </script>
 </body>
 </html>
