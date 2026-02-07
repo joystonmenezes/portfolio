@@ -110,7 +110,23 @@
         .nav-links a:hover { color: var(--accent-2); text-shadow: 0 0 8px var(--accent-2); }
 
         /* --- Hero --- */
-        .hero { height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 0 20px; position: relative; }
+/* Find this section in your <style> tag and update it */
+
+        .hero { 
+            /* CHANGED: Use min-height instead of height so content can scroll on small screens */
+            min-height: 100vh; 
+            
+            display: flex; 
+            flex-direction: column; 
+            justify-content: center; 
+            align-items: center; 
+            text-align: center; 
+            
+            /* CHANGED: Added 120px top padding to clear the fixed navbar */
+            padding: 120px 20px 0 20px; 
+            
+            position: relative; 
+        }
         .hero-title {
             font-size: clamp(3rem, 10vw, 6rem); font-weight: 700;
             background: linear-gradient(to right, #fff, var(--accent-2), var(--accent-1));
