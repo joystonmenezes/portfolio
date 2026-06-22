@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hours Tracker | Joyston Menezes</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <meta name="robots" content="noindex, nofollow">
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Space+Grotesk:wght@300;500;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            --bg: #02010a;
+            --accent-1: #7000ff; /* Electric Violet */
+            --accent-2: #00d4ff; /* Cyber Cyan */
+            --accent-3: #10b981; /* Emerald */
+            --warn: #f43f5e;      /* Rose */
+            --glass: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --text-main: #f8fafc;
+            --text-dim: #94a3b8;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            background-color: var(--bg);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            overflow-x: hidden;
+            background-image: radial-gradient(circle at 50% -10%, #1a0b2e 0%, var(--bg) 60%);
+            min-height: 100vh;
+        }
+        h1, h2, h3, h4 { font-family: 'Space Grotesk', sans-serif; color: #fff; }
+        a { text-decoration: none; color: inherit; transition: 0.3s; }
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: var(--bg); }
+        ::-webkit-scrollbar-thumb { background: linear-gradient(var(--accent-1), var(--accent-2)); border-radius: 10px; }
+
+        /* --- NAV BACK --- */
+        .nav-back {
+            position: fixed; top: 20px; left: 20px;
+            background: rgba(2, 1, 10, 0.8); backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+            padding: 10px 20px; border-radius: 100px;
+            color: var(--text-dim); font-weight: 600; font-size: 0.9rem; z-index: 1000;
+        }
+        .nav-back:hover { color: var(--accent-2); border-color: var(--accent-2); }
+
+        /* --- HERO --- */
+        .hero { text-align: center; padding: 130px 20px 50px; }
+        .hero h1 {
+            font-size: clamp(2.4rem, 5vw, 3.8rem); font-weight: 700; letter-spacing: -1px;
+            background: linear-gradient(to right, #fff, var(--accent-2), var(--accent-1));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 14px;
+        }
+        .hero p { color: var(--text-dim); max-width: 640px; margin: 0 auto; font-size: 1.05rem; }
+        .hero .asof { display: inline-block; margin-top: 18px; font-size: 0.8rem; color: var(--accent-2);
+            border: 1px solid var(--glass-border); padding: 6px 16px; border-radius: 100px; background: var(--glass); }
+
+        .container { max-width: 1150px; margin: 0 auto; padding: 0 22px 100px; }
+        .glass { background: var(--glass); border: 1px solid var(--glass-border); border-radius: 22px; }
+
+        /* --- DASHBOARD --- */
+        .dash { display: grid; grid-template-columns: 320px 1fr; gap: 22px; margin-bottom: 22px; }
+        .ring-card { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 30px; position: relative; }
+        .ring-wrap { position: relative; width: 230px; height: 230px; }
+        .ring-wrap svg { transform: rotate(-90deg); width: 100%; height: 100%; }
+        .ring-bg { fill: none; stroke: rgba(255,255,255,0.07); stroke-width: 14; }
+        .ring-fill { fill: none; stroke-width: 14; stroke-linecap: round; transition: stroke-dashoffset 0.8s cubic-bezier(0.2,0.8,0.2,1); }
+        .ring-center { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+        .ring-center .pct { font-family: 'Space Grotesk'; font-size: 2.6rem; font-weight: 700; line-height: 1; color: #fff; }
+        .ring-center .frac { font-size: 0.95rem; color: var(--text-dim); margin-top: 8px; font-family: 'Fira Code'; }
+        .ring-center .lbl { font-size: 0.65rem; letter-spacing: 2px; text-transform: uppercase; color: var(--accent-2); margin-top: 6px; }
+
+        .stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; }
+        .stat { padding: 26px; position: relative; overflow: hidden; }
+        .stat::before { content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: var(--accent-2); opacity: 0.8; }
+        .stat.s2::before { background: var(--accent-1); }
+        .stat.s3::before { background: var(--accent-3); }
+        .stat.s4::before { background: #facc15; }
+        .stat .label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1.5px; color: var(--text-dim); display: flex; align-items: center; gap: 8px; }
+        .stat .big { font-family: 'Space Grotesk'; font-size: 2.3rem; font-weight: 700; margin: 10px 0 4px; color: #fff; }
+        .stat .sub { font-size: 0.85rem; color: var(--text-dim); }
+        .stat .big.warn { color: var(--warn); }
+
+        /* --- CONTROLS --- */
+        .controls { padding: 22px 26px; margin-bottom: 22px; display: flex; flex-wrap: wrap; align-items: flex-end; gap: 26px; }
+        .ctrl { display: flex; flex-direction: column; gap: 7px; }
+        .ctrl label { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 1.2px; color: var(--text-dim); }
+        .ctrl input { width: 130px; background: rgba(255,255,255,0.04); border: 1px solid var(--glass-border); color: #fff;
+            padding: 11px 14px; border-radius: 12px; font-family: 'Fira Code'; font-size: 1rem; transition: 0.25s; }
+        .ctrl input:focus { outline: none; border-color: var(--accent-2); box-shadow: 0 0 0 3px rgba(0,212,255,0.12); }
+        .btn { background: rgba(244,63,94,0.1); border: 1px solid rgba(244,63,94,0.4); color: #fda4af;
+            padding: 11px 20px; border-radius: 12px; font-weight: 600; cursor: pointer; font-family: 'Inter'; font-size: 0.9rem; transition: 0.25s; }
+        .btn:hover { background: var(--warn); color: #fff; border-color: var(--warn); }
+        .note { flex-basis: 100%; font-size: 0.8rem; color: var(--text-dim); line-height: 1.6; border-top: 1px dashed var(--glass-border); padding-top: 16px; margin-top: 4px; }
+        .note i { color: var(--accent-2); }
+
+        /* --- TABLE --- */
+        .table-card { padding: 8px; overflow: hidden; }
+        .table-scroll { overflow-x: auto; border-radius: 16px; }
+        table { width: 100%; border-collapse: collapse; min-width: 780px; }
+        thead th {
+            font-family: 'Space Grotesk'; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 1px;
+            color: var(--accent-2); text-align: left; padding: 16px 14px; border-bottom: 1px solid var(--glass-border); white-space: nowrap;
+        }
+        thead th.num, tbody td.num { text-align: right; }
+        tbody td { padding: 12px 14px; border-bottom: 1px solid rgba(255,255,255,0.05); font-size: 0.9rem; color: var(--text-dim); white-space: nowrap; }
+        tbody tr:hover { background: rgba(255,255,255,0.02); }
+        tbody tr.current { background: rgba(0,212,255,0.06); }
+        tbody tr.current td:first-child { box-shadow: inset 3px 0 0 var(--accent-2); }
+        .pid { font-family: 'Fira Code'; font-weight: 600; color: #fff; }
+        .dates { font-size: 0.82rem; }
+        td.num { font-family: 'Fira Code'; color: #cbd5e1; }
+        td.cum { color: var(--accent-1); font-weight: 600; }
+        td.rem { color: var(--accent-3); font-weight: 600; }
+        td.rem.over { color: var(--warn); }
+
+        .hrs-input {
+            width: 70px; background: rgba(255,255,255,0.03); border: 1px solid transparent; border-bottom: 1px solid var(--glass-border);
+            color: #fff; padding: 7px 8px; border-radius: 8px; font-family: 'Fira Code'; font-size: 0.9rem; text-align: right; transition: 0.2s;
+        }
+        .hrs-input:hover { border-color: var(--glass-border); background: rgba(255,255,255,0.05); }
+        .hrs-input:focus { outline: none; border-color: var(--accent-2); background: rgba(0,212,255,0.08); }
+        .hrs-input.edited { color: var(--accent-2); border-bottom-color: var(--accent-2); }
+        .hrs-input:disabled { opacity: 0.35; cursor: not-allowed; }
+
+        .badge { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.8px; font-weight: 700; padding: 4px 10px; border-radius: 6px; border: 1px solid; }
+        .badge.logged  { color: #cbd5e1; border-color: var(--glass-border); background: rgba(255,255,255,0.04); }
+        .badge.auto    { color: var(--accent-3); border-color: rgba(16,185,129,0.4); background: rgba(16,185,129,0.08); }
+        .badge.current { color: var(--accent-2); border-color: rgba(0,212,255,0.5); background: rgba(0,212,255,0.1); }
+        .badge.upcoming{ color: var(--text-dim); border-color: var(--glass-border); background: transparent; }
+
+        .legend { display: flex; flex-wrap: wrap; gap: 18px; padding: 18px 26px 4px; font-size: 0.78rem; color: var(--text-dim); }
+        .legend span { display: inline-flex; align-items: center; gap: 7px; }
+        .legend .dot { width: 9px; height: 9px; border-radius: 50%; }
+
+        footer { text-align: center; padding: 50px 20px; color: var(--text-dim); font-size: 0.85rem; }
+
+        @media (max-width: 880px) {
+            .dash { grid-template-columns: 1fr; }
+            .stat-grid { grid-template-columns: 1fr 1fr; }
+            .ring-card { padding: 24px; }
+        }
+        @media (max-width: 560px) {
+            .stat-grid { grid-template-columns: 1fr; }
+            .stat .big { font-size: 1.9rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <a href="https://www.joystonmenez.info/" class="nav-back"><i class="fas fa-arrow-left"></i> Back to Portfolio</a>
+
+    <header class="hero">
+        <h1>USC Employment Hours</h1>
+        <p>Live tracker for my 1,000-hour resource-employee cap. Completed weeks auto-fill at my standard weekly rate; edit any cell if a week was different.</p>
+        <div class="asof"><i class="far fa-clock"></i> As of <span id="todayStr">—</span></div>
+    </header>
+
+    <main class="container">
+
+        <!-- DASHBOARD -->
+        <section class="dash">
+            <div class="ring-card glass">
+                <div class="ring-wrap">
+                    <svg viewBox="0 0 230 230">
+                        <defs>
+                            <linearGradient id="ringGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stop-color="#7000ff"/>
+                                <stop offset="55%" stop-color="#00d4ff"/>
+                                <stop offset="100%" stop-color="#10b981"/>
+                            </linearGradient>
+                        </defs>
+                        <circle class="ring-bg" cx="115" cy="115" r="100"/>
+                        <circle class="ring-fill" id="ringFill" cx="115" cy="115" r="100" stroke="url(#ringGrad)"/>
+                    </svg>
+                    <div class="ring-center">
+                        <span class="pct" id="pctNum">0%</span>
+                        <span class="frac" id="fracNum">0 / 1000</span>
+                        <span class="lbl">Hours Used</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="stat-grid">
+                <div class="stat glass s1">
+                    <div class="label"><i class="fas fa-hourglass-half"></i> Hours Remaining</div>
+                    <div class="big" id="remBig">0</div>
+                    <div class="sub" id="remSub">of 1,000-hour cap</div>
+                </div>
+                <div class="stat glass s2">
+                    <div class="label"><i class="fas fa-calendar-week"></i> Weeks You Can Still Work</div>
+                    <div class="big" id="weeksBig">0</div>
+                    <div class="sub" id="weeksSub">at 20 hrs/week</div>
+                </div>
+                <div class="stat glass s3">
+                    <div class="label"><i class="fas fa-flag-checkered"></i> Projected Cap Date</div>
+                    <div class="big" id="capDateBig" style="font-size:1.7rem;">—</div>
+                    <div class="sub" id="capDateSub">if you keep working 20 hrs/week</div>
+                </div>
+                <div class="stat glass s4">
+                    <div class="label"><i class="fas fa-location-crosshairs"></i> Current Pay Period</div>
+                    <div class="big" id="curBig" style="font-size:1.9rem;">—</div>
+                    <div class="sub" id="curSub">—</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CONTROLS -->
+        <section class="controls glass">
+            <div class="ctrl">
+                <label>Standard weekly hours</label>
+                <input type="number" id="rateInput" min="0" step="0.5" value="20">
+            </div>
+            <div class="ctrl">
+                <label>Total hour cap</label>
+                <input type="number" id="capInput" min="0" step="1" value="1000">
+            </div>
+            <button class="btn" id="resetBtn"><i class="fas fa-rotate-left"></i> Reset my edits</button>
+            <p class="note">
+                <i class="fas fa-circle-info"></i>
+                Your edits are saved in <strong>this browser only</strong> (nothing is uploaded). Logged values for <strong>P01–P17</strong> come straight from your sheet.
+                Each week after that auto-fills your standard weekly rate <strong>once the week has fully passed</strong>, and the projection below it updates live.
+            </p>
+        </section>
+
+        <!-- LEGEND -->
+        <div class="legend">
+            <span><span class="dot" style="background:#cbd5e1"></span> Logged (from sheet)</span>
+            <span><span class="dot" style="background:var(--accent-3)"></span> Auto-filled (week passed)</span>
+            <span><span class="dot" style="background:var(--accent-2)"></span> Current period</span>
+            <span><span class="dot" style="background:var(--text-dim)"></span> Upcoming</span>
+            <span style="color:var(--accent-2)"><i class="fas fa-pen-to-square"></i> Any week is editable</span>
+        </div>
+
+        <!-- TABLE -->
+        <section class="table-card glass" style="margin-top:12px;">
+            <div class="table-scroll">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Period</th>
+                            <th>Dates</th>
+                            <th class="num">Week 1</th>
+                            <th class="num">Week 2</th>
+                            <th class="num">Period</th>
+                            <th class="num">Cumulative</th>
+                            <th class="num">Remaining</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tbody"></tbody>
+                </table>
+            </div>
+        </section>
+
+    </main>
+
+    <footer>
+        &copy; 2026 Joyston Menezes — personal hours tracker.
+    </footer>
+
+    <script>
+    (function () {
+        "use strict";
+
+        // ---- Pay-period schedule. logged = [week1, week2] from the sheet, or null for auto periods ----
+        const PERIODS = [
+            { id: "P01", start: "2025-09-11", end: "2025-09-24", logged: [0, 20] },
+            { id: "P02", start: "2025-09-25", end: "2025-10-08", logged: [20, 20] },
+            { id: "P03", start: "2025-10-09", end: "2025-10-22", logged: [20, 20] },
+            { id: "P04", start: "2025-10-23", end: "2025-11-05", logged: [20, 20] },
+            { id: "P05", start: "2025-11-06", end: "2025-11-19", logged: [20, 20] },
+            { id: "P06", start: "2025-11-20", end: "2025-12-03", logged: [20, 7.5] },
+            { id: "P07", start: "2025-12-04", end: "2025-12-17", logged: [20, 20] },
+            { id: "P08", start: "2025-12-18", end: "2025-12-31", logged: [20, 20] },
+            { id: "P09", start: "2026-01-01", end: "2026-01-14", logged: [20, 20] },
+            { id: "P10", start: "2026-01-15", end: "2026-01-28", logged: [20, 20] },
+            { id: "P11", start: "2026-01-29", end: "2026-02-11", logged: [20, 20] },
+            { id: "P12", start: "2026-02-12", end: "2026-02-25", logged: [20, 20] },
+            { id: "P13", start: "2026-02-26", end: "2026-03-11", logged: [20, 20] },
+            { id: "P14", start: "2026-03-12", end: "2026-03-25", logged: [20, 20] },
+            { id: "P15", start: "2026-03-26", end: "2026-04-08", logged: [30, 30] },
+            { id: "P16", start: "2026-04-09", end: "2026-04-22", logged: [30, 30] },
+            { id: "P17", start: "2026-04-23", end: "2026-05-06", logged: [30, 30] },
+            { id: "P18", start: "2026-05-07", end: "2026-05-20", logged: null },
+            { id: "P19", start: "2026-05-21", end: "2026-06-03", logged: null },
+            { id: "P20", start: "2026-06-04", end: "2026-06-17", logged: null },
+            { id: "P21", start: "2026-06-18", end: "2026-07-01", logged: null },
+            { id: "P22", start: "2026-07-02", end: "2026-07-15", logged: null },
+            { id: "P23", start: "2026-07-16", end: "2026-07-29", logged: null },
+            { id: "P24", start: "2026-07-30", end: "2026-08-12", logged: null },
+            { id: "P25", start: "2026-08-13", end: "2026-08-26", logged: null },
+            { id: "P26", start: "2026-08-27", end: "2026-09-09", logged: null },
+            { id: "P27", start: "2026-09-10", end: "2026-09-23", logged: null }
+        ];
+
+        const LS = { rate: "usc_hours_rate", cap: "usc_hours_cap", ov: "usc_hours_overrides" };
+
+        // ---- State (persisted) ----
+        const state = {
+            rate: loadNum(LS.rate, 20),
+            cap: loadNum(LS.cap, 1000),
+            overrides: loadObj(LS.ov)
+        };
+
+        function loadNum(key, def) { const v = parseFloat(localStorage.getItem(key)); return isFinite(v) ? v : def; }
+        function loadObj(key) { try { return JSON.parse(localStorage.getItem(key)) || {}; } catch (e) { return {}; } }
+        function save() {
+            localStorage.setItem(LS.rate, state.rate);
+            localStorage.setItem(LS.cap, state.cap);
+            localStorage.setItem(LS.ov, JSON.stringify(state.overrides));
+        }
+
+        // ---- Date helpers ----
+        function parseDate(s) { const p = s.split("-"); return new Date(+p[0], +p[1] - 1, +p[2]); }
+        function today() { const d = new Date(); d.setHours(0, 0, 0, 0); return d; }
+        function weekStart(p, w) { const d = parseDate(p.start); if (w === 2) d.setDate(d.getDate() + 7); return d; }
+        function weekEnd(p, w) { const d = weekStart(p, w); d.setDate(d.getDate() + 6); return d; }
+        function weekPassed(p, w) { return today() > weekEnd(p, w); }  // entire week is in the past
+        function isCurrentPeriod(p) { const t = today(); return t >= parseDate(p.start) && t <= parseDate(p.end); }
+
+        // ---- Hours model ----
+        function key(p, w) { return p.id + "-w" + w; }
+        function isOverridden(p, w) { return Object.prototype.hasOwnProperty.call(state.overrides, key(p, w)); }
+        function defaultHours(p, w) {
+            if (p.logged) return p.logged[w - 1];
+            return weekPassed(p, w) ? state.rate : 0;
+        }
+        function effective(p, w) {
+            return isOverridden(p, w) ? num(state.overrides[key(p, w)]) : defaultHours(p, w);
+        }
+        function num(v) { const n = parseFloat(v); return isFinite(n) && n >= 0 ? n : 0; }
+        function fmt(n) { return (Math.round(n * 100) / 100).toString(); }
+        function fmtInt(n) { return Math.round(n).toLocaleString("en-US"); }
+
+        // ---- Render ----
+        const tbody = document.getElementById("tbody");
+
+        function render() {
+            const cap = state.cap, rate = state.rate;
+            let cum = 0;
+            let rowsHTML = "";
+
+            PERIODS.forEach(function (p) {
+                const w1 = effective(p, 1), w2 = effective(p, 2);
+                const total = w1 + w2;
+                cum += total;
+                const rem = cap - cum;
+
+                const cur = isCurrentPeriod(p);
+                let badge, dotPassed1 = weekPassed(p, 1), dotPassed2 = weekPassed(p, 2);
+                if (cur) badge = '<span class="badge current">Current</span>';
+                else if (p.logged) badge = '<span class="badge logged">Logged</span>';
+                else if (dotPassed1 || dotPassed2) badge = '<span class="badge auto">Auto-filled</span>';
+                else badge = '<span class="badge upcoming">Upcoming</span>';
+
+                const ed1 = isOverridden(p, 1) ? " edited" : "";
+                const ed2 = isOverridden(p, 2) ? " edited" : "";
+
+                rowsHTML +=
+                    '<tr class="' + (cur ? "current" : "") + '">' +
+                        '<td class="pid">' + p.id + '</td>' +
+                        '<td class="dates">' + shortDate(p.start) + ' &ndash; ' + shortDate(p.end) + '</td>' +
+                        '<td class="num"><input class="hrs-input' + ed1 + '" type="number" min="0" step="0.5" ' +
+                            'data-pid="' + p.id + '" data-week="1" value="' + fmt(w1) + '"></td>' +
+                        '<td class="num"><input class="hrs-input' + ed2 + '" type="number" min="0" step="0.5" ' +
+                            'data-pid="' + p.id + '" data-week="2" value="' + fmt(w2) + '"></td>' +
+                        '<td class="num">' + fmt(total) + '</td>' +
+                        '<td class="num cum">' + fmt(cum) + '</td>' +
+                        '<td class="num rem' + (rem < 0 ? " over" : "") + '">' + fmt(rem) + '</td>' +
+                        '<td>' + badge + '</td>' +
+                    '</tr>';
+            });
+
+            tbody.innerHTML = rowsHTML;
+
+            const used = cum;
+            const remaining = cap - used;
+            const pct = cap > 0 ? used / cap : 0;
+
+            // Ring
+            const r = 100, C = 2 * Math.PI * r;
+            const ring = document.getElementById("ringFill");
+            const shown = Math.max(0, Math.min(1, pct));
+            ring.style.strokeDasharray = C;
+            ring.style.strokeDashoffset = C * (1 - shown);
+            ring.setAttribute("stroke", pct > 1 ? "var(--warn)" : "url(#ringGrad)");
+            document.getElementById("pctNum").textContent = (Math.round(pct * 1000) / 10) + "%";
+            document.getElementById("fracNum").textContent = fmt(used) + " / " + fmtInt(cap);
+
+            // Remaining
+            const remBig = document.getElementById("remBig");
+            remBig.textContent = fmt(remaining);
+            remBig.classList.toggle("warn", remaining < 0);
+            document.getElementById("remSub").textContent = remaining < 0
+                ? "OVER the " + fmtInt(cap) + "-hour cap" : "of " + fmtInt(cap) + "-hour cap";
+
+            // Weeks left + projection
+            const weeksBig = document.getElementById("weeksBig");
+            const weeksSub = document.getElementById("weeksSub");
+            const capDateBig = document.getElementById("capDateBig");
+            const capDateSub = document.getElementById("capDateSub");
+
+            if (rate <= 0) {
+                weeksBig.textContent = "—"; weeksSub.textContent = "set a weekly rate above";
+                capDateBig.textContent = "—"; capDateSub.textContent = "set a weekly rate above";
+            } else if (remaining <= 0) {
+                weeksBig.textContent = "0"; weeksBig.classList.add("warn");
+                weeksSub.textContent = "cap reached";
+                capDateBig.textContent = "Reached"; capDateSub.textContent = "you are at/over the cap";
+            } else {
+                const weeksLeft = remaining / rate;
+                weeksBig.classList.remove("warn");
+                weeksBig.textContent = (Math.round(weeksLeft * 10) / 10);
+                weeksSub.textContent = "≈ " + Math.floor(weeksLeft) + " full weeks at " + fmt(rate) + " hrs/week";
+                const cd = today();
+                cd.setDate(cd.getDate() + Math.ceil(weeksLeft * 7));
+                capDateBig.textContent = cd.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
+                capDateSub.textContent = "if you keep working " + fmt(rate) + " hrs/week";
+            }
+
+            // Current period
+            const cp = PERIODS.find(isCurrentPeriod);
+            document.getElementById("curBig").textContent = cp ? cp.id : "—";
+            document.getElementById("curSub").textContent = cp
+                ? shortDate(cp.start) + " – " + shortDate(cp.end)
+                : "outside the tracked schedule";
+
+            document.getElementById("todayStr").textContent =
+                today().toLocaleDateString("en-US", { weekday: "short", month: "long", day: "numeric", year: "numeric" });
+        }
+
+        function shortDate(s) {
+            return parseDate(s).toLocaleDateString("en-US", { month: "short", day: "numeric" });
+        }
+
+        // ---- Events ----
+        tbody.addEventListener("change", function (e) {
+            const inp = e.target;
+            if (!inp.classList.contains("hrs-input")) return;
+            const pid = inp.getAttribute("data-pid");
+            const w = parseInt(inp.getAttribute("data-week"), 10);
+            const p = PERIODS.find(function (x) { return x.id === pid; });
+            state.overrides[key(p, w)] = num(inp.value);
+            save();
+            render();
+        });
+
+        const rateInput = document.getElementById("rateInput");
+        const capInput = document.getElementById("capInput");
+        rateInput.value = state.rate;
+        capInput.value = state.cap;
+        rateInput.addEventListener("change", function () { state.rate = num(rateInput.value); save(); render(); });
+        capInput.addEventListener("change", function () { state.cap = num(capInput.value) || 1000; save(); render(); });
+
+        document.getElementById("resetBtn").addEventListener("click", function () {
+            if (!confirm("Clear all your manual edits and auto-filled overrides? Your weekly rate and cap stay as set.")) return;
+            state.overrides = {};
+            save();
+            render();
+        });
+
+        render();
+    })();
+    </script>
+</body>
+</html>
