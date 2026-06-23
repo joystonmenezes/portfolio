@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow, noarchive">
+<title>Planning · JM</title>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+:root{
+  --bg:#02010a; --panel:#0a0917; --accent-1:#7000ff; --accent-2:#00d4ff; --accent-3:#10b981;
+  --warn:#fbbf24; --glass:rgba(255,255,255,.03); --glass-border:rgba(255,255,255,.1);
+  --text-main:#f8fafc; --text-dim:#94a3b8;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text-main);font-family:'Inter',sans-serif;line-height:1.6;
+  background-image:radial-gradient(circle at 15% 10%,rgba(112,0,255,.12),transparent 40%),radial-gradient(circle at 85% 30%,rgba(0,212,255,.08),transparent 40%);}
+h1,h2,h3,h4,.mono{font-family:'Space Grotesk',sans-serif}
+a{color:var(--accent-2);text-decoration:none}
+a:hover{text-decoration:underline}
+.wrap{max-width:1080px;margin:0 auto;padding:0 22px}
+
+/* nav */
+nav{position:sticky;top:0;z-index:50;backdrop-filter:blur(14px);background:rgba(2,1,10,.72);border-bottom:1px solid var(--glass-border)}
+nav .wrap{display:flex;gap:6px;align-items:center;flex-wrap:wrap;padding:11px 22px}
+nav .brand{font-weight:700;letter-spacing:.5px;margin-right:auto;font-family:'Space Grotesk'}
+nav a{color:var(--text-dim);font-size:13px;padding:6px 10px;border-radius:8px}
+nav a:hover{color:var(--text-main);background:var(--glass);text-decoration:none}
+
+/* hero */
+header.hero{padding:64px 0 34px}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:12px;letter-spacing:1.5px;text-transform:uppercase;color:var(--warn);border:1px solid rgba(251,191,36,.3);background:rgba(251,191,36,.06);padding:5px 12px;border-radius:99px}
+header.hero h1{font-size:clamp(2.1rem,5vw,3.3rem);line-height:1.08;margin:18px 0 10px;font-weight:700}
+header.hero h1 .grad{background:linear-gradient(90deg,var(--accent-1),var(--accent-2));-webkit-background-clip:text;background-clip:text;color:transparent}
+header.hero p.lead{font-size:1.15rem;color:var(--text-dim);max-width:680px}
+.chips{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px}
+.chip{display:inline-flex;align-items:center;gap:8px;background:var(--glass);border:1px solid var(--glass-border);padding:8px 14px;border-radius:12px;font-size:13px}
+.chip i{color:var(--accent-2)}
+
+/* sections */
+section{padding:34px 0;border-top:1px solid rgba(255,255,255,.05)}
+.sec-h{display:flex;align-items:center;gap:12px;margin-bottom:8px}
+.sec-h .num{font-family:'Space Grotesk';font-size:13px;color:var(--accent-1);border:1px solid rgba(112,0,255,.4);border-radius:8px;padding:2px 9px}
+h2{font-size:1.7rem;font-weight:700}
+.sub{color:var(--text-dim);margin-bottom:22px;max-width:760px}
+
+.panel{background:var(--panel);border:1px solid var(--glass-border);border-radius:16px;padding:22px;margin-bottom:16px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+@media(max-width:780px){.grid2,.grid3{grid-template-columns:1fr}}
+.kicker{font-size:12px;letter-spacing:1px;text-transform:uppercase;color:var(--accent-3);margin-bottom:6px;font-weight:600}
+ul.clean{list-style:none}
+ul.clean li{padding-left:24px;position:relative;margin:7px 0;color:var(--text-dim)}
+ul.clean li::before{content:"\f0a9";font-family:"Font Awesome 6 Free";font-weight:900;color:var(--accent-1);position:absolute;left:0;font-size:12px;top:5px}
+ul.clean li strong{color:var(--text-main)}
+
+/* filter */
+.filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px}
+.fbtn{background:var(--glass);border:1px solid var(--glass-border);color:var(--text-dim);padding:8px 15px;border-radius:99px;cursor:pointer;font-size:13px;font-family:'Inter';transition:.18s}
+.fbtn:hover{color:var(--text-main)}
+.fbtn.active{background:linear-gradient(90deg,var(--accent-1),var(--accent-2));color:#fff;border-color:transparent}
+
+/* prof cards */
+.cards{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:780px){.cards{grid-template-columns:1fr}}
+.card{background:var(--panel);border:1px solid var(--glass-border);border-radius:14px;padding:18px;position:relative;transition:.18s}
+.card:hover{border-color:rgba(0,212,255,.4);transform:translateY(-2px)}
+.card .top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
+.card h4{font-size:1.06rem}
+.card .inst{color:var(--text-dim);font-size:13px;margin:2px 0 9px}
+.badges{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:9px}
+.b{font-size:10.5px;font-weight:600;letter-spacing:.4px;padding:3px 8px;border-radius:6px;text-transform:uppercase}
+.b.reach{background:rgba(112,0,255,.16);color:#c4a8ff;border:1px solid rgba(112,0,255,.4)}
+.b.match{background:rgba(16,185,129,.14);color:#6ee7b7;border:1px solid rgba(16,185,129,.4)}
+.b.likely{background:rgba(251,191,36,.14);color:#fcd34d;border:1px solid rgba(251,191,36,.4)}
+.b.ca{background:rgba(0,212,255,.12);color:#7dd3fc;border:1px solid rgba(0,212,255,.4)}
+.b.top{background:linear-gradient(90deg,var(--accent-1),var(--accent-2));color:#fff}
+.card .why{font-size:13.5px;color:var(--text-dim);margin-bottom:10px}
+.card .why b{color:var(--text-main)}
+.papers{border-top:1px dashed var(--glass-border);padding-top:9px;margin-top:4px}
+.papers .pl{font-size:11px;letter-spacing:.6px;text-transform:uppercase;color:var(--accent-3);margin-bottom:5px}
+.papers p{font-size:12px;color:var(--text-dim);margin:4px 0}
+.papers p .v{color:#64748b;font-style:italic}
+.card .lk{font-size:12.5px;margin-top:9px;display:inline-block}
+
+/* tiers / programs */
+.tier{display:flex;gap:12px;align-items:flex-start;margin:10px 0;padding:13px 15px;background:var(--glass);border:1px solid var(--glass-border);border-radius:12px}
+.tier .tg{font-family:'Space Grotesk';font-weight:700;min-width:74px;font-size:13px}
+.tier.r .tg{color:#c4a8ff}.tier.m .tg{color:#6ee7b7}.tier.l .tg{color:#fcd34d}
+.tier .tx{font-size:13.5px;color:var(--text-dim)}
+.tier .tx b{color:var(--text-main)}
+.callout{background:linear-gradient(180deg,rgba(16,185,129,.08),transparent);border:1px solid rgba(16,185,129,.3);border-radius:12px;padding:15px 17px;margin-top:8px}
+
+/* details */
+details{background:var(--panel);border:1px solid var(--glass-border);border-radius:12px;margin-bottom:11px;overflow:hidden}
+details summary{cursor:pointer;padding:15px 18px;font-family:'Space Grotesk';font-weight:500;list-style:none;display:flex;justify-content:space-between;align-items:center}
+details summary::-webkit-details-marker{display:none}
+details summary::after{content:"\f067";font-family:"Font Awesome 6 Free";font-weight:900;color:var(--accent-2);font-size:12px}
+details[open] summary::after{content:"\f068"}
+details .body{padding:0 18px 18px;border-top:1px solid var(--glass-border);padding-top:14px}
+.email{background:#070611;border:1px solid var(--glass-border);border-radius:10px;padding:15px;font-size:13px;color:#cbd5e1;white-space:pre-wrap;font-family:'Inter';margin:8px 0}
+.email .subj{color:var(--accent-2);font-weight:600}
+.tag{display:inline-block;font-size:11px;color:var(--warn);background:rgba(251,191,36,.08);border:1px solid rgba(251,191,36,.3);border-radius:6px;padding:2px 8px;margin-left:6px}
+
+/* timeline */
+.tl{position:relative;margin-left:8px;padding-left:24px;border-left:2px solid rgba(112,0,255,.35)}
+.tl .it{position:relative;margin-bottom:16px}
+.tl .it::before{content:"";position:absolute;left:-31px;top:4px;width:12px;height:12px;border-radius:50%;background:var(--accent-1);box-shadow:0 0 0 4px rgba(112,0,255,.18)}
+.tl .it .w{font-family:'Space Grotesk';font-weight:600;color:var(--accent-2);font-size:14px}
+.tl .it .d{color:var(--text-dim);font-size:13.5px}
+
+/* checklist */
+.check label{display:flex;gap:11px;align-items:flex-start;padding:11px 14px;background:var(--glass);border:1px solid var(--glass-border);border-radius:10px;margin-bottom:9px;cursor:pointer;font-size:14px}
+.check input{margin-top:4px;accent-color:var(--accent-3);width:16px;height:16px}
+.check input:checked + span{text-decoration:line-through;color:var(--text-dim)}
+
+footer{padding:40px 0;border-top:1px solid var(--glass-border);color:var(--text-dim);font-size:13px}
+.privacy{background:rgba(251,191,36,.06);border:1px solid rgba(251,191,36,.3);border-radius:12px;padding:14px 16px;font-size:13px;color:#fcd34d;margin-top:14px}
+</style>
+</head>
+<body>
+
+<nav><div class="wrap">
+  <span class="brand">JM · PhD Roadmap</span>
+  <a href="#strategy">Strategy</a>
+  <a href="#profs">Professors</a>
+  <a href="#programs">Programs</a>
+  <a href="#outreach">Emails</a>
+  <a href="#sop">SOP</a>
+  <a href="#timeline">Timeline</a>
+  <a href="#week">This week</a>
+</div></nav>
+
+<header class="hero"><div class="wrap">
+  <span class="eyebrow"><i class="fa-solid fa-lock"></i> Private planning page · not indexed</span>
+  <h1>PhD Roadmap — <span class="grad">Fall 2027</span></h1>
+  <p class="lead">Computational social science: <b style="color:#f8fafc">digital mental health</b> &times; <b style="color:#f8fafc">information integrity</b>. A single place for the strategy, target professors, outreach, statement, and timeline.</p>
+  <div class="chips">
+    <span class="chip"><i class="fa-solid fa-user-graduate"></i> 25 target professors</span>
+    <span class="chip"><i class="fa-solid fa-building-columns"></i> 17 programs</span>
+    <span class="chip"><i class="fa-solid fa-location-dot"></i> California-weighted</span>
+    <span class="chip"><i class="fa-regular fa-calendar"></i> Apply Dec 2026 – Jan 2027</span>
+  </div>
+</div></header>
+
+<main class="wrap">
+
+<!-- STRATEGY -->
+<section id="strategy">
+  <div class="sec-h"><span class="num">01</span><h2>Strategy &amp; positioning</h2></div>
+  <p class="sub">One identity, one spine, outreach-first. This is the whole plan in a paragraph.</p>
+  <div class="panel" style="border-color:rgba(0,212,255,.3)">
+    <div class="kicker">The plan in one line</div>
+    Apply as a <b>computational social scientist</b> to <b>iSchool / social-computing / communication</b> programs, with <b>digital mental health as the spine</b> and <b>misinformation as the strong second</b>, weighted toward <b>California</b> — and do <b>professor outreach now</b> (summer is the best window).
+  </div>
+  <div class="grid2">
+    <div class="panel">
+      <div class="kicker">Why you're competitive</div>
+      <ul class="clean">
+        <li><strong>Production-grade data engineering</strong> — million-scale multimodal scraping &amp; pipelines (TikTok / X).</li>
+        <li><strong>Applied ML/LLM for meaningful constructs</strong> — Bigorexia harm/recovery classifiers; BERTopic election discourse.</li>
+        <li><strong>A lived ethics &amp; impact story</strong> — USC homelessness research, NSS India, Tijuana &amp; Colombia.</li>
+        <li><strong>USC ISI pedigree</strong> — Luceri, Ferrara, Lerman as references.</li>
+      </ul>
+    </div>
+    <div class="panel">
+      <div class="kicker">The four positioning fixes</div>
+      <ul class="clean">
+        <li><strong>One field</strong> — computational social science, not CS + Communication + Cognitive Science at once.</li>
+        <li><strong>One spine</strong> — lead with digital mental health (most distinctive, least crowded).</li>
+        <li><strong>Custom fit</strong> — a unique, paper-specific paragraph per school; never recycled.</li>
+        <li><strong>Outreach-first</strong> — email professors before applying; apply where they reply warmly.</li>
+      </ul>
+    </div>
+  </div>
+  <div class="panel" style="margin-top:0">
+    <div class="kicker">Honest geography note</div>
+    California is strongest for your <b>misinformation / CSS</b> vein (Stanford, UC Davis, Berkeley, UC Irvine). Your <b>mental-health spine</b> mostly lives out of state (Minnesota, UIUC, Georgia Tech) — so keep a few out-of-state mental-health applications so that spine survives.
+  </div>
+</section>
+
+<!-- PROFESSORS -->
+<section id="profs">
+  <div class="sec-h"><span class="num">02</span><h2>Target professors</h2></div>
+  <p class="sub">25 verified fits with their real recent papers. <span style="color:#7dd3fc">★ top fit</span> · cite a listed paper in every email. Filter:</p>
+  <div class="filters">
+    <button class="fbtn active" data-filter="all">All (25)</button>
+    <button class="fbtn" data-filter="mh">Mental health</button>
+    <button class="fbtn" data-filter="misinfo">Misinformation &amp; CSS</button>
+    <button class="fbtn" data-filter="nlp">NLP &amp; methods</button>
+    <button class="fbtn" data-filter="ca">California only</button>
+  </div>
+  <div class="cards" id="cardgrid">
+
+    <!-- MENTAL HEALTH -->
+    <div class="card" data-cat="mh" data-ca="0">
+      <div class="top"><h4>Stevie Chancellor</h4></div>
+      <div class="inst">U Minnesota · CS&amp;E (GroupLens)</div>
+      <div class="badges"><span class="b top">★ Top fit</span><span class="b match">Match</span></div>
+      <div class="why"><b>Near-exact fit.</b> Pro-eating-disorder &amp; harmful-content ML, LLMs × mental health, and the <i>critical evaluation</i> of it. Assistant prof actively building her lab.</div>
+      <div class="papers"><div class="pl">Recent</div>
+        <p>Cross-Cultural Evaluation of Depression Detection on Twitter <span class="v">— NAACL 2024</span></p>
+        <p>Seeking in Cycles: Finding Mental Health Information <span class="v">— CHI 2024</span></p>
+        <p>"If This Person is Suicidal, What Do I Do?" <span class="v">— CHI 2024</span></p></div>
+      <a class="lk" href="https://steviechancellor.com" target="_blank" rel="noopener">steviechancellor.com — read "Work With Me" →</a>
+    </div>
+
+    <div class="card" data-cat="mh" data-ca="0">
+      <div class="top"><h4>Koustuv Saha</h4></div>
+      <div class="inst">UIUC · Siebel Computing (OnCARE Lab)</div>
+      <div class="badges"><span class="b top">★ Top fit</span><span class="b match">Match</span></div>
+      <div class="why"><b>Social media + wellbeing + causal inference</b> — matches your causation interest. Newer asst prof. Pairs with Chandrasekharan → <b>UIUC multi-fit</b>.</div>
+      <div class="papers"><div class="pl">Recent</div>
+        <p>Observer Effect in Social Media Use <span class="v">— CHI 2024</span></p>
+        <p>Mental Wellbeing Effects of Disclosing Life Events <span class="v">— Nature Sci. Reports 2025</span></p>
+        <p>AI Chatbots for Mental Health Self-Management <span class="v">— JMIR Mental Health 2026</span></p></div>
+      <a class="lk" href="https://koustuv.com" target="_blank" rel="noopener">koustuv.com →</a>
+    </div>
+
+    <div class="card" data-cat="mh" data-ca="0">
+      <div class="top"><h4>Munmun De Choudhury</h4></div>
+      <div class="inst">Georgia Tech · Interactive Computing (SocWeB)</div>
+      <div class="badges"><span class="b reach">Reach</span></div>
+      <div class="why"><b>Founder</b> of social-media + mental-health CSS; ethical ML at scale. Your Bigorexia taxonomy + LLM classifiers are her exact field.</div>
+      <div class="papers"><div class="pl">Recent</div>
+        <p>Medhalu: Hallucinations in LLM healthcare answers <span class="v">— ICWSM 2026</span></p>
+        <p>Adverse Mental Health Events &amp; Online Harassment <span class="v">— ICWSM 2026</span></p>
+        <p>AI as We Describe It (LLMs in health discourse) <span class="v">— CHI 2026</span></p></div>
+      <a class="lk" href="https://www.cc.gatech.edu/people/munmun-de-choudhury" target="_blank" rel="noopener">cc.gatech.edu →</a>
+    </div>
+
+    <div class="card" data-cat="mh" data-ca="0">
+      <div class="top"><h4>Mai ElSherief</h4></div>
+      <div class="inst">Northeastern · Khoury</div>
+      <div class="badges"><span class="b match">Match</span></div>
+      <div class="why">Online harm, hate speech, <b>health misinformation</b>. Collaborates with De Choudhury &amp; Mitra. Pairs with Lazer → <b>Northeastern multi-fit</b>.</div>
+      <div class="papers"><div class="pl">Recent</div>
+        <p>Online Myths on Opioid Use Disorder: Reddit vs LLM <span class="v">— ICWSM 2025</span></p></div>
+      <a class="lk" href="https://www.khoury.northeastern.edu" target="_blank" rel="noopener">khoury.northeastern.edu →</a>
+    </div>
+
+    <div class="card" data-cat="mh" data-ca="1">
+      <div class="top"><h4>Jingwen Zhang</h4></div>
+      <div class="inst">UC Davis · Communication (CHATR Lab)</div>
+      <div class="badges"><span class="b ca">California</span><span class="b match">Match</span></div>
+      <div class="why"><b>Health communication + conversational AI / chatbots</b> for health &amp; mental health; NIH/NSF funded. Makes <b>UC Davis a multi-fit CA target</b>.</div>
+      <a class="lk" href="https://chatrlab.ucdavis.edu" target="_blank" rel="noopener">chatrlab.ucdavis.edu →</a>
+    </div>
+
+    <div class="card" data-cat="mh" data-ca="1">
+      <div class="top"><h4>Elena Agapie</h4></div>
+      <div class="inst">UC Irvine · Informatics</div>
+      <div class="badges"><span class="b ca">California</span><span class="b match">Match</span></div>
+      <div class="why">HCI + social computing + <b>health informatics</b> — the CA target closest to your mental-health vein.</div>
+      <a class="lk" href="https://www.informatics.uci.edu/grad/phd-informatics/" target="_blank" rel="noopener">informatics.uci.edu →</a>
+    </div>
+
+    <!-- MISINFORMATION / CSS -->
+    <div class="card" data-cat="misinfo" data-ca="1">
+      <div class="top"><h4>Jeff Hancock</h4></div>
+      <div class="inst">Stanford · Communication (Social Media Lab)</div>
+      <div class="badges"><span class="b top">★ Both veins</span><span class="b ca">California</span><span class="b reach">Reach</span></div>
+      <div class="why">Rare fit across <b>both</b> your veins — misinformation <i>and</i> wellbeing — via computational linguistics + experiments. Directs Stanford's Center for CSS.</div>
+      <div class="papers"><div class="pl">Recent</div>
+        <p>SIREN study of the 2024 election (88K messages, 349 adults) <span class="v">— 2024</span></p>
+        <p>Stanford Youth Safety &amp; Digital Wellbeing Report <span class="v">— 2025</span></p>
+        <p>Crowdsourcing &amp; misinformation <span class="v">— PNAS Nexus 2024</span></p></div>
+      <a class="lk" href="https://sml.stanford.edu" target="_blank" rel="noopener">sml.stanford.edu →</a>
+    </div>
+
+    <div class="card" data-cat="misinfo" data-ca="1">
+      <div class="top"><h4>Magdalena Wojcieszak</h4></div>
+      <div class="inst">UC Davis · Communication</div>
+      <div class="badges"><span class="b top">★ Best realistic CA</span><span class="b ca">California</span><span class="b match">Match</span></div>
+      <div class="why"><b>Algorithmic audits + interventions</b>; political exposure &amp; polarization. Publishes in Nature / Science Advances / PNAS. Direct overlap with your election work.</div>
+      <div class="papers"><div class="pl">Recent</div>
+        <p>Auditing Political Exposure Bias on X during the 2024 election <span class="v">— FAccT 2025</span></p>
+        <p>Nudging YouTube's algorithm toward diverse news <span class="v">— PNAS Nexus 2024</span></p></div>
+      <a class="lk" href="https://communication.ucdavis.edu/people/magdalena-wojcieszak" target="_blank" rel="noopener">communication.ucdavis.edu →</a>
+    </div>
+
+    <div class="card" data-cat="misinfo" data-ca="1">
+      <div class="top"><h4>Cuihua (Cindy) Shen</h4></div>
+      <div class="inst">UC Davis · Communication</div>
+      <div class="badges"><span class="b ca">California</span><span class="b match">Match</span></div>
+      <div class="why"><b>Multimodal misinformation</b> in AI-mediated ecosystems; co-directs the Computational Communication Research lab. EiC of JCMC.</div>
+      <a class="lk" href="https://communication.ucdavis.edu/people/cuihua-shen" target="_blank" rel="noopener">communication.ucdavis.edu →</a>
+    </div>
+
+    <div class="card" data-cat="misinfo" data-ca="0">
+      <div class="top"><h4>Tanu Mitra</h4></div>
+      <div class="inst">U Washington · iSchool (Social Computing / CIP)</div>
+      <div class="badges"><span class="b match">Match/Reach</span></div>
+      <div class="why">Misinformation amplification at scale — your BERTopic toolkit. Pairs with Starbird → <b>UW multi-fit</b>. One of the best homes for your profile.</div>
+      <div class="papers"><div class="pl">Recent</div>
+        <p>Geolocation Audit of YouTube for COVID-19 Misinformation <span class="v">— ICWSM 2025</span></p>
+        <p>Online Myths on Opioid Use Disorder: Reddit vs LLM <span class="v">— ICWSM 2025</span></p>
+        <p>Mobilization Potential of Online Election Narratives <span class="v">— ICWSM 2025</span></p></div>
+      <a class="lk" href="https://faculty.washington.edu/tmitra/" target="_blank" rel="noopener">faculty.washington.edu/tmitra →</a>
+    </div>
+
+    <div class="card" data-cat="misinfo" data-ca="0">
+      <div class="top"><h4>Kate Starbird</h4></div>
+      <div class="inst">U Washington · HCDE (Informed Public)</div>
+      <div class="badges"><span class="b reach">Reach</span></div>
+      <div class="why">Misinformation, crisis informatics, rapid rumor analysis. Co-founded the Center for an Informed Public.</div>
+      <a class="lk" href="https://faculty.washington.edu/kstarbi/" target="_blank" rel="noopener">faculty.washington.edu/kstarbi →</a>
+    </div>
+
+    <div class="card" data-cat="misinfo" data-ca="0">
+      <div class="top"><h4>Ceren Budak</h4></div>
+      <div class="inst">U Michigan · School of Information</div>
+      <div class="badges"><span class="b reach">Reach/Match</span></div>
+      <div class="why">Misinformation, polarization, and <b>measurement rigor</b>. 2026 Andrew Carnegie Fellow. Pairs with Hemphill → <b>Michigan multi-fit</b>.</div>
+      <div class="papers"><div class="pl">Recent</div>
+        <p>Misunderstanding the Harms of Online Misinformation <span class="v">— Nature 2024</span></p>
+        <p>Cross-platform ranking intervention, 2024 election <span class="v">— 2024/25</span></p></div>
+      <a class="lk" href="https://www.si.umich.edu/people/ceren-budak" target="_blank" rel="noopener">si.umich.edu →</a>
+    </div>
+
+    <div class="card" data-cat="misinfo" data-ca="0">
+      <div class="top"><h4>Libby Hemphill</h4></div>
+      <div class="inst">U Michigan · School of Information</div>
+      <div class="badges"><span class="b match">Match</span></div>
+      <div class="why">Online toxicity, hate speech, harassment — overlaps your harmful-content work. Top iSchool; strong second name at Michigan.</div>
+      <a class="lk" href="https://www.si.umich.edu" target="_blank" rel="noopener">si.umich.edu →</a>
+    </div>
+
+    <div class="card" data-cat="misinfo" data-ca="0">
+      <div class="top"><h4>Filippo Menczer</h4></div>
+      <div class="inst">Indiana · Luddy (OSoMe)</div>
+      <div class="badges"><span class="b match">Match</span></div>
+      <div class="why">Bots, coordinated inauthentic behavior, misinformation spread (Botometer, Hoaxy). Strong CSS, more realistic admit.</div>
+      <div class="papers"><div class="pl">Recent</div>
+        <p>Emergent Coordinated Behaviors in Networked LLM Agents <span class="v">— WWW 2026</span></p>
+        <p>Anatomy of an AI-powered malicious social botnet <span class="v">— 2024</span></p>
+        <p>Detection of Coordinated Online Behavior: A Survey <span class="v">— 2024</span></p></div>
+      <a class="lk" href="https://cnets.indiana.edu/fil" target="_blank" rel="noopener">cnets.indiana.edu/fil →</a>
+    </div>
+
+    <div class="card" data-cat="misinfo" data-ca="0">
+      <div class="top"><h4>Joshua Tucker &amp; Jonathan Nagler</h4></div>
+      <div class="inst">NYU · CSMaP (Politics / Stats-CSS)</div>
+      <div class="badges"><span class="b reach">Reach/Match</span></div>
+      <div class="why">Social media × politics × democracy at scale — your 2024-election work is their core. Pick the home department carefully.</div>
+      <a class="lk" href="https://csmapnyu.org/jobs/information-for-nyu-phd-students" target="_blank" rel="noopener">csmapnyu.org — PhD info →</a>
+    </div>
+
+    <div class="card" data-cat="misinfo" data-ca="0">
+      <div class="top"><h4>David Lazer</h4></div>
+      <div class="inst">Northeastern · Network Science Institute</div>
+      <div class="badges"><span class="b reach">Reach/Match</span></div>
+      <div class="why">A founder of computational social science; misinformation + networks. Purpose-built Network Science PhD.</div>
+      <a class="lk" href="https://www.networkscienceinstitute.org/academics/phd" target="_blank" rel="noopener">networkscienceinstitute.org →</a>
+    </div>
+
+    <div class="card" data-cat="misinfo" data-ca="0">
+      <div class="top"><h4>Chris Bail</h4></div>
+      <div class="inst">Duke · Polarization Lab / Society-Centered AI</div>
+      <div class="badges"><span class="b reach">Reach</span></div>
+      <div class="why">CSS, polarization, generative AI for bridging divides. Founder of the Summer Institute in Computational Social Science.</div>
+      <a class="lk" href="https://www.chrisbail.net/" target="_blank" rel="noopener">chrisbail.net →</a>
+    </div>
+
+    <div class="card" data-cat="misinfo" data-ca="0">
+      <div class="top"><h4>David Rand &amp; Gordon Pennycook</h4></div>
+      <div class="inst">Cornell · Information Science / Psychology</div>
+      <div class="badges"><span class="b reach">Reach</span></div>
+      <div class="why">Misinformation through a <b>dual-process / cognitive</b> lens — matches the theory section of your statements. Frame the cognitive angle credibly.</div>
+      <a class="lk" href="https://infosci.cornell.edu/" target="_blank" rel="noopener">Cornell Bowers CIS →</a>
+    </div>
+
+    <div class="card" data-cat="misinfo" data-ca="0">
+      <div class="top"><h4>S. González-Bailón &amp; D. Watts</h4></div>
+      <div class="inst">U Penn · Annenberg (CSSLab)</div>
+      <div class="badges"><span class="b reach">Reach</span></div>
+      <div class="why">Networks, political communication, large-scale behavior — the Communication route into CSS. GRE optional.</div>
+      <a class="lk" href="https://www.asc.upenn.edu/graduate/doctorate-communication/apply-phd-program" target="_blank" rel="noopener">asc.upenn.edu →</a>
+    </div>
+
+    <!-- NLP / METHODS -->
+    <div class="card" data-cat="nlp" data-ca="1">
+      <div class="top"><h4>Diyi Yang</h4></div>
+      <div class="inst">Stanford · Computer Science (SALT Lab)</div>
+      <div class="badges"><span class="b top">★ NLP fit</span><span class="b ca">California</span><span class="b reach">Reach</span></div>
+      <div class="why"><b>Socially Aware NLP + CSS</b>; LLMs for social science. Asst prof building a lab — the strongest CS-side California fit for your NLP/LLM skills. Pairs with Hancock → <b>Stanford multi-fit</b>.</div>
+      <div class="papers"><div class="pl">Recent</div>
+        <p>Social Skill Training with Large Language Models <span class="v">— 2024</span></p></div>
+      <a class="lk" href="https://cs.stanford.edu/~diyiy/" target="_blank" rel="noopener">SALT Lab, Stanford CS →</a>
+    </div>
+
+    <div class="card" data-cat="nlp" data-ca="0">
+      <div class="top"><h4>Maarten Sap</h4></div>
+      <div class="inst">CMU · Language Technologies Institute</div>
+      <div class="badges"><span class="b reach">Reach/Match</span></div>
+      <div class="why"><b>NLP + social intelligence</b>; toxic-language detection; AI safety (AI2). Strong fit for your NLP/LLM toolkit.</div>
+      <a class="lk" href="https://maartensap.com/" target="_blank" rel="noopener">maartensap.com →</a>
+    </div>
+
+    <div class="card" data-cat="nlp" data-ca="1">
+      <div class="top"><h4>David Bamman</h4></div>
+      <div class="inst">UC Berkeley · School of Information</div>
+      <div class="badges"><span class="b ca">California</span><span class="b reach">Reach</span></div>
+      <div class="why"><b>NLP + ML for social-science questions</b> — your exact methods. Top iSchool. Pairs with Salehi/Pierson → <b>Berkeley multi-fit</b>.</div>
+      <a class="lk" href="https://www.ischool.berkeley.edu/people/david-bamman" target="_blank" rel="noopener">ischool.berkeley.edu →</a>
+    </div>
+
+    <div class="card" data-cat="nlp" data-ca="1">
+      <div class="top"><h4>Niloufar Salehi</h4></div>
+      <div class="inst">UC Berkeley · School of Information</div>
+      <div class="badges"><span class="b ca">California</span><span class="b reach">Reach</span></div>
+      <div class="why">Social computing, human-centered AI, online harm. (Note: Hany Farid left Berkeley for Dartmouth in mid-2026.)</div>
+      <a class="lk" href="https://www.ischool.berkeley.edu/people/niloufar-salehi" target="_blank" rel="noopener">ischool.berkeley.edu →</a>
+    </div>
+
+    <div class="card" data-cat="nlp" data-ca="0">
+      <div class="top"><h4>Eshwar Chandrasekharan</h4></div>
+      <div class="inst">UIUC · Computer Science</div>
+      <div class="badges"><span class="b match">Match</span></div>
+      <div class="why"><b>Content moderation, online communities, causal inference</b> (Crossmod). Pairs with Saha → <b>UIUC multi-fit</b>.</div>
+      <a class="lk" href="https://eshwarchandrasekharan.com/" target="_blank" rel="noopener">eshwarchandrasekharan.com →</a>
+    </div>
+
+    <div class="card" data-cat="nlp" data-ca="1">
+      <div class="top"><h4>Emma Pierson</h4></div>
+      <div class="inst">UC Berkeley · EECS</div>
+      <div class="badges"><span class="b ca">California</span><span class="b reach">Reach</span></div>
+      <div class="why"><b>ML for health + social inequality</b>; Computational Precision Health. A methods-heavy CA option adjacent to your health vein.</div>
+      <a class="lk" href="https://people.eecs.berkeley.edu/~emmapierson/" target="_blank" rel="noopener">eecs.berkeley.edu/~emmapierson →</a>
+    </div>
+
+  </div>
+</section>
+
+<!-- PROGRAMS -->
+<section id="programs">
+  <div class="sec-h"><span class="num">03</span><h2>Programs — balanced list</h2></div>
+  <p class="sub">~10–12 final apps: 3–4 reach, 4–5 match, 2–3 likely. Apply where ≥1 professor is a real fit (ideally one who replied).</p>
+
+  <div class="callout">
+    <div class="kicker" style="color:#6ee7b7">⚡ Multi-fit schools — prioritize these (2+ advisors = better odds + flexibility)</div>
+    <ul class="clean" style="margin-top:6px">
+      <li><strong>UC Davis</strong> [CA] — Wojcieszak + Shen + Jingwen Zhang (misinfo + health comm)</li>
+      <li><strong>Stanford</strong> [CA] — Hancock (Comm) + Diyi Yang (CS)</li>
+      <li><strong>UC Berkeley</strong> [CA] — Salehi + Bamman + Pierson (iSchool/EECS)</li>
+      <li><strong>UIUC</strong> — Saha + Chandrasekharan</li>
+      <li><strong>U Washington</strong> — Mitra + Starbird</li>
+      <li><strong>U Michigan</strong> — Budak + Hemphill</li>
+      <li><strong>Northeastern</strong> — Lazer + ElSherief</li>
+    </ul>
+  </div>
+
+  <div style="margin-top:16px">
+    <div class="tier r"><span class="tg">REACH</span><span class="tx"><b>Stanford</b> · <b>UC Berkeley</b> · <b>Georgia Tech</b> · <b>U Michigan</b> · Cornell · Penn Annenberg · NYU · Duke</span></div>
+    <div class="tier m"><span class="tg">MATCH</span><span class="tx"><b>UC Davis</b> · <b>UIUC</b> · <b>U Minnesota</b> · <b>U Washington</b> · Indiana (Luddy) · UC Irvine · Northeastern · CMU (LTI)</span></div>
+    <div class="tier l"><span class="tg">LIKELY</span><span class="tx">Rutgers (SC&amp;I, GRE-optional) · U Maryland (iSchool/UMIACS) · Syracuse / Drexel / ASU — pick 2–3 with a specific fit</span></div>
+  </div>
+  <div class="panel" style="margin-top:16px">
+    <div class="kicker">USC note</div>
+    Re-apply to USC <b>only</b> with an explicit champion (Luceri / Lerman / Ferrara), or via <b>Annenberg</b> (a different door than the CS dept). Otherwise their biggest value to you is <b>letters</b>.
+  </div>
+</section>
+
+<!-- OUTREACH -->
+<section id="outreach">
+  <div class="sec-h"><span class="num">04</span><h2>Outreach emails</h2></div>
+  <p class="sub">Goal of a cold email: <i>not</i> "admit me" — "I admire your specific work, here's the overlap, are you taking students for Fall 2027?" 150–200 words, cite one real paper, attach CV.</p>
+
+  <div class="grid2" style="margin-bottom:16px">
+    <div class="panel"><div class="kicker">The rules</div>
+      <ul class="clean">
+        <li><strong>150–200 words</strong>, never longer.</li>
+        <li>Cite <strong>one specific recent paper</strong> of theirs (use the directory above).</li>
+        <li><strong>One thing you did</strong>, with a number.</li>
+        <li><strong>One ask</strong>: recruiting for Fall 2027?</li>
+        <li>Attach CV; link your site. Send <strong>Tue–Thu AM</strong>.</li>
+        <li><strong>One follow-up</strong> only (~10–12 days). Then stop.</li>
+      </ul>
+    </div>
+    <div class="panel"><div class="kicker">Sending order</div>
+      <ul class="clean">
+        <li><strong>1.</strong> Chancellor · Saha · De Choudhury (mental-health spine — send first)</li>
+        <li><strong>2.</strong> Hancock · Wojcieszak (top California)</li>
+        <li><strong>3.</strong> Mitra · Budak · Diyi Yang</li>
+        <li><strong>4.</strong> Then down the directory as you read their recent papers</li>
+      </ul>
+    </div>
+  </div>
+
+  <details><summary>📧 Stevie Chancellor — your #1 fit (ready to send)</summary><div class="body">
+    <div class="email"><span class="subj">Subject: Prospective Fall 2027 PhD — ML for high-risk eating-disorder communities</span>
+
+Dear Professor Chancellor,
+
+I'm Joyston Menezes — an MS in Computer Science from USC and a research assistant at USC's Information Sciences Institute. I read your "Work With Me" page carefully, and I'm applying for Fall 2027 PhD programs because building and critically evaluating human-centered ML for high-risk online health behavior — especially pro-eating-disorder communities — is exactly the research I want to commit to.
+
+Under Prof. Kristina Lerman at ISI, I built LLaMA/Gemini classifiers over millions of TikTok videos to model harmful-vs-recovery narratives around muscle dysmorphia ("Bigorexia"), including a hierarchical taxonomy for the construct. What pulls me toward your group is that you take the ethics of measuring these communities as seriously as the accuracy <span class="tag">→ cite "Cross-Cultural Evaluation of Depression Detection," NAACL 2024</span>.
+
+Would you be recruiting PhD students for Fall 2027? I'd be grateful for a brief call. My CV is attached; more at joystonmenez.info.
+
+Thank you,
+Joyston Menezes · jmenezes@usc.edu</div>
+  </div></details>
+
+  <details><summary>📧 Magdalena Wojcieszak — best realistic California anchor</summary><div class="body">
+    <div class="email"><span class="subj">Subject: Prospective Fall 2027 PhD — algorithmic audits &amp; large-scale political discourse</span>
+
+Dear Professor Wojcieszak,
+
+I'm Joyston Menezes, an MS in Computer Science from USC and a research assistant at USC ISI's HUMANS Lab. I'm applying for Fall 2027 PhD programs, and your work on algorithmic audits and interventions is exactly the research I want to do — your FAccT 2025 audit of political exposure bias on X during the 2024 election is strikingly close to what I built.
+
+With Profs. Luca Luceri and Emilio Ferrara, I built the scraping and analysis pipeline behind a public multimodal dataset of the 2024 US election on TikTok — analyzing 10M+ comments with BERTopic and consolidating 700+ fragmented topics into coherent themes. I'd love to bring that large-scale-measurement experience to the audit-and-intervention questions you study.
+
+Would you be taking PhD students for Fall 2027? I'd welcome a short conversation. CV attached; more at joystonmenez.info.
+
+Thank you,
+Joyston Menezes · jmenezes@usc.edu</div>
+  </div></details>
+
+  <details><summary>📧 Jeff Hancock — rare fit across both veins</summary><div class="body">
+    <div class="email"><span class="subj">Subject: Prospective Fall 2027 PhD — computational study of social media, trust &amp; wellbeing</span>
+
+Dear Professor Hancock,
+
+I'm Joyston Menezes, an MS in Computer Science from USC and a research assistant at USC's Information Sciences Institute. The Social Media Lab is unusual in covering both halves of what I care about — misinformation and trust, and social-media wellbeing — through computational linguistics and experiments.
+
+At ISI I've worked across both: I built the pipeline and BERTopic analysis behind a public multimodal dataset of 2024-election discourse on TikTok (10M+ comments), and, with Prof. Kristina Lerman, ML classifiers over millions of videos to model harmful-vs-recovery narratives in eating-disorder communities. Your SIREN study of the 2024 election is the kind of integration I want to pursue in a PhD.
+
+Would you be taking PhD students for Fall 2027? I'd welcome a brief call. CV attached; more at joystonmenez.info.
+
+Thank you,
+Joyston Menezes · jmenezes@usc.edu</div>
+  </div></details>
+
+  <details><summary>📧 + letter-writer request (Lerman / Luceri / Ferrara)</summary><div class="body">
+    <div class="email"><span class="subj">Subject: Reference for my Fall 2027 PhD applications?</span>
+
+Dear Prof. [Lerman / Luceri / Ferrara],
+
+I'm applying for PhD programs in computational social science this cycle (Fall 2027 entry), focusing on [digital mental health / misinformation], building directly on the work I did with you at ISI. Would you be willing to write a strong letter of recommendation for me?
+
+If yes, I'll send a short packet to make it easy: my CV, draft statement, a one-page summary of what I worked on in your lab (with specifics and numbers), and the list of programs with deadlines (earliest ≈ Dec 1).
+
+Thank you so much — I'm grateful for your mentorship.
+Joyston</div>
+    <p style="color:#94a3b8;font-size:13px;margin-top:8px">The remaining personalized drafts (Saha, De Choudhury, Mitra, Budak) are in <b>03_Personalized_Emails.md</b> in your Game Plan folder.</p>
+  </div></details>
+</section>
+
+<!-- SOP -->
+<section id="sop">
+  <div class="sec-h"><span class="num">05</span><h2>Statement of purpose</h2></div>
+  <p class="sub">New opening — no "Panta Rhei," lead with your own finding. Mental health is the spine; a custom fit paragraph per school.</p>
+  <div class="panel">
+    <div class="kicker">The new opening</div>
+    <p style="color:#cbd5e1;font-size:14.5px">"When I trained classifiers to flag harmful 'Bigorexia' content across millions of TikTok videos, the hardest cases were not the obviously dangerous ones — they were the posts where harm and recovery lived in the same caption, the same aesthetic, the same community. That ambiguity convinced me that detecting harmful content is not only an engineering problem; it is a computational social science problem that requires modeling people, context, and meaning at scale."</p>
+  </div>
+  <details><summary>Structure &amp; the fit-paragraph bank</summary><div class="body">
+    <ul class="clean">
+      <li><strong>1 · Hook</strong> — the Bigorexia finding above.</li>
+      <li><strong>2 · Identity</strong> — "a computer scientist who became a computational social scientist."</li>
+      <li><strong>3 · Mental-health thread</strong> (Lerman) — taxonomy, LLaMA/Gemini classifiers, the open question.</li>
+      <li><strong>4 · Information-integrity thread</strong> (HUMANS) — 10M comments, BERTopic, the dataset, the measurement question.</li>
+      <li><strong>5 · Ethics throughline</strong> — homelessness, NSS, Tijuana/Colombia → why you study vulnerable communities carefully.</li>
+      <li><strong>6 · Custom fit paragraph</strong> — name 1–2 professors + a specific paper + one concrete project.</li>
+      <li><strong>7 · Future + goal</strong> — causal inference, prebunking, real-time intervention; research scientist / professor.</li>
+    </ul>
+    <p style="color:#94a3b8;font-size:13px;margin-top:8px">Full draft + per-school fit paragraphs (Minnesota, UC Davis, Stanford, UW, Georgia Tech): <b>04_SOP_Master_Draft.md</b> and <b>SOP_Master_Draft_v1.docx</b> in your Game Plan folder. Drop the patents from the narrative (low signal in US PhD admissions).</p>
+  </div></details>
+</section>
+
+<!-- TIMELINE -->
+<section id="timeline">
+  <div class="sec-h"><span class="num">06</span><h2>Timeline</h2></div>
+  <p class="sub">Outreach first (time-sensitive), SOP second, applications last.</p>
+  <div class="tl">
+    <div class="it"><div class="w">Now – August 2026</div><div class="d">Email professors (best window). Lock in 3 letter writers. Build outreach habit. Rebuild CV + SOP. Update website.</div></div>
+    <div class="it"><div class="w">September 2026</div><div class="d">Narrow final list by who replied warmly. Request USC + NMAMIT transcripts. Refine SOP.</div></div>
+    <div class="it"><div class="w">October 2026</div><div class="d">Write custom fit paragraph per school. Second follow-up to non-repliers. Prep writing sample.</div></div>
+    <div class="it"><div class="w">November 2026</div><div class="d">Finalize docs. Give letter writers the final packet + deadlines. Pre-fill portals.</div></div>
+    <div class="it"><div class="w">Dec 1 – 15, 2026</div><div class="d">Submit early-deadline programs.</div></div>
+    <div class="it"><div class="w">Dec 2026 – Jan 15, 2027</div><div class="d">Submit the rest. Email professors you spoke with that you've applied.</div></div>
+  </div>
+  <div class="panel" style="margin-top:18px"><div class="kicker">Logistics</div>
+    <ul class="clean">
+      <li><strong>GRE</strong> — most targets are GRE-optional; <b>likely skip</b> (verify each).</li>
+      <li><strong>Letters</strong> — Lerman, Luceri, Ferrara (research letters &gt; teaching).</li>
+      <li><strong>Website</strong> — add a Research page before emailing anyone.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- THIS WEEK -->
+<section id="week">
+  <div class="sec-h"><span class="num">07</span><h2>This week</h2></div>
+  <p class="sub">Checkboxes are just visual (they reset on refresh). The order matters.</p>
+  <div class="check">
+    <label><input type="checkbox"><span>Email <b>Lerman, Luceri, Ferrara</b> to lock in letters.</span></label>
+    <label><input type="checkbox"><span>Email top fits: <b>Chancellor, Saha, De Choudhury, Hancock</b> — personalize the paper reference first.</span></label>
+    <label><input type="checkbox"><span>Add a <b>Research page</b> to joystonmenez.info.</span></label>
+    <label><input type="checkbox"><span>Make the <b>SOP</b> yours — open the docx, read it aloud, fix the voice.</span></label>
+    <label><input type="checkbox"><span>Fill the <b>outreach tracker</b> and confirm each professor is recruiting for Fall 2027.</span></label>
+  </div>
+</section>
+
+</main>
+
+<footer><div class="wrap">
+  <div><b>PhD Roadmap</b> · planning aid for Joyston Menezes · last updated June 2026.</div>
+  <div class="privacy"><i class="fa-solid fa-triangle-exclamation"></i> <b>Privacy:</b> this page is set to <code>noindex</code> and has an unguessable filename, but it lives in a <b>public</b> GitHub repo — the file is browsable by anyone who views the repository. Keep the blunt strategy notes in your local files; treat this page as semi-public.</div>
+</div></footer>
+
+<script>
+const btns=document.querySelectorAll('.fbtn');
+const cards=document.querySelectorAll('#cardgrid .card');
+btns.forEach(b=>b.addEventListener('click',()=>{
+  btns.forEach(x=>x.classList.remove('active'));
+  b.classList.add('active');
+  const f=b.dataset.filter;
+  cards.forEach(c=>{
+    let show = f==='all' || (f==='ca' ? c.dataset.ca==='1' : c.dataset.cat===f);
+    c.style.display = show ? '' : 'none';
+  });
+}));
+</script>
+</body>
+</html>
