@@ -14,7 +14,7 @@
 
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:title" content="Joyston Menezes | Researcher & Engineer">
-    <meta property="twitter:description" content="Computational Social Science researcher — misinformation, information integrity & NLP.">
+    <meta property="twitter:description" content="Computational Social Science researcher: misinformation, information integrity & NLP.">
     <meta property="twitter:image" content="https://www.joystonmenez.info/Joyston.jpg">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Space+Grotesk:wght@300;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -122,8 +122,9 @@
             align-items: center; 
             text-align: center; 
             
-            /* CHANGED: Added 120px top padding to clear the fixed navbar */
-            padding: 120px 20px 0 20px; 
+            /* CHANGED: Added 120px top padding to clear the fixed navbar,
+               60px bottom padding so the business card caption clears the next section */
+            padding: 120px 20px 60px 20px;
             
             position: relative; 
         }
@@ -180,6 +181,92 @@
         .social-link { font-size: 1.8rem; margin: 0 20px; color: var(--text-dim); transition: 0.3s; display: inline-block; }
         .social-link:hover { color: var(--accent-2); transform: translateY(-5px); }
 
+        /* ================= GENERATIVE BUSINESS CARD ================= */
+        .biz-card-wrap { margin-top: 60px; width: min(430px, 92vw); }
+        .biz-card {
+            position: relative; aspect-ratio: 7 / 4; border-radius: 18px; overflow: hidden;
+            border: 1px solid var(--glass-border); cursor: pointer;
+            box-shadow: 0 20px 60px rgba(112, 0, 255, 0.25);
+            transition: transform 0.4s, box-shadow 0.4s;
+        }
+        .biz-card:hover { transform: translateY(-6px) rotate(-1deg); box-shadow: 0 30px 70px rgba(0, 212, 255, 0.25); }
+        .biz-card canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+        .biz-card-overlay {
+            position: absolute; inset: 0; display: flex; justify-content: space-between; align-items: flex-end;
+            padding: 16px 18px; pointer-events: none; text-align: left;
+            background: linear-gradient(to top, rgba(2, 1, 10, 0.75), transparent 45%);
+        }
+        .biz-name { font-family: 'Space Grotesk', sans-serif; font-weight: 700; letter-spacing: 2px; font-size: 0.95rem; color: #fff; }
+        .biz-role { font-size: 0.6rem; text-transform: uppercase; letter-spacing: 2px; color: var(--text-dim); margin-top: 3px; }
+        .biz-seed { font-family: monospace; font-size: 0.62rem; color: var(--accent-2); opacity: 0.85; }
+        .biz-caption { font-size: 0.72rem; color: var(--text-dim); margin-top: 14px; opacity: 0.75; }
+
+        /* ================= PROPAGANDA MODE (Konami code easter egg) ================= */
+        .propaganda-overlay { position: fixed; inset: 0; z-index: 1500; pointer-events: none; display: none; }
+        .propaganda-mode .propaganda-overlay { display: block; }
+        .propaganda-overlay::before {
+            content: ''; position: absolute; inset: 0;
+            background: repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.22) 0 1px, transparent 1px 3px);
+        }
+        .propaganda-overlay::after {
+            content: ''; position: absolute; inset: 0;
+            background: radial-gradient(ellipse at center, transparent 40%, rgba(255, 0, 60, 0.2) 100%);
+        }
+
+        .propaganda-banner {
+            position: fixed; top: 0; left: 0; right: 0; height: 44px; z-index: 2100;
+            display: none; align-items: center; overflow: hidden;
+            background: linear-gradient(90deg, #6b0000, #b30000, #6b0000);
+            border-bottom: 2px solid #ffd700;
+            font-family: 'Space Grotesk', sans-serif;
+        }
+        .propaganda-mode .propaganda-banner { display: flex; }
+        .ticker-viewport { flex: 1; overflow: hidden; white-space: nowrap; }
+        .ticker-track {
+            display: inline-block; white-space: nowrap; color: #ffd700;
+            font-weight: 700; letter-spacing: 1px; font-size: 0.8rem;
+            animation: ticker-scroll 28s linear infinite;
+        }
+        @keyframes ticker-scroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+        .reality-btn {
+            flex-shrink: 0; margin: 0 12px; padding: 6px 14px; border: none; border-radius: 100px;
+            background: #ffd700; color: #4d0000; font-family: inherit; font-weight: 700;
+            font-size: 0.7rem; letter-spacing: 1px; cursor: pointer;
+        }
+        .reality-btn:hover { background: #fff; }
+
+        .propaganda-mode .nav { top: 58px; }
+        .propaganda-mode .hero, .propaganda-mode main, .propaganda-mode .footer { animation: propaganda-flicker 7s infinite; }
+        @keyframes propaganda-flicker {
+            0%, 100% { filter: hue-rotate(0deg); }
+            8% { filter: hue-rotate(-45deg) contrast(1.15); }
+            10% { filter: hue-rotate(0deg); }
+            52% { filter: hue-rotate(30deg) saturate(1.6); }
+            55% { filter: hue-rotate(0deg); }
+        }
+        .propaganda-mode .hero-title {
+            background: none; -webkit-text-fill-color: #ffd700; color: #ffd700;
+            font-size: clamp(1.6rem, 5.5vw, 3.6rem); letter-spacing: 0;
+            text-shadow: 3px 0 #ff004c, -3px 0 var(--accent-2);
+            animation: glitch-jitter 0.9s steps(2) infinite;
+        }
+        .propaganda-mode .hero-title::after { content: '_'; -webkit-text-fill-color: #ffd700; }
+        @keyframes glitch-jitter {
+            0%, 100% { transform: translate(0); }
+            20% { transform: translate(-2px, 1px) skewX(-2deg); }
+            40% { transform: translate(2px, -1px); }
+            60% { transform: translate(-1px, 2px) skewX(2deg); }
+            80% { transform: translate(1px, -2px); }
+        }
+        .propaganda-mode .section-title { color: #ffd700; text-shadow: 2px 2px 0 #ff004c; }
+        .propaganda-mode .section-tag { color: #ff5c5c; }
+        .propaganda-mode .hero-subtitle { color: #ffdf9e; }
+
+        .konami-hint {
+            margin-top: 25px; font-size: 0.7rem; letter-spacing: 6px;
+            color: rgba(148, 163, 184, 0.35); user-select: none; cursor: help;
+        }
+
         @media (max-width: 1024px) {
             .nav { width: 98%; padding: 0 15px; }
             .nav-links { display: none; }
@@ -193,6 +280,12 @@
     <div class="scroll-progress" id="scrollIndicator"></div>
     <canvas id="hero-canvas"></canvas>
 
+    <div class="propaganda-overlay"></div>
+    <div class="propaganda-banner">
+        <div class="ticker-viewport"><div class="ticker-track" id="ticker-track"></div></div>
+        <button class="reality-btn" id="reality-btn">RESTORE REALITY</button>
+    </div>
+
     <nav class="nav">
         <div class="logo">JOYSTON</div>
         <ul class="nav-links">
@@ -204,6 +297,7 @@
             <li><a href="#leadership">Impact</a></li>
             <li><a href="#skills">Skills</a></li>
             <li><a href="#honors">Awards</a></li>
+            <li><a href="#beyond">Beyond</a></li>
         </ul>
         <a href="mailto:jmenezes@usc.edu" class="chip" style="background: var(--accent-2); color: #000; font-weight: 700;">GET IN TOUCH</a>
     </nav>
@@ -257,11 +351,25 @@
             </a>
 
         </div>
+
+        <div class="biz-card-wrap">
+            <div class="biz-card" id="biz-card" title="Click to regenerate">
+                <canvas id="card-canvas"></canvas>
+                <div class="biz-card-overlay">
+                    <div>
+                        <div class="biz-name">JOYSTON MENEZES</div>
+                        <div class="biz-role">Computational Social Science &middot; NLP</div>
+                    </div>
+                    <div class="biz-seed" id="biz-seed"></div>
+                </div>
+            </div>
+            <p class="biz-caption">Generated live from this exact millisecond (<span id="biz-time"></span>). No two visitors ever see the same card. Click it to reroll.</p>
+        </div>
     </header>
 
     <main class="container">
 
-        <section id="about" style="margin-top: -10px; padding-bottom: 120px;">
+        <section id="about" style="padding-bottom: 120px;">
             <div class="bento-grid">
                 <div class="card span-12 reveal">
                     
@@ -272,7 +380,7 @@
                             <h2 style="font-size: 2.5rem; margin-top: 10px; color: #fff;">Computational Social Science for a Trustworthy Information Ecosystem</h2>
 
                             <p style="font-size: 1.25rem; color: var(--text-dim); margin-top: 25px; line-height: 1.8; margin-bottom: 30px;">
-                                I am a Master of Science in Computer Science graduate from USC and a computational social science researcher at <strong>USC ISI</strong> and <strong>UCLA</strong>. I build large-scale <strong>NLP</strong> and <strong>machine-learning</strong> systems to study how information — and <strong>misinformation</strong> — spreads across social platforms, from political discourse to online health misinformation. My work pairs production-grade data engineering with LLM-driven analysis to make digital information ecosystems more transparent and trustworthy.
+                                I am a Master of Science in Computer Science graduate from USC and a computational social science researcher at <strong>USC ISI</strong> and <strong>UCLA</strong>. I build large-scale <strong>NLP</strong> and <strong>machine-learning</strong> systems to study how information, and <strong>misinformation</strong>, spreads across social platforms, from political discourse to online health misinformation. My work pairs production-grade data engineering with LLM-driven analysis to make digital information ecosystems more transparent and trustworthy.
                             </p>
 
                          
@@ -374,6 +482,15 @@
                     <ul class="bullets">
                         <li>Built and maintained ERP & website end-to-end: responsive UIs (HTML/CSS/JS), PHP/MySQL back-ends, and on-page SEO that boosted organic traffic.</li>
                         <li>Prototyped blockchain and ML solutions: Ethereum/Hyperledger DApps for supply-chain tracking and Python-based chatbots sharpened smart-contract and data-science skills.</li>
+                    </ul>
+                </div>
+                <div class="card span-12 reveal" style="border-left: 4px solid var(--accent-2);">
+                    <span class="date">Jun 2020 – Jul 2020</span>
+                    <h3 class="company">Project Intern</h3>
+                    <p style="color: var(--accent-2); font-weight: 600;">Dlithe Consultancy | Bangalore, India</p>
+                    <ul class="bullets">
+                        <li><strong>Blockchain:</strong> Trained on Ethereum tooling, Hyperledger, smart-contract management, DevOps, and DApp development, building a Tuna Fishing supply-chain tracker and a Decentralized Voting App.</li>
+                        <li><strong>Machine Learning with Python:</strong> Developed bot applications, social-media integrations, and data analytics workflows across multiple datasets.</li>
                     </ul>
                 </div>
             </div>
@@ -529,6 +646,20 @@
                         Orchestrated a 24-hour National Level Hackathon. Managed logistics for 50+ teams and coordinated industry panels.
                     </p>
                 </div>
+                <div class="card span-6 reveal-left" style="border-left: 4px solid var(--accent-3);">
+                    <span class="pub-type" style="border-color: var(--accent-3); color: var(--accent-3);">Grassroots Initiative</span>
+                    <h3 class="company" style="font-size: 1.1rem;">Paddy Crop Cultivation Drive | Belman, India</h3>
+                    <p style="color: var(--text-dim); margin-top: 10px; font-size: 0.95rem;">
+                        <strong>2019 – 2022:</strong> Revived a paddy field left barren for 15 years, cultivating it across consecutive seasons and donating the entire harvest to homeless and underprivileged families.
+                    </p>
+                </div>
+                <div class="card span-6 reveal-right" style="border-left: 4px solid var(--accent-1);">
+                    <span class="pub-type" style="border-color: var(--accent-1); color: var(--accent-1);">Elected Leadership</span>
+                    <h3 class="company" style="font-size: 1.1rem;">Vice President | ICYM, Udupi Diocese</h3>
+                    <p style="color: var(--text-dim); margin-top: 10px; font-size: 0.95rem;">
+                        <strong>2018 – 2022:</strong> Elected Vice President of the Indian Catholic Youth Movement for the Udupi Diocese, and served as Public Relations Officer of the state central council, leading youth-empowerment and social-welfare programs.
+                    </p>
+                </div>
                 <div class="card span-6 reveal-left">
                     <span class="pub-type">Humanitarian Trip</span>
                     <h3 class="company">Tijuana, Mexico</h3>
@@ -613,6 +744,37 @@
             </div>
         </section>
 
+        <section id="beyond" style="padding-bottom: 120px;">
+            <div class="section-header reveal">
+                <span class="section-tag">Off The Record</span>
+                <h2 class="section-title">Beyond Research</h2>
+            </div>
+            <div class="bento-grid">
+                <div class="card span-4 reveal" style="border-top: 4px solid var(--accent-2);">
+                    <i class="fas fa-camera-retro" style="color: var(--accent-2); font-size: 1.8rem;"></i>
+                    <h4 style="color: #fff; margin-top: 15px;">Photography</h4>
+                    <p style="font-size: 0.9rem; color: var(--text-dim); margin-top: 10px;">
+                        First place at a national techno-cultural fest and third at Nitte Pixel. Years spent behind the lens before the research career.
+                    </p>
+                    <a href="https://joystonmj7.wixsite.com/joyston/photography" target="_blank" style="color: var(--accent-2); font-size: 0.8rem; display: inline-block; margin-top: 12px;"><i class="fas fa-link"></i> View gallery</a>
+                </div>
+                <div class="card span-4 reveal" style="border-top: 4px solid var(--accent-3);">
+                    <i class="fas fa-futbol" style="color: var(--accent-3); font-size: 1.8rem;"></i>
+                    <h4 style="color: #fff; margin-top: 15px;">Football</h4>
+                    <p style="font-size: 0.9rem; color: var(--text-dim); margin-top: 10px;">
+                        Won Under-17 tournaments across the Udupi, Chikmagalur, and Mangalore districts of Karnataka, representing taluk and district teams.
+                    </p>
+                </div>
+                <div class="card span-4 reveal" style="border-top: 4px solid var(--accent-1);">
+                    <i class="fas fa-music" style="color: var(--accent-1); font-size: 1.8rem;"></i>
+                    <h4 style="color: #fff; margin-top: 15px;">Music &amp; Design</h4>
+                    <p style="font-size: 0.9rem; color: var(--text-dim); margin-top: 10px;">
+                        Musician and graphic designer, with creative instincts that sneak into data visualizations (and the occasional website easter egg).
+                    </p>
+                </div>
+            </div>
+        </section>
+
     </main>
 
     <footer class="footer">
@@ -623,6 +785,7 @@
         </div>
         <p style="color: var(--text-dim); margin-top: 30px;">Let's connect and collaborate on the future of Computational Social Science.</p>
         <p style="color: var(--accent-2); font-size: 0.75rem; margin-top: 10px; letter-spacing: 2px;">&copy; 2026 Joyston Menezes. All Rights Reserved.</p>
+        <p class="konami-hint" title="Try it on your keyboard&hellip;">&uarr; &uarr; &darr; &darr; &larr; &rarr; &larr; &rarr; B A</p>
     </footer>
 
     <script>
@@ -640,6 +803,9 @@
         let typingTimer = null; // Variable to store the active timer
 
         function typeCycle() {
+            // Propaganda mode owns the headline while active — don't fight it
+            if (document.body.classList.contains('propaganda-mode')) return;
+
             // 1. CLEAR existing timer if it's still running
             if (typingTimer) clearInterval(typingTimer);
             
@@ -740,6 +906,213 @@
             }
 
             lastScrollY = currentScrollY;
+        });
+
+        // ============================================================
+        // GENERATIVE BUSINESS CARD (seeded by the visitor's timestamp)
+        // ============================================================
+        const bizCard = document.getElementById('biz-card');
+        const cardCanvas = document.getElementById('card-canvas');
+        const cardCtx = cardCanvas.getContext('2d');
+        const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        let currentSeed = Date.now();
+        let cardAnim = null;
+
+        // Small seeded PRNG — same seed always draws the same card
+        function mulberry32(a) {
+            return function() {
+                a |= 0; a = a + 0x6D2B79F5 | 0;
+                let t = Math.imul(a ^ a >>> 15, 1 | a);
+                t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t;
+                return ((t ^ t >>> 14) >>> 0) / 4294967296;
+            };
+        }
+
+        function generateCard(seed) {
+            if (cardAnim) cancelAnimationFrame(cardAnim);
+            const rnd = mulberry32(seed);
+            const dpr = window.devicePixelRatio || 1;
+            const rect = bizCard.getBoundingClientRect();
+            const W = rect.width, H = rect.height;
+            // Layout not settled yet (mid-load) — try again next frame
+            if (W < 50) { cardAnim = requestAnimationFrame(() => generateCard(seed)); return; }
+            cardCanvas.width = W * dpr;
+            cardCanvas.height = H * dpr;
+            cardCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+            document.getElementById('biz-seed').textContent =
+                'SEED 0x' + (seed >>> 0).toString(16).toUpperCase().padStart(8, '0');
+            const d = new Date(seed);
+            document.getElementById('biz-time').textContent =
+                d.toLocaleTimeString([], { hour12: false }) + '.' + String(seed % 1000).padStart(3, '0');
+
+            // Background wash, tinted per-seed
+            const bgHue = 250 + rnd() * 80 - 40;
+            const bg = cardCtx.createLinearGradient(0, 0, W, H);
+            bg.addColorStop(0, '#04021a');
+            bg.addColorStop(1, 'hsl(' + bgHue + ', 80%, 8%)');
+            cardCtx.fillStyle = bg;
+            cardCtx.fillRect(0, 0, W, H);
+
+            // Seeded flow field: every parameter below comes from the timestamp
+            const f1 = 1 + rnd() * 3, f2 = 1 + rnd() * 3;
+            const p1 = rnd() * Math.PI * 2, p2 = rnd() * Math.PI * 2;
+            const curl = 1.2 + rnd() * 2.8;
+            const step = 3 + rnd() * 3;
+            const palette = ['#7000ff', '#00d4ff', '#10b981', '#ff4bd8', '#f8fafc'];
+
+            const trails = [];
+            const count = 80 + Math.floor(rnd() * 60);
+            for (let i = 0; i < count; i++) {
+                let x = rnd() * W, y = rnd() * H;
+                const pts = [[x, y]];
+                for (let s = 0; s < 55; s++) {
+                    const a = Math.sin((x / W) * Math.PI * f1 + p1) * curl
+                            + Math.cos((y / H) * Math.PI * f2 + p2) * curl;
+                    x += Math.cos(a) * step;
+                    y += Math.sin(a) * step;
+                    pts.push([x, y]);
+                }
+                trails.push({
+                    pts,
+                    color: palette[Math.floor(rnd() * palette.length)],
+                    width: 0.4 + rnd() * 1.4,
+                    alpha: 0.15 + rnd() * 0.45
+                });
+            }
+
+            let drawn = 0;
+            function drawBatch() {
+                const batch = reducedMotion ? trails.length : 5;
+                for (let n = 0; n < batch && drawn < trails.length; n++, drawn++) {
+                    const t = trails[drawn];
+                    cardCtx.globalAlpha = t.alpha;
+                    cardCtx.strokeStyle = t.color;
+                    cardCtx.lineWidth = t.width;
+                    cardCtx.lineCap = 'round';
+                    cardCtx.beginPath();
+                    cardCtx.moveTo(t.pts[0][0], t.pts[0][1]);
+                    t.pts.forEach(p => cardCtx.lineTo(p[0], p[1]));
+                    cardCtx.stroke();
+                    // Glowing node where the trail ends
+                    const end = t.pts[t.pts.length - 1];
+                    cardCtx.globalAlpha = Math.min(1, t.alpha + 0.25);
+                    cardCtx.fillStyle = t.color;
+                    cardCtx.beginPath();
+                    cardCtx.arc(end[0], end[1], t.width + 0.5, 0, Math.PI * 2);
+                    cardCtx.fill();
+                }
+                cardCtx.globalAlpha = 1;
+                if (drawn < trails.length) cardAnim = requestAnimationFrame(drawBatch);
+            }
+            drawBatch();
+        }
+
+        bizCard.addEventListener('click', () => generateCard(currentSeed = Date.now()));
+        window.addEventListener('resize', () => generateCard(currentSeed));
+        generateCard(currentSeed);
+
+        // ============================================================
+        // KONAMI CODE → PROPAGANDA MODE
+        // ============================================================
+        const KONAMI = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown',
+                        'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a'];
+        let konamiBuffer = [];
+
+        const PROPAGANDA_HEADLINES = [
+            'JOYSTON MENEZES: INVENTED SENTIMENT',
+            'SCIENTISTS CONFIRM: HE READ THE ENTIRE INTERNET',
+            '50 MILLION POSTS ANALYZED. ALL AGREE. GLORIOUS.',
+            'BERT AND LLAMA NOW REPORT TO JOYSTON',
+            'MISINFORMATION SURRENDERS UNCONDITIONALLY',
+            '92% PRECISION RAISED TO 200% BY OFFICIAL DECREE',
+            'THE ALGORITHM ASKS HIM FOR RECOMMENDATIONS',
+            'USC TO BE RENAMED UNIVERSITY OF SOUTHERN JOYSTON',
+            'PEER REVIEW REPLACED WITH STANDING OVATION'
+        ];
+        const PROPAGANDA_SECTIONS = {
+            'Education': 'INDOCTRINATION CENTERS HE CONQUERED',
+            'Work & Research': 'THE GLORIOUS FIVE-YEAR PLAN (DONE IN TWO)',
+            'Publications & Patents': 'THE SACRED TEXTS',
+            'Research & Development': 'MIRACLES PERFORMED',
+            'Leadership & Involvement': 'ACTS OF HEROISM (WITNESSED BY MILLIONS)',
+            'Skills & Technologies': 'SUPERPOWERS (PEER-REVIEWED*)',
+            'Honors & Awards': 'TRIBUTES FROM A GRATEFUL PLANET',
+            'Beyond Research': 'STATE-APPROVED RECREATIONAL ACTIVITIES'
+        };
+
+        const heroTag = document.querySelector('.hero .section-tag');
+        const heroSub = document.querySelector('.hero-subtitle');
+        let headlineTimer = null;
+        let savedHero = null;
+
+        function enterPropaganda() {
+            savedHero = { tag: heroTag.textContent, sub: heroSub.textContent };
+            document.body.classList.add('propaganda-mode');
+            if (typingTimer) clearInterval(typingTimer);
+
+            heroTag.textContent = '★ OFFICIAL STATE BROADCAST ★';
+            heroSub.innerHTML = 'Every claim on this page is now 100% TRUE, certified by the Ministry of Joyston Affairs.*<br>' +
+                '<span style="font-size: 0.85rem; opacity: 0.85;">*Nothing has been verified. This is what propaganda feels like. Press <strong>ESC</strong> to restore reality.</span>';
+
+            document.querySelectorAll('.section-title').forEach(el => {
+                const swap = PROPAGANDA_SECTIONS[el.textContent.trim()];
+                if (swap) { el.dataset.original = el.textContent; el.textContent = swap; }
+            });
+
+            const line = ' ★ OFFICIAL STATE BROADCAST ★ ALL CLAIMS 100% VERIFIED BY THE MINISTRY OF JOYSTON AFFAIRS ★ ' +
+                'DISSENT HAS BEEN PEER-REVIEWED AND REJECTED ★ THIS IS WHAT MISINFORMATION LOOKS LIKE ★ ';
+            document.getElementById('ticker-track').textContent = line + line; // doubled for a seamless loop
+
+            let h = 0;
+            nameElement.textContent = PROPAGANDA_HEADLINES[0];
+            headlineTimer = setInterval(() => {
+                h = (h + 1) % PROPAGANDA_HEADLINES.length;
+                nameElement.textContent = PROPAGANDA_HEADLINES[h];
+            }, 2600);
+        }
+
+        function exitPropaganda() {
+            document.body.classList.remove('propaganda-mode');
+            clearInterval(headlineTimer);
+            heroTag.textContent = savedHero.tag;
+            heroSub.textContent = savedHero.sub;
+            document.querySelectorAll('.section-title').forEach(el => {
+                if (el.dataset.original) { el.textContent = el.dataset.original; delete el.dataset.original; }
+            });
+            typeCycle();
+        }
+
+        function togglePropaganda() {
+            if (document.body.classList.contains('propaganda-mode')) exitPropaganda();
+            else enterPropaganda();
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && document.body.classList.contains('propaganda-mode')) {
+                exitPropaganda();
+                return;
+            }
+            // Rolling buffer of the last 10 keys — extra presses or repeats
+            // before the sequence can't break it
+            const key = e.key.length === 1 ? e.key.toLowerCase() : e.key;
+            konamiBuffer.push(key);
+            if (konamiBuffer.length > KONAMI.length) konamiBuffer.shift();
+            if (konamiBuffer.length === KONAMI.length && konamiBuffer.every((k, i) => k === KONAMI[i])) {
+                konamiBuffer = [];
+                togglePropaganda();
+            }
+        });
+
+        document.getElementById('reality-btn').addEventListener('click', exitPropaganda);
+
+        // No keyboard on phones: tapping the headshot 5 times fast also triggers it
+        let tapCount = 0, tapReset = null;
+        document.querySelector('.animate-headshot').addEventListener('click', () => {
+            tapCount++;
+            clearTimeout(tapReset);
+            tapReset = setTimeout(() => tapCount = 0, 1600);
+            if (tapCount >= 5) { tapCount = 0; togglePropaganda(); }
         });
     </script>
 </body>
